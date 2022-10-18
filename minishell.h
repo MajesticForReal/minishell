@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:00:55 by klaurier          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/10/17 17:37:57 by klaurier         ###   ########.fr       */
+=======
+/*   Updated: 2022/10/18 16:25:32 by anrechai         ###   ########.fr       */
+>>>>>>> c8d3d0e855ec4f501ce078714dacad8aaa3088d9
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +31,27 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include "minishell.h"
+
+enum	e_token
+{
+	TOK_SPACE,
+	TOK_PIPE,
+	TOK_DQ,
+	TOK_SQ,
+	TOK_IN,
+	TOK_OUT,
+	TOK_TOTO,
+	TOK_FROMFROM,
+	TOK_DOLL,
+	TOK_WORD,
+};
+
+typedef struct s_lex
+{
+	char 			*str;
+	int				token;
+	struct s_lex	*next;
+}			t_lex;
 
 //structure de pipex
 typedef struct env
@@ -77,6 +102,12 @@ typedef struct s_minishell
 	char	*short_pwd;
 	char	*short_input;
 }				t_minishell;
+
+typedef struct s_lexer
+{
+	char	*word;
+	int		token;
+}			t_lexer;
 
 // utils_minishell
 int	ft_compare(char *str, char *str2);
@@ -147,5 +178,15 @@ void	ft_export_var(char *input, t_env *env);
 void	ft_add_back_str(t_env *env, char *str);
 void	ft_unset_var(char *input, t_env *env);
 void	ft_del_struct(t_env *env);
+
+// parsing lexer
+void	ft_lexer(char *input);
+t_lex	*ft_initialize_struct(void);
+int	add_back(t_lex *start, int tok, char *input, int i, char c);
+int	ft_size_str(char *input, int i, char c);
+void	ft_lexer(char *input);
+int	ft_word(char *input, t_lex *lex, int i);
+int	ft_first_lex(t_lex *lex, char *input);
+int	ft_size_str_word(char *input, int i);
 
 #endif

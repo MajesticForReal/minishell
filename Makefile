@@ -3,10 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+         #
+#    By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/27 16:02:00 by y klaurier        #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2022/10/17 17:39:52 by klaurier         ###   ########.fr        #
+=======
+#    Updated: 2022/10/18 16:19:30 by anrechai         ###   ########.fr        #
+>>>>>>> c8d3d0e855ec4f501ce078714dacad8aaa3088d9
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +23,7 @@ SRCS 		=	main.c \
 				utils_minishell.c \
 				free_pipex.c \
 				get_path_and_cmd_pipex.c \
+<<<<<<< HEAD
 				builtin_pwd.c \
 				builtin_cd.c \
 				builtin_echo.c \
@@ -26,6 +31,10 @@ SRCS 		=	main.c \
 				builtin_export.c \
 				builtin_unset.c \
 				init_env.c 
+=======
+				builtin.c\
+				lexer.c
+>>>>>>> c8d3d0e855ec4f501ce078714dacad8aaa3088d9
 
 
 OBJS		=	${SRCS:.c=.o}
