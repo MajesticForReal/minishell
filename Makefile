@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+         #
+#    By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    xxCreated: 2022/06/27 16:02:59 by klaurier          #+#    #+#            #
-#    Updated: 2022/06/28 14:05:41 by klaurier         ###   ########.fr        #
+#    Created: 2022/06/27 16:02:00 by y klaurier        #+#    #+#              #
+#    Updated: 2022/10/18 16:19:30 by anrechai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ SRCS 		=	main.c \
 				utils_minishell.c \
 				free_pipex.c \
 				get_path_and_cmd_pipex.c \
-				builtin.c
+				builtin.c\
+				lexer.c
 
 
 OBJS		=	${SRCS:.c=.o}

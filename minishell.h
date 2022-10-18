@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:00:55 by klaurier          #+#    #+#             */
-/*   Updated: 2022/07/13 18:48:39 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/10/18 16:25:32 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,27 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include "minishell.h"
+
+enum	e_token
+{
+	TOK_SPACE,
+	TOK_PIPE,
+	TOK_DQ,
+	TOK_SQ,
+	TOK_IN,
+	TOK_OUT,
+	TOK_TOTO,
+	TOK_FROMFROM,
+	TOK_DOLL,
+	TOK_WORD,
+};
+
+typedef struct s_lex
+{
+	char 			*str;
+	int				token;
+	struct s_lex	*next;
+}			t_lex;
 
 //structure de pipex
 typedef struct s_pipex
@@ -49,6 +70,12 @@ typedef struct s_minishell
 {
     char    **builtin;
 }           t_minishell;
+
+typedef struct s_lexer
+{
+	char	*word;
+	int		token;
+}			t_lexer;
 
 // utils_minishell
 int	ft_compare(char *str, char *str2);
@@ -94,5 +121,15 @@ char	**ft_split(char const *s, char c);
 
 //buitin
 int ft_builtin_pwd(void);
+
+// parsing lexer
+void	ft_lexer(char *input);
+t_lex	*ft_initialize_struct(void);
+int	add_back(t_lex *start, int tok, char *input, int i, char c);
+int	ft_size_str(char *input, int i, char c);
+void	ft_lexer(char *input);
+int	ft_word(char *input, t_lex *lex, int i);
+int	ft_first_lex(t_lex *lex, char *input);
+int	ft_size_str_word(char *input, int i);
 
 #endif
