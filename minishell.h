@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:00:55 by klaurier          #+#    #+#             */
-/*   Updated: 2022/10/18 16:25:32 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/10/18 17:10:10 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,11 +123,10 @@ char	**ft_split(char const *s, char c);
 int ft_builtin_pwd(void);
 
 // parsing lexer
-void	ft_lexer(char *input);
 t_lex	*ft_initialize_struct(void);
 int	add_back(t_lex *start, int tok, char *input, int i, char c);
 int	ft_size_str(char *input, int i, char c);
-void	ft_lexer(char *input);
+void	ft_lexer(char *input, t_lex *lex);
 int	ft_word(char *input, t_lex *lex, int i);
 int	ft_first_lex(t_lex *lex, char *input);
 int	ft_size_str_word(char *input, int i);

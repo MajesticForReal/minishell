@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer                                              :+:      :+:    :+:   */
+/*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:18:43 by anrechai          #+#    #+#             */
-/*   Updated: 2022/10/18 16:19:16 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/10/18 17:20:27 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ int	ft_word(char *input, t_lex *lex, int i)
 int	ft_first_lex(t_lex *lex, char *input)
 {
 	int	i;
+	int	j;
 	int	size;
 
 	i = 0;
@@ -133,21 +134,21 @@ int	ft_first_lex(t_lex *lex, char *input)
 		}
 	size = ft_size_str(input, i, input[i]);
 	lex->str = malloc(sizeof(char) * (size + 1));
-	while (i < size)
+	j = 0;
+	while (j < size)
 	{
-		lex->str[i] = input[i];
+		lex->str[j] = input[i];
 		i++;
+		j++;
 	}
-	lex->str[i] = '\0';
+	lex->str[j] = '\0';
 	lex->next = NULL;
 	return (i);
 }
 
-void	ft_lexer(char *input)
+void	ft_lexer(char *input, t_lex *lex)
 {
-	t_lex 	*lex;
 	int		i;
-	lex = malloc(sizeof(t_lex));
 
 	i = ft_first_lex(lex, input);
 	while (input[i])
