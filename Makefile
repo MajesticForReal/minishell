@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    xxCreated: 2022/06/27 16:02:59 by klaurier          #+#    #+#            #
-#    Updated: 2022/06/28 14:05:41 by klaurier         ###   ########.fr        #
+#    Created: 2022/06/27 16:02:00 by y klaurier        #+#    #+#              #
+#    Updated: 2022/10/17 17:39:52 by klaurier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,13 @@ SRCS 		=	main.c \
 				utils_minishell.c \
 				free_pipex.c \
 				get_path_and_cmd_pipex.c \
-				builtin.c
+				builtin_pwd.c \
+				builtin_cd.c \
+				builtin_echo.c \
+				builtin_env.c \
+				builtin_export.c \
+				builtin_unset.c \
+				init_env.c 
 
 
 OBJS		=	${SRCS:.c=.o}
