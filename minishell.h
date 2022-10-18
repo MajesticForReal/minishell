@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:00:55 by klaurier          #+#    #+#             */
-/*   Updated: 2022/10/18 17:10:10 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/10/18 17:23:30 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,15 @@
 # define MINISHELL_H
 # define FAIL -1
 # define SUCCESS 1
+# define TRUE 2
+# define FALSE -2
 
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
 # include <readline/readline.h>
+# include <signal.h>
 # include <readline/history.h>
 # include <sys/types.h>
 # include <sys/wait.h>
@@ -47,6 +50,23 @@ typedef struct s_lex
 }			t_lex;
 
 //structure de pipex
+typedef struct env
+{
+	char *str;
+	struct env	*next;
+}t_env;
+
+typedef struct utils_builtin
+{
+	char *home_str;
+}t_builtin;
+
+typedef struct var
+{
+	char *name;
+	struct var *next;
+}t_var;
+
 typedef struct s_pipex
 {
 	int		fd_in;
@@ -68,8 +88,16 @@ typedef struct s_pipex
 //struct minishell
 typedef struct s_minishell
 {
-    char    **builtin;
-}           t_minishell;
+    char	**builtin;
+	int		i;
+	int		j;
+	int		size_pwd;
+	int		size_short_input;
+	char	*path_pwd;
+	char	*complet_path;
+	char	*short_pwd;
+	char	*short_input;
+}				t_minishell;
 
 typedef struct s_lexer
 {
@@ -120,7 +148,32 @@ char	**ft_r_split(char const *s, char c, char **strs);
 char	**ft_split(char const *s, char c);
 
 //buitin
-int ft_builtin_pwd(void);
+char *ft_builtin_pwd(int option);
+int	ft_builtin_cd_dir(char *input);
+char *ft_parsing_cd_dir(char *str);
+char *ft_concat(char *str_1, char *str_2);
+int	ft_builtin_cd_only(char *input, t_env *env);
+int	ft_builtin_cd_back(char *input);
+int	ft_cd_is_back(char *input);
+int	ft_builtin_echo_option(char *input);
+int	ft_builtin_echo_only(char *input);
+int	ft_builtin_echo(char *input);
+int	ft_builtin_env(char **envp);
+void	test_signal(int code);
+int	ft_builtin_echo_option_2(char *input);
+int	ft_print_2_d_tab(char **strs, int index);
+t_env *ft_init_env(void);
+void	ft_fill_env(char **envp, t_env *env);
+void	ft_add_back_envp(t_env *env, char **envp, int j);
+t_env *ft_init_fill_env(char **envp);
+void	ft_print_list_env(t_env *env);
+void	ft_compare_just_a_part(char *complet_str, char *part_to_find, t_builtin *t_builtin);
+void	ft_init_fill_str_home(char *complet_str, t_builtin *builtin);
+int	ft_builtin_cd_rac(char *input);
+void	ft_export_var(char *input, t_env *env);
+void	ft_add_back_str(t_env *env, char *str);
+void	ft_unset_var(char *input, t_env *env);
+void	ft_del_struct(t_env *env);
 
 // parsing lexer
 t_lex	*ft_initialize_struct(void);

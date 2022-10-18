@@ -6,13 +6,13 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 12:50:41 by anrechai          #+#    #+#             */
-/*   Updated: 2022/10/18 17:10:42 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/10/18 17:23:01 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int main(int argc, char const *argv[])
+int main(int argc, char const *argv[], char **envp)
 {
 	t_lex *lex;
 
@@ -34,8 +34,14 @@ int main(int argc, char const *argv[])
 		free(input);
 	}
     
+	(void)env;
 	(void)input;
 	(void)argc;
     (void)argv;
 }
 
+void	test_signal(int code)
+{
+	printf("salut");
+	(void)code;
+}
