@@ -6,7 +6,7 @@
 /*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:41:14 by klaurier          #+#    #+#             */
-/*   Updated: 2022/10/18 16:48:24 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/10/18 17:16:57 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ int main(int argc, char const *argv[], char **envp)
 	while(1)
 	{
 		input = readline("$>");
-		ft_lexer(input);
 		add_history(input);
+		ft_lexer(input);
 		if(ft_compare(input, "exit") == SUCCESS)
 			return (0);
 		else if(ft_compare(input, "pwd") == SUCCESS)
@@ -70,18 +70,22 @@ int main(int argc, char const *argv[], char **envp)
 			ft_unset_var(input, env);
 		else if(ft_compare(input, "unset TERM_PROGRAM_VERSION=1.72.0") == SUCCESS)
 			ft_unset_var(input, env);
-		// ft_lexer(input, &lexer);
 		free(input);
 	}
-    
 	(void)env;
 	(void)input;
 	(void)argc;
     (void)argv;
 }
 
-void	test_signal(int code)
+void	ft_test(t_lex *lexer)
 {
-	printf("salut");
-	(void)code;
+	int	i;
+	t_lex *copy_lexer;
+	
+	i = 0;
+	copy_lexer = lexer;
+	if(ft_compare(lexer->str, "echo"))
+		
+		
 }

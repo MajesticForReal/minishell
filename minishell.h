@@ -6,7 +6,7 @@
 /*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:00:55 by klaurier          #+#    #+#             */
-/*   Updated: 2022/10/18 16:43:03 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/10/18 17:15:52 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,34 +111,34 @@ void	ft_putstr(char *str);
 size_t	ft_strlen(const char *str);
 
 //utils pipex
-void	ft_error(t_pipex *pipex, int *pipe_fd);
-void	ft_free_all(t_pipex *pipex);
-void	close_fd(t_pipex *pipex);
-void	ft_free_2dchar(char **tab);
-void	ft_execve_fail(char *my_cmd);
-void	ft_exec_cmd_no_env(char **cmd, char **path, t_pipex *pipex);
-void	ft_exec_cmd_env(char **cmd, char **path, t_pipex *pipex);
-void	ft_dup_and_close(t_pipex *pipex, int x);
-void	ft_fork_child_2(t_pipex *pipex);
-void	ft_fork_child(t_pipex *pipex);
-void	ft_exeptional_case_1(t_pipex *pipex, char **argv);
-int     ft_detect_exeptional_case_0(char **argv, t_pipex *pipex);
-int     ft_detect_exeptional_case_3(int i, int j);
-int     ft_detect_exeptional_case_2(char **argv);
-int     ft_detect_exeptional_case_1(char **argv);
-char	*ft_strdup(const char *src);
-size_t	ft_strlen(const char *str);
-char	*ft_strchr(const char *str, int c);
-char	*ft_strcat_cmd(char *path, char *cmd, char slash);
-void	ft_putstr(char *str);
-void	ft_pipex(t_pipex *pipex);
-void	ft_choose_cmd(char **argv, t_pipex *pipex);
-void	ft_get_fd_in(char **argv, t_pipex *pipex);
-int     main_pipex(int argc, char **argv, char **envp);
-void	ft_malloc_nothing(t_pipex *pipex);
-int	ft_get_path_cmd(char **argv, char **envp, t_pipex *pipex);
-int	ft_get_cmd(char **argv, t_pipex *pipex);
-const char	*ft_search_line_path(char **envp);
+// void	ft_error(t_pipex *pipex, int *pipe_fd);
+// void	ft_free_all(t_pipex *pipex);
+// void	close_fd(t_pipex *pipex);
+// void	ft_free_2dchar(char **tab);
+// void	ft_execve_fail(char *my_cmd);
+// void	ft_exec_cmd_no_env(char **cmd, char **path, t_pipex *pipex);
+// void	ft_exec_cmd_env(char **cmd, char **path, t_pipex *pipex);
+// void	ft_dup_and_close(t_pipex *pipex, int x);
+// void	ft_fork_child_2(t_pipex *pipex);
+// void	ft_fork_child(t_pipex *pipex);
+// void	ft_exeptional_case_1(t_pipex *pipex, char **argv);
+// int     ft_detect_exeptional_case_0(char **argv, t_pipex *pipex);
+// int     ft_detect_exeptional_case_3(int i, int j);
+// int     ft_detect_exeptional_case_2(char **argv);
+// int     ft_detect_exeptional_case_1(char **argv);
+// char	*ft_strdup(const char *src);
+// size_t	ft_strlen(const char *str);
+// char	*ft_strchr(const char *str, int c);
+// char	*ft_strcat_cmd(char *path, char *cmd, char slash);
+// void	ft_putstr(char *str);
+// void	ft_pipex(t_pipex *pipex);
+// void	ft_choose_cmd(char **argv, t_pipex *pipex);
+// void	ft_get_fd_in(char **argv, t_pipex *pipex);
+// int     main_pipex(int argc, char **argv, char **envp);
+// void	ft_malloc_nothing(t_pipex *pipex);
+// int	ft_get_path_cmd(char **argv, char **envp, t_pipex *pipex);
+// int	ft_get_cmd(char **argv, t_pipex *pipex);
+// const char	*ft_search_line_path(char **envp);
 
 //split
 char	**ft_malloc_error(char **strs);
@@ -184,5 +184,6 @@ void	ft_lexer(char *input);
 int	ft_word(char *input, t_lex *lex, int i);
 int	ft_first_lex(t_lex *lex, char *input);
 int	ft_size_str_word(char *input, int i);
+void	ft_test(t_lex *lexer);
 
 #endif
