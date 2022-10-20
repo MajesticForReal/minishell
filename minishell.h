@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:00:55 by klaurier          #+#    #+#             */
-/*   Updated: 2022/10/20 15:55:36 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/10/20 16:47:05 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,22 +50,16 @@ typedef struct s_lex
 }			t_lex;
 
 //structure de pipex
-typedef struct env
+typedef struct s_env
 {
 	char *str;
-	struct env	*next;
+	struct s_env	*next;
 }t_env;
 
-typedef struct utils
+typedef struct s_utils
 {
 	char *home_str;
 }t_utils;
-
-typedef struct var
-{
-	char *name;
-	struct var *next;
-}t_var;
 
 typedef struct s_pipex
 {
@@ -99,16 +93,12 @@ typedef struct s_minishell
 	char	*short_input;
 }				t_minishell;
 
-typedef struct s_lexer
-{
-	char	*word;
-	int		token;
-}			t_lexer;
-
 // utils_minishell
 int	ft_compare(char *str, char *str2);
 void	ft_putstr(char *str);
 size_t	ft_strlen(const char *str);
+void	ft_putstr_fd(char *s, int fd);
+void	ft_putchar_fd(char c, int fd);
 
 //split
 char	**ft_malloc_error(char **strs);

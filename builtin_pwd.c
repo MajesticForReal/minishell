@@ -14,7 +14,8 @@ char *ft_builtin_pwd(int option)
     }
     else if (path_dir != NULL && option == 1)
     {
-		printf("%s\n", path_dir);
+		ft_putstr_fd(path_dir, 1);
+		ft_putstr_fd("\n", 1);
     	free(path_dir);
     	return (NULL);
 	}

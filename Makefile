@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+         #
+#    By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/27 16:02:00 by y klaurier        #+#    #+#              #
-#    Updated: 2022/10/20 15:52:43 by klaurier         ###   ########.fr        #
+#    Updated: 2022/10/20 17:08:04 by anrechai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,6 @@
 SRCS 		=	main.c \
 				builtin_cd.c \
 				builtin_echo.c \
-				builtin_env.c \
 				builtin_export.c \
 				builtin_pwd.c \
 				builtin_unset.c \

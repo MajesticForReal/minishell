@@ -1,15 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_minishell.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/20 16:19:32 by anrechai          #+#    #+#             */
+/*   Updated: 2022/10/20 17:07:29 by anrechai         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 # include "minishell.h"
 
-void	ft_putstr(char *str)
+void	ft_putstr_fd(char *s, int fd)
 {
-	int	i;
+	if (s != NULL)
+		write(fd, s, ft_strlen(s));
+}
 
-	i = 0;
-	while (str[i] != '\0')
-	{
-		write(2, &str[i], 1);
-		i++;
-	}
+void	ft_putchar_fd(char c, int fd)
+{
+	write(fd, &c, sizeof(c));
 }
 
 size_t	ft_strlen(const char *str)
@@ -93,10 +104,11 @@ int	ft_print_2_d_tab(char **strs, int index)
 		{
 			if(strs[index + 1] == NULL)
 			{
-				printf("%s",strs[index]);
+				ft_putstr_fd(strs[index], 1);
 				return(1);
 			}	
-			printf("%s ",strs[index]);
+			ft_putstr_fd(strs[index], 1);
+			ft_putchar_fd(' ', 1);
 			index++;
 		}
 	}
@@ -108,7 +120,8 @@ void	ft_print_list_env(t_env *env)
 {
 	while(env != NULL)
 	{
-		printf("%s\n", env->str);
+		ft_putstr_fd(env->str, 1);
+		ft_putstr_fd("\n", 1);
 		env = env->next;
 	}
 }

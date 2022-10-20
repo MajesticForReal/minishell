@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:09:54 by klaurier          #+#    #+#             */
-/*   Updated: 2022/10/20 16:02:46 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/10/20 17:10:37 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 //permet de faire la commande "echo" sans argument ni option
 int	ft_builtin_echo_only(void)
 {
-	printf("\n");
+	ft_putstr_fd("\n", 1);
 	return (SUCCESS);
 }
 //permet de faire la commande "echo -n", "echo -n salut", "echo -nnn -nnn salut", "echo -nnn -nan salut -n"
@@ -24,17 +24,21 @@ void	ft_not_n(t_lex *lex, int *valide_n)
 	{
 		if(*valide_n == 1)
 		{
-			printf("%s", lex->str);
+			ft_putstr_fd(lex->str, 1);
 			return ;
 		}	
 		else
 		{
-			printf("%s\n", lex->str);
+			ft_putstr_fd(lex->str, 1);
+			ft_putstr_fd("\n", 1);
 			return ;
 		}
 	}
 	else
-		printf("%s ", lex->str);
+	{
+		ft_putstr_fd(lex->str, 1);
+		ft_putchar_fd(' ', 1);
+	}
 }
 
 void	ft_builtin_echo_option(t_lex *lex)
