@@ -6,7 +6,7 @@
 /*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:41:14 by klaurier          #+#    #+#             */
-/*   Updated: 2022/10/18 17:16:57 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/10/20 15:39:15 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,62 +14,18 @@
 
 int main(int argc, char const *argv[], char **envp)
 {
-
-    char	*input = NULL;
-	t_env	*env;
-	t_var	*var;
+	t_lex *lex;
+	t_env *env;
 	
-	var =  malloc(sizeof(t_var));
-	if (var == NULL)
-		return (-1);
 	env = ft_init_fill_env(envp);
-	// ft_print_list_env(env);
-	// t_lexer *lexer;
-
-	// lexer = malloc(sizeof(t_lexer));
-	// ecriture d'un prompt
-
-	// lecture de STDIN en boucle grace a readline et while(1)
-
-	// pour que ca marche pour un pc qui n'a pas la biblioteque de readline
-	// entrer sudo apt-get install libreadline-dev dans le terminal
+	lex = malloc(sizeof(t_lex));
+	char	*input = NULL;
 	while(1)
 	{
-		input = readline("$>");
+		input = readline(" > ");
 		add_history(input);
-		ft_lexer(input);
-		if(ft_compare(input, "exit") == SUCCESS)
-			return (0);
-		else if(ft_compare(input, "pwd") == SUCCESS)
-			ft_builtin_pwd(1);
-		else if(ft_compare(input, "cd") == SUCCESS)
-			ft_builtin_cd_only(input, env);
-		else if(ft_compare(input, "cd dossier") == SUCCESS || ft_compare(input, "cd dossier/") == SUCCESS)
-			ft_builtin_cd_dir(input);
-		else if(ft_compare(input, "cd dossier_2") == SUCCESS || ft_compare(input, "cd dossier_2/") == SUCCESS)
-			ft_builtin_cd_dir(input);
-		else if(ft_compare(input, "cd ..") == SUCCESS)
-			ft_builtin_cd_back(input);
-		else if(ft_compare(input, "cd ~") == SUCCESS)
-			ft_builtin_cd_only(input, env);
-		else if(ft_compare(input, "cd ~/") == SUCCESS)
-			ft_builtin_cd_only(input, env);
-		else if(ft_compare(input, "cd /") == SUCCESS)
-			ft_builtin_cd_rac(input);
-		else if(ft_compare(input, "echo salut") == SUCCESS)
-			ft_builtin_echo(input);
-		else if(ft_compare(input, "echo -nnn -nann salut") == SUCCESS)
-			ft_builtin_echo_option_2(input);
-		else if(ft_compare(input, "echo") == SUCCESS)
-			ft_builtin_echo_only(input);
-		else if(ft_compare(input, "env") == SUCCESS)
-			ft_print_list_env(env);
-		else if(ft_compare(input, "export var=\"salut\"") == SUCCESS)
-			ft_export_var(input, env);
-		else if(ft_compare(input, "unset var=\"salut\"") == SUCCESS)
-			ft_unset_var(input, env);
-		else if(ft_compare(input, "unset TERM_PROGRAM_VERSION=1.72.0") == SUCCESS)
-			ft_unset_var(input, env);
+		ft_lexer(input, lex);
+		ft_all_builtin(lex, env);
 		free(input);
 	}
 	(void)env;
@@ -78,14 +34,19 @@ int main(int argc, char const *argv[], char **envp)
     (void)argv;
 }
 
-void	ft_test(t_lex *lexer)
+void	ft_all_builtin(t_lex *lex, t_env *env)
 {
-	int	i;
-	t_lex *copy_lexer;
-	
-	i = 0;
-	copy_lexer = lexer;
-	if(ft_compare(lexer->str, "echo"))
-		
-		
+	if(ft_compare(lex->str, "pwd") == SUCCESS)
+		ft_builtin_pwd(1);
+	else if(ft_compare(lex->str, "cd") == SUCCESS)
+		ft_builtin_cd_all(lex, env);
+	else if(ft_compare(lex->str, "echo") == SUCCESS)
+		ft_builtin_echo_all(lex, env);
+	else if(ft_compare(lex->str, "env") == SUCCESS)
+		ft_print_list_env(env);
+	else if(ft_compare(lex->str, "unset") == SUCCESS)
+		ft_unset_var(lex, env);
+	else if(ft_compare(lex->str, "export") == SUCCESS)
+		ft_export_var(lex, env);
+
 }

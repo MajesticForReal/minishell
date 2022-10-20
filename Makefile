@@ -5,23 +5,23 @@
 #                                                     +:+ +:+         +:+      #
 #    By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/10/18 16:41:52 by klaurier          #+#    #+#              #
-#    Updated: 2022/10/18 16:46:18 by klaurier         ###   ########.fr        #
+#    Created: 2022/06/27 16:02:00 by y klaurier        #+#    #+#              #
+#    Updated: 2022/10/18 17:33:50 by klaurier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 SRCS 		=	main.c \
-				split.c \
-				utils_minishell.c \
-				builtin_pwd.c \
 				builtin_cd.c \
 				builtin_echo.c \
 				builtin_env.c \
 				builtin_export.c \
+				builtin_pwd.c \
 				builtin_unset.c \
 				init_env.c \
-				lexer.c
+				split.c \
+				lexer.c \
+				utils_minishell.c
 
 OBJS		=	${SRCS:.c=.o}
 
