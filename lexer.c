@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:18:43 by anrechai          #+#    #+#             */
-/*   Updated: 2022/10/18 17:23:41 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/10/19 16:07:27 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,9 @@ int	ft_first_lex(t_lex *lex, char *input)
 	int	size;
 
 	i = 0;
-	while (input[i] == ' ')
+	if (input[i] == '\0')
+		return (0);
+	while (input[i] == ' ' || input[i] == '\t')
 		i++;
 	if (input[i] == '<')
 		lex->token = TOK_IN;
@@ -151,6 +153,8 @@ void	ft_lexer(char *input, t_lex *lex)
 	int		i;
 
 	i = ft_first_lex(lex, input);
+	if (i == 0)
+		return ;
 	while (input[i])
 	{
 		if (input[i] != '|' && input[i] != 34 && input[i] != 36
@@ -159,7 +163,7 @@ void	ft_lexer(char *input, t_lex *lex)
 				{
 					i = add_back(lex, TOK_WORD, input, i, input[i]);
 				}
-		else if (input[i] == ' ')
+		else if (input[i] == ' ' || input[i] == '\t')
 			i++;
 		else if (input[i] == '<')
 			i = add_back(lex, TOK_IN, input, i, input[i]);
@@ -174,10 +178,10 @@ void	ft_lexer(char *input, t_lex *lex)
 		else if (input[i] == '|')
 			i = add_back(lex, TOK_PIPE, input, i, input[i]);
 	}
-	while (lex->next != NULL)
-	{
-		printf("%s\n", lex->str);
-		lex = lex->next;
-	}
-	printf("%s\n", lex->str);
+	// while (lex->next != NULL)
+	// {
+		// printf("%s\n", lex->str);
+		// lex = lex->next;
+	// }
+	// printf("%s\n", lex->str);
 }

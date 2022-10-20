@@ -6,13 +6,14 @@
 #    By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/27 16:02:00 by y klaurier        #+#    #+#              #
-#    Updated: 2022/10/18 17:23:19 by anrechai         ###   ########.fr        #
+#    Updated: 2022/10/18 17:42:00 by anrechai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 SRCS 		=	main.c \
-				lexer.c
+				lexer.c\
+				parser_redir.c
 
 OBJS		=	${SRCS:.c=.o}
 
