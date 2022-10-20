@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 16:19:32 by anrechai          #+#    #+#             */
-/*   Updated: 2022/10/20 17:07:29 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/10/20 17:47:02 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,37 @@ void	ft_compare_just_a_part(char *complet_str, char *str_part, t_utils *utils)
 		i++;
 	}
 }
+
+char *ft_concat2(char *str_1, char *str_2)
+{
+	char *new_str;
+	int	i;
+	int	k;
+
+	i = 0;
+	k = 0;
+	new_str =  malloc(sizeof(char) * ft_strlen(str_1) + ft_strlen(str_2) + 1);
+	if (new_str == NULL)
+		return (NULL);
+	while(str_1[i] != '\0')
+	{
+		new_str[k] = str_1[i];
+		i++;
+		k++;
+	}
+	// new_str[k] = '/';
+	// k++;
+	i = 0;
+	while(str_2[i] != '\0')
+	{
+		new_str[k] = str_2[i];
+		i++;
+		k++;
+	}
+	new_str[k] = '\0';
+	return (new_str);
+}
+
 //perme de printf un tableau 2d comme envp du mainpour voir les valeur et comparer a la liste chainee env
 int	ft_print_2_d_tab(char **strs, int index)
 {

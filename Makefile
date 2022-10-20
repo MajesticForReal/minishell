@@ -6,7 +6,7 @@
 #    By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/27 16:02:00 by y klaurier        #+#    #+#              #
-#    Updated: 2022/10/20 17:08:04 by anrechai         ###   ########.fr        #
+#    Updated: 2022/10/20 17:53:39 by anrechai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ SRCS 		=	main.c \
 				split.c \
 				lexer.c \
 				parser_redir.c \
-				utils_minishell.c
+				utils_minishell.c\
+				organizer.c
 
 OBJS		=	${SRCS:.c=.o}
 

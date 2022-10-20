@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:18:43 by anrechai          #+#    #+#             */
-/*   Updated: 2022/10/18 19:08:01 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/10/20 18:06:45 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	ft_size_str_word(char *input, int i)
 	size = 0;
 	while (input[i] != '|' && input[i] != 34 && input[i] != 36
 		&& input[i] != 39 && input[i] != '<'
-		&& input[i] != '>' && input[i] != ' ' && input[i] != '\0')
+		&& input[i] != '>' && input[i] != ' '  && input[i] != '\t' && input[i] != '\0')
 	{
 		size++;
 		i++;
@@ -111,8 +111,11 @@ int	ft_first_lex(t_lex *lex, char *input)
 	int	size;
 
 	i = 0;
-	while (input[i] == ' ')
+	while (input[i] == ' ' || input[i] == '\t')
+	{
+		lex->token = TOK_SPACE;
 		i++;
+	}
 	if (input[i] == '<')
 		lex->token = TOK_IN;
 	else if (input[i] == '>')
@@ -127,7 +130,7 @@ int	ft_first_lex(t_lex *lex, char *input)
 		lex->token = TOK_PIPE;
 	else if (input[i] != '|' && input[i] != 34 && input[i] != 36
 		&& input[i] != 39 && input[i] != '<'
-		&& input[i] != '>' && input[i] != ' ' && input[i] != '\0')
+		&& input[i] != '>' && input[i] != ' ' && input[i] != '\t' && input[i] != '\0')
 		{
 			i = ft_word(input, lex, i);
 			return (i);
@@ -155,12 +158,12 @@ void	ft_lexer(char *input, t_lex *lex)
 	{
 		if (input[i] != '|' && input[i] != 34 && input[i] != 36
 				&& input[i] != 39 && input[i] != '<'
-				&& input[i] != '>' && input[i] != ' ')
+				&& input[i] != '>' && input[i] != ' ' && input[i] != '\t')
 				{
 					i = add_back(lex, TOK_WORD, input, i, input[i]);
 				}
-		else if (input[i] == ' ')
-			i++;
+		else if (input[i] == ' ' || input[i] == '\t')
+			i = add_back(lex, TOK_SPACE, input, i, input[i]);
 		else if (input[i] == '<')
 			i = add_back(lex, TOK_IN, input, i, input[i]);
 		else if (input[i] == '>')
@@ -174,11 +177,4 @@ void	ft_lexer(char *input, t_lex *lex)
 		else if (input[i] == '|')
 			i = add_back(lex, TOK_PIPE, input, i, input[i]);
 	}
-	// printf("\n\n");
-	// while (lex->next != NULL)
-	// {
-		// printf("%s\n", lex->str);
-		// lex = lex->next;
-	// }
-	// printf("%s\n", lex->str);
 }
