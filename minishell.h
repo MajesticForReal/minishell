@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:00:55 by klaurier          #+#    #+#             */
-/*   Updated: 2022/10/19 19:54:49 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/10/20 15:41:38 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ typedef struct env
 	struct env		*next;
 }					t_env;
 
-typedef struct utils_builtin
+typedef struct utils
 {
 	char			*home_str;
 }					t_builtin;

@@ -6,58 +6,86 @@
 /*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:09:54 by klaurier          #+#    #+#             */
-/*   Updated: 2022/10/17 16:03:45 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/10/19 16:59:54 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 //permet de faire la commande "echo" sans argument ni option
-int	ft_builtin_echo_only(char *input)
+int	ft_builtin_echo_only(void)
 {
 	printf("\n");
-	(void)input;
 	return (SUCCESS);
 }
-// permet de faire la commande "echo salut" par exemple
-int	ft_builtin_echo(char *input)
-{
-	char	**strs;
-
-	strs = ft_split(input, ' ');
-	printf("%s\n",strs[1]);
-	free(strs);
-	return (1);
-
-}
 //permet de faire la commande "echo -n", "echo -n salut", "echo -nnn -nnn salut", "echo -nnn -nan salut -n"
-int	ft_builtin_echo_option_2(char *input)
+void	ft_not_n(t_lex *lex, int *valide_n)
 {
-	char	**strs;
-	int	i;
-	int	j;
-	int	start_to_print;
-
-	start_to_print = 0;
-	i = 1;
-	j = 1;
-	strs = ft_split(input, ' ');
-	while(strs[i] != NULL)
+	if(lex->next == NULL)
 	{
-		while(strs[i][j] != '\0')
+		if(*valide_n == 1)
 		{
-			if(strs[1][0] != '-' && strs[1][1] != 'n')
-				ft_print_2_d_tab(strs, 1);
-			if(strs[i][j] != 'n')
-			{
-				ft_print_2_d_tab(strs, i);
-				return (1);
-			}
-			j++;
+			printf("%s", lex->str);
+			return ;
+		}	
+		else
+		{
+			printf("%s\n", lex->str);
+			return ;
 		}
-		j = 1;
+	}
+	else
+		printf("%s ", lex->str);
+}
+
+void	ft_builtin_echo_option(t_lex *lex)
+{
+	int	valide_n;
+	int	print_n_now;
+
+	print_n_now = 0;
+	valide_n = 0;
+	lex = lex->next;
+	while(lex != NULL)
+	{
+		if(ft_builtin_echo_detect_n(lex->str) == 1 && print_n_now == 0) 
+			{
+				lex = lex->next;
+				valide_n = 1;
+			}
+		else
+		{
+			ft_not_n(lex, &valide_n);
+			lex = lex->next;
+			print_n_now = 1;
+		}
+	}
+}
+
+int	ft_builtin_echo_detect_n(char *lex_str)
+{
+	int	i;
+
+	i = 0;
+	if(lex_str[0] == '-' && lex_str[1] == 'n')
+		i = 2;
+	else
+		return (0);
+	while(lex_str[i] != '\0')
+	{
+		if(lex_str[i] != 'n')
+			return (0);
 		i++;
 	}
-	(void)start_to_print;
-	free(strs);
 	return (1);
+}
+
+void	ft_builtin_echo_all(t_lex *lex,t_env *env)
+{
+	if(lex->next == NULL)
+		ft_builtin_echo_only();
+	else if(lex->next != NULL)
+		ft_builtin_echo_option(lex);
+		
+	(void)env;
+	(void)lex;
 }

@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 12:50:41 by anrechai          #+#    #+#             */
-/*   Updated: 2022/10/20 15:33:01 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/10/20 15:42:03 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ int	main(int argc, char const *argv[], char **envp)
 	// entrer sudo apt-get install libreadline-dev dans le terminal
 	while (1)
 	{
-		input = readline("$>");
+		input = readline(" > ");
+		add_history(input);
 		ft_lexer(input, lex);
 		ft_parser(lex);
 		free(input);

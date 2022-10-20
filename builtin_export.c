@@ -6,33 +6,34 @@
 /*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 15:45:22 by klaurier          #+#    #+#             */
-/*   Updated: 2022/10/17 17:40:17 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/10/19 18:53:46 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_export_var(char *input, t_env *env)
+int	ft_check_valid_export(char *lex_str)
 {
-	char *short_input;
 	int	i;
-	int	j;
-	
-	i = 7;
-	j = 0;
-	short_input = NULL;
-	short_input =  malloc(sizeof(char) * ft_strlen(input) - 5);
-	if (short_input == NULL)
-		return ;
-	
-	while(input[i] != '\0')
+
+	i = 0;
+	while(lex_str[i] != '\0')
 	{
-		short_input[j] = input[i];
+		if(lex_str[i] == '=')
+			return (SUCCESS);
 		i++;
-		j++;
 	}
-	short_input[j] = '\0';
-	ft_add_back_str(env, short_input);
+	return (FAIL);
+}
+
+void	ft_export_var(t_lex *lex, t_env *env)
+{
+	if(lex->next != NULL)
+		lex = lex->next;
+	if(ft_check_valid_export(lex->str) == SUCCESS)
+		ft_add_back_str(env, lex->str);
+	else
+		return ;
 }
 
 void	ft_add_back_str(t_env *env, char *str)

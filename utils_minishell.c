@@ -38,26 +38,26 @@ int	ft_compare(char *str, char *str2)
 	}
 	return(FAIL);
 }
-void	ft_init_fill_str_home(char *complet_str, t_builtin *builtin)
+void	ft_init_fill_str_home(char *complet_str, t_utils *utils)
 {
 	int	i;
 	int	j;
 
 	i = 5;
 	j = 0;
-	builtin->home_str = malloc(sizeof(char) * ft_strlen(complet_str) - 4);
-	if(builtin->home_str == NULL)
+	utils->home_str = malloc(sizeof(char) * ft_strlen(complet_str) - 4);
+	if(utils->home_str == NULL)
 		return ;
 	while(complet_str[i] != '\0')
 	{
-		builtin->home_str[j] = complet_str[i];
+		utils->home_str[j] = complet_str[i];
 		i++;
 		j++;
 	}
-	builtin->home_str[j] = '\0';
+	utils->home_str[j] = '\0';
 }
 
-void	ft_compare_just_a_part(char *complet_str, char *str_part, t_builtin *builtin)
+void	ft_compare_just_a_part(char *complet_str, char *str_part, t_utils *utils)
 {
 	int	i;
 	int	j;
@@ -72,7 +72,7 @@ void	ft_compare_just_a_part(char *complet_str, char *str_part, t_builtin *builti
 		{
 			if(j == k - 1)
 			{
-				ft_init_fill_str_home(complet_str, builtin);
+				ft_init_fill_str_home(complet_str, utils);
 				return ;
 			}
 			j++;
@@ -112,3 +112,4 @@ void	ft_print_list_env(t_env *env)
 		env = env->next;
 	}
 }
+
