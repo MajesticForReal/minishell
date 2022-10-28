@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+         #
+#    By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/27 16:02:00 by y klaurier        #+#    #+#              #
-#    Updated: 2022/10/20 17:53:39 by anrechai         ###   ########.fr        #
+#    Updated: 2022/10/20 19:05:17 by klaurier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRCS 		=	main.c \
 				split.c \
 				lexer.c \
 				parser_redir.c \
+				parser_k.c \
 				utils_minishell.c\
 				organizer.c
 

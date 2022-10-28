@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:00:55 by klaurier          #+#    #+#             */
-/*   Updated: 2022/10/20 17:53:18 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/10/27 15:58:15 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ void				ft_lexer(char *input, t_lex *lex);
 int					ft_word(char *input, t_lex *lex, int i);
 int					ft_first_lex(t_lex *lex, char *input);
 int					ft_size_str_word(char *input, int i);
+void				ft_parser_k(t_lex *lex, t_env *env);
 void				ft_parser(t_lex *lex);
 void				ft_tok_fromfrom(t_lex *lex);
 void				ft_tok_toto(t_lex *lex);
@@ -160,9 +161,29 @@ int					ft_quotes(t_lex *lex);
 int					ft_out(t_lex *lex);
 int					ft_in(t_lex *lex);
 int					ft_pipe(t_lex *lex, t_lex *start);
+int					ft_dollars_only(t_lex *lex);
+void				ft_dollar(t_lex *lex, t_env *env);
+void				ft_print_dollars_only(t_lex *lex);
+int					ft_is_num(char *lex_str);
+int					ft_dollar_is_var(char *lex_str, t_env *env);
+int					ft_shearch_var(char *lex_str, t_env *env);
+void				ft_print_lex_k(t_lex *lex);
+void				ft_print_var(t_lex *lex, t_env *env);
+void				ft_print_after_var(t_lex *lex, t_env *env);
+int					ft_compare_just_a_part_2(char *var_more);
+char 				*ft_cut_var_more(char *var_more);
+int					ft_char_after_var(t_lex *lex);
+void				ft_change_list_to_var(t_lex *lex);
+int					ft_after_doll_is_num(t_lex *lex);
+void				ft_cut_after_1_num(t_lex *lex);
+void				ft_change_list_to_var_2(t_lex *lex);
+void				ft_dollar_first(t_lex *lex, t_env *env);
+void				ft_change_doll_egal(t_lex *lex);
+int					ft_shearch_special_char(t_lex *lex);
+
 
 // Organizer
 void				ft_organizer(t_lex *lex);
-void	ft_print_list(t_lex *lex);
+void				ft_print_list(t_lex *lex);
 
 #endif

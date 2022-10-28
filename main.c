@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:41:14 by klaurier          #+#    #+#             */
-/*   Updated: 2022/10/20 18:29:22 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/10/27 16:38:12 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,11 @@ int main(int argc, char const *argv[], char **envp)
 		input = readline(">");
 		add_history(input);
 		ft_lexer(input, lex);
+		ft_parser_k(lex, env);
+		// ft_organizer(lex);
 		// ft_parser(lex);
-		ft_organizer(lex);
-		ft_all_builtin(lex, env);
+		ft_print_lex_k(lex);
+		// ft_all_builtin(lex, env);
 		free(input);
 	}
 	(void)env;
@@ -50,5 +52,4 @@ void	ft_all_builtin(t_lex *lex, t_env *env)
 		ft_unset_var(lex, env);
 	else if(ft_compare(lex->str, "export") == SUCCESS)
 		ft_export_var(lex, env);
-
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:18:43 by anrechai          #+#    #+#             */
-/*   Updated: 2022/10/20 18:06:45 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/10/21 17:03:17 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,4 +177,6 @@ void	ft_lexer(char *input, t_lex *lex)
 		else if (input[i] == '|')
 			i = add_back(lex, TOK_PIPE, input, i, input[i]);
 	}
+	i = 0;
+	ft_print_lex_k(lex);
 }
