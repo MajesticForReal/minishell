@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 17:31:10 by anrechai          #+#    #+#             */
-/*   Updated: 2022/10/28 18:49:21 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/10/28 20:36:13 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ void	ft_clear_space(t_lex **lex)
 				if ((*lex)->next != NULL)
 					(*lex)->next = (*lex)->next->next;
 				else
-					(*lex)->next == NULL;
+					(*lex)->next = NULL;
 			}
 			while ((*lex) != first && (*lex)->next != NULL && (*lex)->next->token == TOK_WORD)
 			{
@@ -179,7 +179,7 @@ void	ft_clear_space(t_lex **lex)
 	(*lex) = first;
 }
 
-int	ft_parser_kevin(t_lex *lex)
+int	ft_check_quotes(t_lex *lex)
 {
 	int	i;
 
@@ -208,36 +208,5 @@ void	ft_organizer(t_lex **lex)
 {
 	ft_concat_quotes(lex);
 	ft_clear_quotes(lex);
-	// ft_print_list((*lex));
-	// ft_print_lex_k((*lex));
 	ft_clear_space(lex);
-}
-
-void    ft_print_lex_k(t_lex *lex)
-{
-    int    i;
-
-    i = 0;
-    printf("\n----lexer----\n");
-    printf("--begin--\n");
-    if(lex == NULL)
-    {
-        printf("lex == NULL\n");
-        printf("----end----\n\n");
-        return ;
-    }
-    else
-        printf("lex != NULL\n");
-    while (lex->next   != NULL)
-    {
-        printf("%d = tokken: %d / STR: %s\n",i , lex->token, lex->str);
-        if(lex->next != NULL)
-            lex = lex->next;
-        i++;
-    }
-    if(lex != NULL)
-    {
-        printf("%d = tokken: %d / STR: %s\n",i , lex->token, lex->str);
-        printf("----end----\n\n");
-    }
 }

@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:41:14 by klaurier          #+#    #+#             */
-/*   Updated: 2022/10/28 18:34:31 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/10/28 20:35:50 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,14 @@ int	main(int argc, char const *argv[], char **envp)
 		input = readline(">");
 		add_history(input);
 		ft_lexer(input, lex);
-		if (ft_parser_kevin(lex) == 0) // $ + quotes
+		if (ft_parser_k(lex, env) == 0) // $ + quotes
 			ft_organizer(&lex);        //virer espace et quotes
 		ft_parser(lex);                //parser redirection et pipe
-		ft_print_list(lex);
-		// FT ORGANIZER2 VIRER LES PIPE
+		// ft_print_list(lex);
+		// REDIRECTION ET OPEN
+		// FT ORGANIZER2 VIRER LES PIPE && NEW LIST POUR EXECVE
 		ft_all_builtin(lex, env);
+		// EXECVE
 		free(input);
 	}
 	(void)env;

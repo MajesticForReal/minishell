@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:18:43 by anrechai          #+#    #+#             */
-/*   Updated: 2022/10/28 17:49:00 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/10/28 19:56:48 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,4 +183,6 @@ void	ft_lexer(char *input, t_lex *lex)
 		else if (input[i] == '|')
 			i = add_back(lex, TOK_PIPE, input, i, input[i]);
 	}
+	i = 0;
+	// ft_print_lex_k(lex);
 }

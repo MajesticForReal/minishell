@@ -6,7 +6,7 @@
 #    By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/27 16:02:00 by y klaurier        #+#    #+#              #
-#    Updated: 2022/10/27 20:28:32 by anrechai         ###   ########.fr        #
+#    Updated: 2022/10/28 19:44:16 by anrechai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRCS 		=	main.c \
 				split.c \
 				lexer.c \
 				parser_redir.c \
+				parser_k.c \
 				utils_minishell.c\
 				organizer.c
 
@@ -28,7 +29,7 @@ OBJS		=	${SRCS:.c=.o}
 
 NAME		=	minishell
 
-# FLAG		=	-Wall -Wextra -Werror
+FLAG		=	-Wall -Wextra -Werror
 
 HEADER		=	minishell.h
 

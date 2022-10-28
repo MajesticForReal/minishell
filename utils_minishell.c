@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 16:19:32 by anrechai          #+#    #+#             */
-/*   Updated: 2022/10/26 18:12:07 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/10/28 19:44:41 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,3 +157,31 @@ void	ft_print_list_env(t_env *env)
 	}
 }
 
+void	ft_print_lex_k(t_lex *lex)
+{
+	int	i;
+	
+	i = 0;
+	printf("\n----lexer----\n");
+	printf("--begin--\n");
+	if(lex == NULL)
+	{
+		printf("lex == NULL\n");
+		printf("----end----\n\n");	
+		return ;
+	}
+	else
+		printf("lex != NULL\n");
+	while (lex->next   != NULL)
+	{
+		printf("%d = tokken: %d / STR: %s\n",i , lex->token, lex->str);
+		if(lex->next != NULL)
+			lex = lex->next;
+		i++;
+	}
+	if(lex != NULL)
+	{
+		printf("%d = tokken: %d / STR: %s\n",i , lex->token, lex->str);
+		printf("----end----\n\n");	
+	}
+}

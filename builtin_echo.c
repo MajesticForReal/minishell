@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:09:54 by klaurier          #+#    #+#             */
-/*   Updated: 2022/10/20 17:10:37 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/10/27 17:07:15 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ int	ft_builtin_echo_detect_n(char *lex_str)
 
 void	ft_builtin_echo_all(t_lex *lex,t_env *env)
 {
+	// if(lex->next->token != TOK_SPACE)
+		// return ;
 	if(lex->next == NULL)
 		ft_builtin_echo_only();
 	else if(lex->next != NULL)
