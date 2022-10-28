@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:18:43 by anrechai          #+#    #+#             */
-/*   Updated: 2022/10/20 18:06:45 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/10/28 17:49:00 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_lex	*ft_initialize_struct(void)
 	if (!curr)
 		return (NULL);
 	curr->next = NULL;
-	curr->token = 0;
+	curr->token = -1;
 	curr->str = NULL;
 	return (curr);
 }
@@ -30,6 +30,12 @@ int	ft_size_str(char *input, int i, char c)
 	int	size;
 
 	size = 0;
+	if (input[i] == 34 || input[i] == 39)
+	{
+		size++;
+		i++;
+		return (size);
+	}
 	while (input[i] != '\0' && input[i] == c)
 	{
 		size++;

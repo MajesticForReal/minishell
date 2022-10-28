@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:32:17 by anrechai          #+#    #+#             */
-/*   Updated: 2022/10/20 18:28:40 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/10/26 18:11:55 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,9 @@
 void	ft_parser(t_lex *lex)
 {
 	t_lex	*start;
-	int		i;
 
 	start = malloc(sizeof(t_lex));
 	start = lex;
-	i = 0;
 
 	while (lex != NULL)
 	{
@@ -36,17 +34,6 @@ void	ft_parser(t_lex *lex)
 		else if (lex->token == TOK_OUT)
 		{
 			if (ft_out(lex) == -1)
-				return ;
-		}
-		else if (lex->token == TOK_DQ || lex->token == TOK_SQ)
-		{
-			if (i == 0)
-			{
-				i = ft_quotes(lex);
-				if (i != 1)
-					return ;
-			}
-			else
 				return ;
 		}
 		lex = lex->next;

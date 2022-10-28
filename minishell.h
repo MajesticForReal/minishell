@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:00:55 by klaurier          #+#    #+#             */
-/*   Updated: 2022/10/20 17:53:18 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/10/28 18:43:21 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_lex
 	char			*str;
 	int				token;
 	struct s_lex	*next;
+	
 }					t_lex;
 
 //structure de pipex
@@ -160,9 +161,16 @@ int					ft_quotes(t_lex *lex);
 int					ft_out(t_lex *lex);
 int					ft_in(t_lex *lex);
 int					ft_pipe(t_lex *lex, t_lex *start);
+int	ft_parser_kevin(t_lex *lex);
 
 // Organizer
-void				ft_organizer(t_lex *lex);
+void				ft_organizer(t_lex **lex);
 void	ft_print_list(t_lex *lex);
+void	ft_clear_space(t_lex **lex);
+void	ft_clear_quotes(t_lex **lex);
+void	ft_concat_quotes(t_lex **lex);
+
+
+void    ft_print_lex_k(t_lex *lex);
 
 #endif
