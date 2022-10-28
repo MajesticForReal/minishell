@@ -6,7 +6,7 @@
 /*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:41:14 by klaurier          #+#    #+#             */
-/*   Updated: 2022/10/27 16:38:12 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/10/28 16:57:43 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int main(int argc, char const *argv[], char **envp)
 		ft_parser_k(lex, env);
 		// ft_organizer(lex);
 		// ft_parser(lex);
+		ft_redirection(lex);
 		ft_print_lex_k(lex);
 		// ft_all_builtin(lex, env);
 		free(input);

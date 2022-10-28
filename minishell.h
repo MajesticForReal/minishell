@@ -6,7 +6,7 @@
 /*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:00:55 by klaurier          #+#    #+#             */
-/*   Updated: 2022/10/27 15:58:15 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/10/28 16:57:52 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,6 +181,8 @@ void				ft_dollar_first(t_lex *lex, t_env *env);
 void				ft_change_doll_egal(t_lex *lex);
 int					ft_shearch_special_char(t_lex *lex);
 
+// redirection
+void	ft_redirection(t_lex *lex);
 
 // Organizer
 void				ft_organizer(t_lex *lex);
