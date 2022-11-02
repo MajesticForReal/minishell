@@ -31,13 +31,13 @@ int	ft_builtin_cd_back(void)
 	return (SUCCESS);
 }
 //permet de faire la commande cd san rien derrier "cd"
-int	ft_builtin_cd_only(t_env *env)
+int	ft_builtin_cd_only(t_env *env, t_utils *utils)
 {
-	t_utils *utils;
+	// t_utils *utils;
 
-	utils = malloc(sizeof(t_utils));
-	if (utils == NULL)
-		return (-1);
+	// utils = malloc(sizeof(t_utils));
+	// if (utils == NULL)
+	// 	return (-1);
 	while(env != NULL)
 	{
 		ft_compare_just_a_part(env->str, "HOME=", utils);
@@ -53,12 +53,12 @@ int	ft_builtin_cd_only(t_env *env)
 }
 
 //permet de faire la commande "cd + dossier" acceder a un dossier
-void	ft_builtin_cd_all(t_lex *lex, t_env *env)
+void	ft_builtin_cd_all(t_lex *lex, t_env *env, t_utils *utils)
 {
 	if(lex->next == NULL
 		|| ft_compare(lex->next->str, "~") == SUCCESS
 		|| ft_compare(lex->next->str, "~/") == SUCCESS)
-		ft_builtin_cd_only(env);
+		ft_builtin_cd_only(env, utils);
 	else if(ft_compare(lex->next->str, "..") == SUCCESS)
 		ft_builtin_cd_back();
 	else if(ft_compare(lex->next->str, "/") == SUCCESS)

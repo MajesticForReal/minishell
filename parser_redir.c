@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:32:17 by anrechai          #+#    #+#             */
-/*   Updated: 2022/10/28 19:44:36 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/10/31 18:40:06 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	ft_parser(t_lex *lex)
 {
 	t_lex	*start;
 
-	start = malloc(sizeof(t_lex));
 	start = lex;
 
 	while (lex != NULL)

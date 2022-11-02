@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 19:02:36 by klaurier          #+#    #+#             */
-/*   Updated: 2022/10/28 20:36:57 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/10/31 21:05:19 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,16 @@ int		ft_parser_k(t_lex *lex, t_env *env)
 		ft_parser_doll(lex, env);
 	else 
 		return (-1);
-	printf("6\n");
 	return (0);
 }
 
 void	ft_parser_doll(t_lex *lex, t_env *env)
 {
-	t_lex	*start;
+	// t_lex	*start;
 	int		i;
 
-	start = malloc(sizeof(t_lex));
-	start = lex;
+	// start = malloc(sizeof(t_lex));
+	// start = lex;
 	i = 0;
 	while (lex != NULL)
 	{
@@ -41,7 +40,7 @@ void	ft_parser_doll(t_lex *lex, t_env *env)
 		i++;
 	}
 	(void)i;
-	(void)start;
+	// (void)start;
 	(void)env;
 }
 
@@ -177,6 +176,7 @@ void	ft_change_list_to_var(t_lex *lex)
 	int	i;
 	int	j;
 	char *tmp_var;
+	t_lex *tmp;
 
 	i = 0;
 	j = ft_last_alpha_num(lex);
@@ -202,16 +202,18 @@ void	ft_change_list_to_var(t_lex *lex)
 	lex->str[i] = '\0';
 	if(lex->next->next != NULL)
 	{
-		free(lex->next->str);
-		free(lex->next);
+		tmp = lex->next;
 		lex->next = lex->next->next;
+		free(tmp->str);
+		free(tmp);
 		return ;
 	}
 	else
 	{
-		free(lex->next->str);
-		free(lex->next);
+		tmp = lex->next;
 		lex->next = NULL;
+		free(tmp->str);
+		free(tmp);
 		return ;
 	}
 }
@@ -222,18 +224,19 @@ void	ft_cut_after_1_num(t_lex *lex)
 	int	j;
 
 	i = 1;
-	j = 0;
-	while(lex->next->str[i] != '\0')
-	{
-		i++;
-		j++;
-	}
-	i = 1;
-	j = 0;
+	j = ft_strlen(lex->next->str);
+	// while(lex->next->str[i] != '\0')
+	// {
+		// i++;
+		// j++;
+	// }
+	// i = 1;
+	// j = 0;
 	free(lex->str);
-	lex->str = malloc(sizeof(char) * j + 1);
+	lex->str = malloc(sizeof(char) * j);
 	if (lex->str == NULL)
 		return ;
+	j = 0;
 	while(lex->next->str[i] != '\0')
 	{
 		lex->str[j] = lex->next->str[i];
@@ -271,6 +274,8 @@ int	ft_after_doll_is_num(t_lex *lex)
 
 void	ft_supp_2_list(t_lex *lex)
 {
+	t_lex *tmp;
+	
 	free(lex->str);
 	lex->str = malloc(sizeof(char) * 2);
 	if(lex->str == NULL)
@@ -280,27 +285,30 @@ void	ft_supp_2_list(t_lex *lex)
 	lex->token = TOK_SPACE;
 	if(lex->next->next != NULL)
 	{
-		free(lex->next->str);
-		free(lex->next);
+		tmp = lex->next;
 		lex->next = lex->next->next;
+		free(tmp->str);
+		free(tmp);
 		return ;
 	}
 	else
 	{
-		free(lex->next->str);
-		free(lex->next);
+		tmp = lex->next;
 		lex->next = NULL;
+		free(tmp->str);
+		free(tmp);
 		return ;
 	}
 }
-	
+//$=qwe $=qwe $qwe+qwe $qwe+qwe
 
 void	ft_cut_after_special_char(t_lex *lex)
 {
 	int	i;
 	int	j;
 	int	k;
-
+	t_lex *tmp;
+	
 	i = 0;
 	j = 0;
 	k = 0;
@@ -320,10 +328,8 @@ void	ft_cut_after_special_char(t_lex *lex)
 	}
 	k = i;
 	i--;
-	printf("1\n");
 	while(lex->next->str[++i] != '\0')
 		j++;
-	printf("2\n");
 	lex->str =  malloc(sizeof(char) * j + 1);
 	if (lex->str == NULL)
 		return ;
@@ -334,28 +340,31 @@ void	ft_cut_after_special_char(t_lex *lex)
 		i++;
 		k++;
 	}
-	printf("3\n");
 	lex->str[i] = '\0';
 	if(lex->next->next != NULL)
 	{
-		free(lex->next->str);
-		free(lex->next);
+		tmp = lex->next;
 		lex->next = lex->next->next;
+		free(tmp->str);
+		free(tmp);
 	}
 	else
 	{
-		free(lex->next->str);
-		free(lex->next);
+		tmp = lex->next;
 		lex->next = NULL;
+		free(tmp->str);
+		free(tmp);
 	}
-	printf("4\n");
 }
 
 void	ft_change_doll_egal(t_lex *lex)
 {
 	int	i;
-
+	int	j;
+	t_lex *tmp;
+	
 	i = 0;
+	j = 1;
 	free(lex->str);
 	lex->str = malloc(sizeof(char) * ft_strlen(lex->next->str) + 2);
 	if(lex->str == NULL)
@@ -365,22 +374,25 @@ void	ft_change_doll_egal(t_lex *lex)
 	{
 		while(lex->next->str[i] != '\0')
 		{
-			lex->str[i + 1] = lex->next->str[i];
+			lex->str[j] = lex->next->str[i];
 			i++;
+			j++;
 		}
-		lex->str[i + 1] = '\0';
+		lex->str[j] = '\0';
 	}
 	if(lex->next->next != NULL)
 	{
-		free(lex->next->str);
-		free(lex->next);
+		tmp = lex->next;
 		lex->next = lex->next->next;
+		free(tmp->str);
+		free(tmp);
 	}
 	else
 	{
-		free(lex->next->str);
-		free(lex->next);
+		tmp = lex->next;
 		lex->next = NULL;
+		free(tmp->str);
+		free(tmp);
 	}
 }
 int	ft_shearch_special_char(t_lex *lex)
