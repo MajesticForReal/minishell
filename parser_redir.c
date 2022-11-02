@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:32:17 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/02 19:29:11 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/02 19:39:03 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,6 @@ int	ft_out(t_lex *lex)
 						&& lex->next->token != TOK_SQ
 						&& lex->next->token != TOK_DOLL && lex->next->token != TOK_SPACE))
 			{
-				printf("ICIIIIIIIII\n");
 				ft_putstr_fd("syntax error near unexpected token `", 2);
 				ft_putchar_fd(lex->next->str[0], 2);
 				ft_putchar_fd(lex->next->str[1], 2);
