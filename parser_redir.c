@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:32:17 by anrechai          #+#    #+#             */
-/*   Updated: 2022/10/31 18:40:06 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/02 19:29:11 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	ft_parser(t_lex *lex)
 	t_lex	*start;
 
 	start = lex;
-
 	while (lex != NULL)
 	{
 		if (lex->token == TOK_PIPE)
@@ -87,13 +86,55 @@ int	ft_out(t_lex *lex)
 	ft_tok_fromfrom(lex);
 	while (lex != NULL)
 	{
-		if (lex->str != NULL && (lex->token == TOK_OUT
+		if (lex->next != NULL && (lex->token == TOK_OUT
+				|| lex->token == TOK_FROMFROM) && lex->next->token == TOK_SPACE
+			&& (lex->next->next == NULL || lex->next->next->token != TOK_WORD))
+		{
+			if (lex->str != NULL && (lex->token == TOK_OUT
+					|| lex->token == TOK_FROMFROM))
+			{
+				if ((lex->token == TOK_OUT || lex->token == TOK_FROMFROM)
+					&& lex->next->next == NULL && ft_strlen(lex->str) < 3)
+				{
+					ft_putstr_fd("syntax error near unexpected token `newline'\n",
+									2);
+					return (-1);
+				}
+				else if ((lex->token == TOK_OUT || lex->token == TOK_FROMFROM)
+						&& ft_strlen(lex->str) == 3)
+				{
+					ft_putstr_fd("syntax error near unexpected token `>'\n", 2);
+					return (-1);
+				}
+				else if ((lex->token == TOK_OUT || lex->token == TOK_FROMFROM)
+						&& ft_strlen(lex->str) > 3)
+				{
+					ft_putstr_fd("syntax error near unexpected token `>>'\n",
+									2);
+					return (-1);
+				}
+				else if ((lex->token == TOK_OUT || lex->token == TOK_FROMFROM)
+						&& (lex->next->next->token != TOK_WORD
+							&& lex->next->next->token != TOK_DQ
+							&& lex->next->next->token != TOK_SQ
+							&& lex->next->next->token != TOK_DOLL))
+				{
+					ft_putstr_fd("syntax error near unexpected token `", 2);
+					ft_putchar_fd(lex->next->next->str[0], 2);
+					ft_putchar_fd(lex->next->next->str[1], 2);
+					ft_putstr_fd("'\n", 2);
+					return (-1);
+				}
+			}
+		}
+		else if (lex->str != NULL && (lex->token == TOK_OUT
 				|| lex->token == TOK_FROMFROM))
 		{
 			if ((lex->token == TOK_OUT || lex->token == TOK_FROMFROM)
 				&& lex->next == NULL && ft_strlen(lex->str) < 3)
 			{
-				ft_putstr_fd("syntax error near unexpected token `newline'\n", 2);
+				ft_putstr_fd("syntax error near unexpected token `newline'\n",
+								2);
 				return (-1);
 			}
 			else if ((lex->token == TOK_OUT || lex->token == TOK_FROMFROM)
@@ -105,15 +146,17 @@ int	ft_out(t_lex *lex)
 			else if ((lex->token == TOK_OUT || lex->token == TOK_FROMFROM)
 					&& ft_strlen(lex->str) > 3)
 			{
-				ft_putstr_fd("syntax error near unexpected token `>>'\n", 2);
+				ft_putstr_fd("syntax error near unexpected token `>>'\n",
+								2);
 				return (-1);
 			}
 			else if ((lex->token == TOK_OUT || lex->token == TOK_FROMFROM)
 					&& (lex->next->token != TOK_WORD
 						&& lex->next->token != TOK_DQ
 						&& lex->next->token != TOK_SQ
-						&& lex->next->token != TOK_DOLL))
+						&& lex->next->token != TOK_DOLL && lex->next->token != TOK_SPACE))
 			{
+				printf("ICIIIIIIIII\n");
 				ft_putstr_fd("syntax error near unexpected token `", 2);
 				ft_putchar_fd(lex->next->str[0], 2);
 				ft_putchar_fd(lex->next->str[1], 2);
@@ -131,13 +174,63 @@ int	ft_in(t_lex *lex)
 	ft_tok_toto(lex);
 	while (lex != NULL)
 	{
-		if (lex->str != NULL && (lex->token == TOK_IN
+			if (lex->next != NULL && (lex->token == TOK_IN
+				|| lex->token == TOK_TOTO) && lex->next->token == TOK_SPACE
+			&& (lex->next->next == NULL || lex->next->next->token != TOK_WORD))
+		{
+			if (lex->str != NULL && (lex->token == TOK_IN
+					|| lex->token == TOK_TOTO))
+			{
+				if ((lex->token == TOK_IN || lex->token == TOK_TOTO)
+					&& lex->next->next == NULL && ft_strlen(lex->str) < 4)
+				{
+					ft_putstr_fd("syntax error near unexpected token `newline'\n",
+									2);
+					return (-1);
+				}
+				else if ((lex->token == TOK_IN || lex->token == TOK_TOTO)
+						&& ft_strlen(lex->str) == 4)
+				{
+					ft_putstr_fd("syntax error near unexpected token `<'\n",
+									2);
+					return (-1);
+				}
+				else if ((lex->token == TOK_IN || lex->token == TOK_TOTO)
+						&& ft_strlen(lex->str) == 5)
+				{
+					ft_putstr_fd("syntax error near unexpected token `<<'\n",
+									2);
+					return (-1);
+				}
+				else if ((lex->token == TOK_IN || lex->token == TOK_TOTO)
+						&& ft_strlen(lex->str) > 5)
+				{
+					ft_putstr_fd("syntax error near unexpected token `<<<'\n",
+									2);
+					return (-1);
+				}
+				else if ((lex->token == TOK_IN || lex->token == TOK_TOTO)
+						&& (lex->next->next->token != TOK_WORD
+							&& lex->next->next->token != TOK_DQ
+							&& lex->next->next->token != TOK_SQ
+							&& lex->next->next->token != TOK_DOLL))
+				{
+					ft_putstr_fd("syntax error near unexpected token `", 2);
+					ft_putchar_fd(lex->next->next->str[0], 2);
+					ft_putchar_fd(lex->next->next->str[1], 2);
+					ft_putstr_fd("'\n", 2);
+					return (-1);
+				}
+			}
+		}
+		else if (lex->str != NULL && (lex->token == TOK_IN
 				|| lex->token == TOK_TOTO))
 		{
 			if ((lex->token == TOK_IN || lex->token == TOK_TOTO)
 				&& lex->next == NULL && ft_strlen(lex->str) < 4)
 			{
-				ft_putstr_fd("syntax error near unexpected token `newline'\n", 2);
+				ft_putstr_fd("syntax error near unexpected token `newline'\n",
+								2);
 				return (-1);
 			}
 			else if ((lex->token == TOK_IN || lex->token == TOK_TOTO)
@@ -149,20 +242,22 @@ int	ft_in(t_lex *lex)
 			else if ((lex->token == TOK_IN || lex->token == TOK_TOTO)
 					&& ft_strlen(lex->str) == 5)
 			{
-				ft_putstr_fd("syntax error near unexpected token `<<'\n", 2);
+				ft_putstr_fd("syntax error near unexpected token `<<'\n",
+								2);
 				return (-1);
 			}
 			else if ((lex->token == TOK_IN || lex->token == TOK_TOTO)
 					&& ft_strlen(lex->str) > 5)
 			{
-				ft_putstr_fd("syntax error near unexpected token `<<<'\n", 2);
+				ft_putstr_fd("syntax error near unexpected token `<<<'\n",
+								2);
 				return (-1);
 			}
 			else if ((lex->token == TOK_IN || lex->token == TOK_TOTO)
 					&& (lex->next->token != TOK_WORD
 						&& lex->next->token != TOK_DQ
 						&& lex->next->token != TOK_SQ
-						&& lex->next->token != TOK_DOLL))
+						&& lex->next->token != TOK_DOLL && lex->next->token != TOK_SPACE))
 			{
 				ft_putstr_fd("syntax error near unexpected token `", 2);
 				ft_putchar_fd(lex->next->str[0], 2);
@@ -189,7 +284,8 @@ int	ft_pipe(t_lex *lex, t_lex *start)
 			}
 			else if (ft_strlen(lex->str) > 1)
 			{
-				ft_putstr_fd("syntax error near unexpected token `||'\n", 2);
+				ft_putstr_fd("syntax error near unexpected token `||'\n",
+								2);
 				return (-1);
 			}
 		}
@@ -204,7 +300,8 @@ int	ft_pipe(t_lex *lex, t_lex *start)
 			else if (lex->next != NULL && lex->next->token == TOK_PIPE
 					&& ft_strlen(lex->next->str) > 1)
 			{
-				ft_putstr_fd("syntax error near unexpected token `||'\n", 2);
+				ft_putstr_fd("syntax error near unexpected token `||'\n",
+								2);
 				return (-1);
 			}
 			else if (lex->next == NULL)

@@ -6,7 +6,7 @@
 /*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:41:14 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/02 18:24:15 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/02 19:39:32 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	ft_free(t_lex *lex, t_env *env, t_utils *utils)
 
 int	main(int argc, char **argv, char **envp)
 {
+	// t_exec *exe;
 	t_lex	*lex;
 	t_env	*env;
 	char	*input;
@@ -70,13 +71,12 @@ int	main(int argc, char **argv, char **envp)
 			ft_organizer(&lex);        //virer espace et quotes
 		}
 		ft_parser(lex);                //parser redirection et pipe
-		ft_print_lex_k(lex);
 		ft_heredoc(lex, env);
-		ft_print_lex_k(lex);
 		ft_redirection(lex);
 
-		// REDIRECTION ET OPEN
-		// FT ORGANIZER2 VIRER LES PIPE && NEW LIST POUR EXECVE
+		// REDIRECTION HERE DOC ET OPEN
+		// FT ORGANIZER2 VIRER ESPACE + VIRER LES PIPE && NEW LIST POUR EXECVE
+		// ft_print_exe(exe);
 		// EXECVE
 		free(input);
 		// free(history);

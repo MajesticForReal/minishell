@@ -6,7 +6,11 @@
 /*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 17:31:10 by anrechai          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/11/02 17:13:50 by klaurier         ###   ########.fr       */
+=======
+/*   Updated: 2022/11/02 19:35:48 by anrechai         ###   ########.fr       */
+>>>>>>> 77781b2fc7a6252d0628862589334f7e87870e19
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +106,6 @@ void	ft_clear_quotes(t_lex **lex)
 		free(lex_tmp);
 	}
 	first = (*lex);
-	ft_print_lex_k((*lex));
 	while ((*lex) != NULL && (*lex)->next != NULL)
 	{
 		if ((*lex)->next->token == TOK_DQ || (*lex)->next->token == TOK_SQ)
@@ -125,7 +128,6 @@ void	ft_clear_quotes(t_lex **lex)
 	}
 	else
 		(*lex) = first;
-	ft_print_lex_k((*lex));
 }
 
 
@@ -256,7 +258,6 @@ void	ft_organizer_heredoc(char *input, int fd)
 
 void	ft_organizer(t_lex **lex)
 {
-	ft_print_lex_k((*lex));
 	ft_clear_quotes(lex);
 	ft_concat_clear(lex);
 }
