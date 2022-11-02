@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_minishell.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 16:19:32 by anrechai          #+#    #+#             */
-/*   Updated: 2022/10/27 15:30:53 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/10/28 19:44:41 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,6 @@ char *ft_concat2(char *str_1, char *str_2)
 		i++;
 		k++;
 	}
-	// new_str[k] = '/';
-	// k++;
 	i = 0;
 	while(str_2[i] != '\0')
 	{
@@ -121,6 +119,8 @@ char *ft_concat2(char *str_1, char *str_2)
 		k++;
 	}
 	new_str[k] = '\0';
+	free(str_1);
+	free(str_2);
 	return (new_str);
 }
 

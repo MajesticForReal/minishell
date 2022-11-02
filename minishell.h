@@ -6,7 +6,7 @@
 /*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:00:55 by klaurier          #+#    #+#             */
-/*   Updated: 2022/10/28 16:57:52 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/02 14:49:04 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_lex
 	char			*str;
 	int				token;
 	struct s_lex	*next;
+	
 }					t_lex;
 
 //structure de pipex
@@ -146,6 +147,7 @@ char				*ft_init_prompt_place(t_env *env);
 char				*ft_init_prompt_logname(t_env *env);
 
 // parsing lexer
+int		ft_parser_k(t_lex *lex, t_env *env);
 t_lex				*ft_initialize_struct(void);
 int					add_back(t_lex *start, int tok, char *input, int i, char c);
 int					ft_size_str(char *input, int i, char c);
@@ -153,7 +155,7 @@ void				ft_lexer(char *input, t_lex *lex);
 int					ft_word(char *input, t_lex *lex, int i);
 int					ft_first_lex(t_lex *lex, char *input);
 int					ft_size_str_word(char *input, int i);
-void				ft_parser_k(t_lex *lex, t_env *env);
+void				ft_parser_doll(t_lex *lex, t_env *env);
 void				ft_parser(t_lex *lex);
 void				ft_tok_fromfrom(t_lex *lex);
 void				ft_tok_toto(t_lex *lex);
@@ -161,6 +163,16 @@ int					ft_quotes(t_lex *lex);
 int					ft_out(t_lex *lex);
 int					ft_in(t_lex *lex);
 int					ft_pipe(t_lex *lex, t_lex *start);
+int	ft_check_quotes(t_lex *lex);
+
+// Organizer
+void				ft_organizer(t_lex **lex);
+void				ft_print_list(t_lex *lex);
+void				ft_clear_space(t_lex **lex);
+void				ft_clear_quotes(t_lex **lex);
+void				ft_concat_quotes(t_lex **lex);
+
+//parser_dollar
 int					ft_dollars_only(t_lex *lex);
 void				ft_dollar(t_lex *lex, t_env *env);
 void				ft_print_dollars_only(t_lex *lex);
@@ -181,11 +193,14 @@ void				ft_dollar_first(t_lex *lex, t_env *env);
 void				ft_change_doll_egal(t_lex *lex);
 int					ft_shearch_special_char(t_lex *lex);
 
-// redirection
-void	ft_redirection(t_lex *lex);
+//heredoc
+int					ft_heredoc(t_lex *lex, t_env *env);
+void				ft_organizer_heredoc(char *input, int fd);
+void				ft_dollar_heredoc(char *input, int fd);
+void				ft_write_var_env_in_fd(char *input, int fd);
+char				*ft_parser_limiter(t_lex *tmp);
 
-// Organizer
-void				ft_organizer(t_lex *lex);
-void				ft_print_list(t_lex *lex);
+//redirection
+void	ft_redirection(t_lex *lex);
 
 #endif

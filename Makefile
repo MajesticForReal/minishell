@@ -6,9 +6,10 @@
 #    By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/27 16:02:00 by y klaurier        #+#    #+#              #
-#    Updated: 2022/10/28 16:59:00 by klaurier         ###   ########.fr        #
+#    Updated: 2022/11/02 14:49:43 by klaurier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 
 
 SRCS 		=	main.c \
@@ -24,6 +25,7 @@ SRCS 		=	main.c \
 				parser_k.c \
 				utils_minishell.c\
 				redirection.c\
+				parser_limiter.c \
 				organizer.c
 
 OBJS		=	${SRCS:.c=.o}

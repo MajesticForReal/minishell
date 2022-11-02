@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_redir.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:32:17 by anrechai          #+#    #+#             */
-/*   Updated: 2022/10/20 19:11:04 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/10/28 19:44:36 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,9 @@
 void	ft_parser(t_lex *lex)
 {
 	t_lex	*start;
-	int		i;
 
 	start = malloc(sizeof(t_lex));
 	start = lex;
-	i = 0;
 
 	while (lex != NULL)
 	{
@@ -36,17 +34,6 @@ void	ft_parser(t_lex *lex)
 		else if (lex->token == TOK_OUT)
 		{
 			if (ft_out(lex) == -1)
-				return ;
-		}
-		else if (lex->token == TOK_DQ || lex->token == TOK_SQ)
-		{
-			if (i == 0)
-			{
-				i = ft_quotes(lex);
-				if (i != 1)
-					return ;
-			}
-			else
 				return ;
 		}
 		lex = lex->next;

@@ -6,13 +6,22 @@
 /*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 19:02:36 by klaurier          #+#    #+#             */
-/*   Updated: 2022/10/27 17:06:26 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/01 19:15:15 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_parser_k(t_lex *lex, t_env *env)
+int		ft_parser_k(t_lex *lex, t_env *env)
+{
+	if (ft_check_quotes(lex) == 0)
+		ft_parser_doll(lex, env);
+	else 
+		return (-1);
+	return (0);
+}
+
+void	ft_parser_doll(t_lex *lex, t_env *env)
 {
 	t_lex	*start;
 	int		i;
@@ -323,6 +332,7 @@ void	ft_cut_after_special_char(t_lex *lex)
 		k++;
 	}
 	lex->str[i] = '\0';
+	lex->token = 9;
 	if(lex->next->next != NULL)
 	{
 		free(lex->next->str);
@@ -394,10 +404,21 @@ void	ft_dollar(t_lex *lex, t_env *env)
 {
 	printf("\ntest 0\n");
 	if(lex->str[0] == '$' && lex->str[1] == '$')
+	{
+		lex->token = 9;
 		return ;
-	if(lex->str[0] == '$' && lex->next == NULL)
+	}
+	else if(lex->str[0] == '$' && lex->next == NULL)
+	{
+		lex->token = 9;
 		return ;
-	if(ft_compare_just_a_part_2(lex->next->str) == SUCCESS)
+	}
+	else if(lex->token == 8 && lex->next->token == 2)
+	{
+		lex->token = 9;
+		return ;
+	}
+	else if(ft_compare_just_a_part_2(lex->next->str) == SUCCESS)
 	{
 		printf("\ntest 2\n");
 		ft_change_list_to_var(lex);
@@ -420,6 +441,12 @@ void	ft_dollar(t_lex *lex, t_env *env)
 	}
 	else if(ft_shearch_var(lex->next->str, env) == FAIL && ft_shearch_special_char(lex) == FAIL)
 	{
+		printf("\ntest 2,4\n");
+		ft_supp_2_list(lex);
+	}
+
+	else if(ft_shearch_var(lex->next->str, env) == FAIL && ft_shearch_special_char(lex) == FAIL)
+	{
 		printf("\ntest 2,5\n");
 		ft_supp_2_list(lex);
 	}
@@ -430,4 +457,108 @@ void	ft_dollar(t_lex *lex, t_env *env)
 	}
 	(void)env;
 	(void)lex;
+}
+
+void	ft_dollar_heredoc(char *input, int fd)
+{
+	int	i;
+	int	j;
+	int	k;
+
+	i = 0;
+	j = 0;
+	k = 0;
+	while(input[i] != '\0')
+	{
+		if(input[i] == '$')
+		{
+			
+			if(ft_compare_just_a_part_2(input + i + 1) == SUCCESS)
+			{
+				k = 1;
+				while(input[j] != '\0' && input[j] != '$')
+				{
+					write(fd, &input[j], 1);
+					j++;
+				}
+				ft_write_var_env_in_fd(input + i + 1, fd);
+			}
+		}
+		i++;
+	}
+	if (k == 0)
+	{
+		ft_putstr_fd(input, fd);
+		ft_putstr_fd("\n", fd);
+	}
+}
+
+void	ft_write_var_env_in_fd(char *input, int fd)
+{
+	int	i;
+	int	j;
+	int	k;
+	
+	char *str;
+	char *getenv_result;
+	char *concat;
+	
+	i = 0;
+	j = 0;
+	k = 0;
+	while(input[i] != '\0')
+	{
+		if(input[i] <= 'z' && input[i] >= 'a')
+			i++;
+		else if(input[i] <= 'Z' && input[i] >= 'A')
+			i++;
+		else if(input[i] <= '9' && input[i] >= '0')
+			i++;
+		else if(input[i] == '_')
+			i++;
+		else
+			break ;
+	}
+	str = malloc(sizeof(char) * i + 1);
+	if (str == NULL)
+		return ;
+	while(j < i)
+	{
+		str[j] = input[j];
+		j++;
+	}
+	str[j] = '\0';
+	getenv_result = getenv(str);
+	j = 0;
+	k = i;
+	while(input[i] != '\0')
+	{
+		i++;
+		j++;
+	}
+	concat = malloc(sizeof(char) * j + ft_strlen(getenv_result) + 1);
+	if(concat == NULL)
+		return ;
+	i = 0;
+	j = 0;
+	while(getenv_result[i] != '\0')
+	{
+		concat[i] = getenv_result[i];
+		i++;
+	}
+	j = i;
+	while(input[k] != '\0')
+	{
+		concat[i] = input[k];
+		i++;
+		k++;
+	}
+	concat[i] = '\0';
+	ft_putstr_fd(concat, fd);
+	ft_putstr_fd("\n", fd);
+	free(concat);
+	free(str);
+	// free(getenv_result);
+	(void)fd;
+	(void)i;
 }

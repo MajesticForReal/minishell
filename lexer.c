@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:18:43 by anrechai          #+#    #+#             */
-/*   Updated: 2022/10/21 17:03:17 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/10/28 19:56:48 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_lex	*ft_initialize_struct(void)
 	if (!curr)
 		return (NULL);
 	curr->next = NULL;
-	curr->token = 0;
+	curr->token = -1;
 	curr->str = NULL;
 	return (curr);
 }
@@ -30,6 +30,12 @@ int	ft_size_str(char *input, int i, char c)
 	int	size;
 
 	size = 0;
+	if (input[i] == 34 || input[i] == 39)
+	{
+		size++;
+		i++;
+		return (size);
+	}
 	while (input[i] != '\0' && input[i] == c)
 	{
 		size++;
@@ -178,5 +184,5 @@ void	ft_lexer(char *input, t_lex *lex)
 			i = add_back(lex, TOK_PIPE, input, i, input[i]);
 	}
 	i = 0;
-	ft_print_lex_k(lex);
+	// ft_print_lex_k(lex);
 }
