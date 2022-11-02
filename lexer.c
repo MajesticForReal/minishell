@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:18:43 by anrechai          #+#    #+#             */
-/*   Updated: 2022/10/28 19:56:48 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/01 14:34:46 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	add_back(t_lex *start, int tok, char *input, int i, char c)
 	int		size;
 
 	new = ft_initialize_struct();
-	while (start->next != NULL)
+	while (start != NULL && start->next != NULL)
 		start = start->next;
 	start->next = new;
 	new->token = tok;
@@ -184,5 +184,4 @@ void	ft_lexer(char *input, t_lex *lex)
 			i = add_back(lex, TOK_PIPE, input, i, input[i]);
 	}
 	i = 0;
-	// ft_print_lex_k(lex);
 }

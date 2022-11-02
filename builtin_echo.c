@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:09:54 by klaurier          #+#    #+#             */
-/*   Updated: 2022/10/27 17:07:15 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/02 17:03:34 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	ft_not_n(t_lex *lex, int *valide_n)
 	else
 	{
 		ft_putstr_fd(lex->str, 1);
-		ft_putchar_fd(' ', 1);
+		// ft_putchar_fd(' ', 1);
 	}
 }
 

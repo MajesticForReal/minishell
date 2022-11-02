@@ -6,7 +6,7 @@
 /*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:00:55 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/02 14:49:04 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/02 17:13:42 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct s_utils
 
 typedef struct s_pipex
 {
+	char			*home_str;
 	int				fd_in;
 	int				fd_out;
 	char			**path;
@@ -81,18 +82,18 @@ typedef struct s_pipex
 }					t_pipex;
 
 //struct minishell
-typedef struct s_minishell
-{
-	char			**builtin;
-	int				i;
-	int				j;
-	int				size_pwd;
-	int				size_short_input;
-	char			*path_pwd;
-	char			*complet_path;
-	char			*short_pwd;
-	char			*short_input;
-}					t_minishell;
+// typedef struct s_minishell
+// {
+// 	char			**builtin;
+// 	int				i;
+// 	int				j;
+// 	int				size_pwd;
+// 	int				size_short_input;
+// 	char			*path_pwd;
+// 	char			*complet_path;
+// 	char			*short_pwd;
+// 	char			*short_input;
+// }					t_minishell;
 
 // utils_minishell
 int					ft_compare(char *str, char *str2);
@@ -114,7 +115,7 @@ char				*ft_builtin_pwd(int option);
 int					ft_builtin_cd_dir(char *input);
 char				*ft_parsing_cd_dir(char *lex_str);
 char				*ft_concat(char *str_1, char *str_2);
-int					ft_builtin_cd_only(t_env *env);
+int					ft_builtin_cd_only(t_env *env, t_utils *utils);
 int					ft_builtin_cd_back(void);
 int					ft_cd_is_back(char *input);
 int					ft_builtin_echo_only(void);
@@ -135,8 +136,8 @@ void				ft_export_var(t_lex *lex, t_env *env);
 void				ft_add_back_str(t_env *env, char *str);
 void				ft_unset_var(t_lex *lex, t_env *env);
 void				ft_del_struct(t_env *env);
-void				ft_all_builtin(t_lex *lex, t_env *env);
-void				ft_builtin_cd_all(t_lex *lex, t_env *env);
+void				ft_all_builtin(t_lex *lex, t_env *env, t_utils *utils);
+void				ft_builtin_cd_all(t_lex *lex, t_env *env, t_utils *utils);
 void				ft_builtin_echo_all(t_lex *lex, t_env *env);
 int					ft_builtin_echo_detect_n(char *lex_str);
 void				ft_builtin_echo_option(t_lex *lex);
@@ -167,10 +168,9 @@ int	ft_check_quotes(t_lex *lex);
 
 // Organizer
 void				ft_organizer(t_lex **lex);
-void				ft_print_list(t_lex *lex);
-void				ft_clear_space(t_lex **lex);
-void				ft_clear_quotes(t_lex **lex);
-void				ft_concat_quotes(t_lex **lex);
+void	ft_print_list(t_lex *lex);
+void	ft_concat_clear(t_lex **lex);
+void	ft_clear_quotes(t_lex **lex);
 
 //parser_dollar
 int					ft_dollars_only(t_lex *lex);
@@ -202,5 +202,6 @@ char				*ft_parser_limiter(t_lex *tmp);
 
 //redirection
 void	ft_redirection(t_lex *lex);
+void	ft_free(t_lex *lex, t_env *env, t_utils *utils);
 
 #endif

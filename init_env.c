@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 17:58:17 by klaurier          #+#    #+#             */
-/*   Updated: 2022/10/17 18:39:04 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/10/31 19:08:11 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,15 @@ void	ft_fill_env(char **envp, t_env *env)
 	int	i;
 	
 	i = 0;
-	env->str = envp[0];
+	env->str = malloc(sizeof(char) * (ft_strlen(envp[0]) + 1));
+	while (envp[0][i])
+	{
+		env->str[i] = envp[0][i];
+		i++;
+	}
+	env->str[i] = '\0';
 	env->next = NULL;
+	i = 0;
 	while(envp[++i] != NULL)
 		ft_add_back_envp(env, envp, i);
 }

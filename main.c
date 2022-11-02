@@ -6,23 +6,61 @@
 /*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:41:14 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/02 17:09:15 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/02 18:24:15 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int argc, char const *argv[], char **envp)
+void	ft_free(t_lex *lex, t_env *env, t_utils *utils)
+{
+	t_lex *tmp;
+	t_env *tmp2;
+	
+	while (lex != NULL && lex->next != NULL)
+	{
+		tmp = lex;
+		if (lex->next != NULL)
+			lex = lex->next;
+		free(tmp->str);
+		free(tmp);
+	}
+	free(lex->str);
+	free(lex);
+	while (env != NULL && env->next != NULL)
+	{
+		tmp2 = env;
+		if (env->next != NULL)
+		env = env->next;
+		free(tmp2->str);
+		free(tmp2);
+	}
+	free(env->str);
+	free(env);
+	if (utils->home_str != NULL)
+		free(utils->home_str);
+	free(utils);
+	return ;
+}
+
+int	main(int argc, char **argv, char **envp)
 {
 	t_lex	*lex;
 	t_env	*env;
 	char	*input;
+	t_utils *utils;
+	// char	*history;
 
+
+	utils = malloc(sizeof(t_utils));
+	utils->home_str = NULL;
 	env = ft_init_fill_env(envp);
 	lex = malloc(sizeof(t_lex));
 	input = NULL;
+	// history = NULL;
 	while (1)
 	{
+		// input = argv[1];
 		input = readline(">");
 		add_history(input);
 		ft_lexer(input, lex);
@@ -39,9 +77,11 @@ int	main(int argc, char const *argv[], char **envp)
 
 		// REDIRECTION ET OPEN
 		// FT ORGANIZER2 VIRER LES PIPE && NEW LIST POUR EXECVE
-		ft_all_builtin(lex, env);
 		// EXECVE
 		free(input);
+		// free(history);
+		// ft_free(lex, env, utils);
+		// return (0);
 	}
 	(void)env;
 	(void)input;
@@ -49,16 +89,16 @@ int	main(int argc, char const *argv[], char **envp)
 	(void)argv;
 }
 
-void	ft_all_builtin(t_lex *lex, t_env *env)
+void	ft_all_builtin(t_lex *lex, t_env *env, t_utils *utils)
 {
 	if (lex->str != NULL)
 	{
 		if (ft_compare(lex->str, "pwd") == SUCCESS)
 			ft_builtin_pwd(1);
 		else if (ft_compare(lex->str, "cd") == SUCCESS)
-			ft_builtin_cd_all(lex, env);
+			ft_builtin_cd_all(lex, env, utils);
 		else if (ft_compare(lex->str, "echo") == SUCCESS)
-			ft_builtin_echo_all(lex, env);
+			ft_builtin_echo_all(lex->next, env);
 		else if (ft_compare(lex->str, "env") == SUCCESS)
 			ft_print_list_env(env);
 		else if (ft_compare(lex->str, "unset") == SUCCESS)
@@ -76,7 +116,7 @@ int	ft_heredoc(t_lex *lex, t_env *env)
 	char *limiter;
 	char *input;
 	char *file;
-	
+
 	file = ".HEREDOC";
 	tmp = lex;
 	fd = 0;
@@ -86,14 +126,32 @@ int	ft_heredoc(t_lex *lex, t_env *env)
 	{
 		if(lex->next != NULL)
 			tmp = tmp->next;
-		// limiter = ft_parser_limiter(tmp);
-		limiter = tmp->str;
-		printf("limiter = %s\n", limiter);
+		if(tmp->next == NULL)
+		{
+			limiter = NULL;
+			input = NULL;
+		}
+		else
+		{
+			limiter = tmp->next->str;
+			input = limiter + 1;
+		}
 		fd = open(file, O_CREAT | O_RDWR | O_TRUNC, 0744);
-		while(ft_compare(input, limiter) != SUCCESS)
+		printf("limiter = %s\n", limiter);
+		printf("input = %s\n", input);
+		while(1)
 		{
 			input = readline(" >>");
-			ft_organizer_heredoc(input, fd);
+			if(ft_strlen(input) == 0 && limiter != NULL)
+				ft_organizer_heredoc(input, fd);
+			else if(ft_strlen(input) != 0 && limiter == NULL)
+				ft_organizer_heredoc(input, fd); 
+			else if(ft_strlen(input) == 0 && limiter == NULL)
+				break;
+			else if(ft_compare(input, limiter) != SUCCESS)
+				ft_organizer_heredoc(input, fd);
+			else
+				break;
 		}
 	}
 	else
