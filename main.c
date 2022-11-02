@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:41:14 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/02 17:08:59 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/02 19:34:05 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	ft_free(t_lex *lex, t_env *env, t_utils *utils)
 
 int	main(int argc, char **argv, char **envp)
 {
+	// t_exec *exe;
 	t_lex	*lex;
 	t_env	*env;
 	char	*input;
@@ -73,7 +74,8 @@ int	main(int argc, char **argv, char **envp)
 		// ft_print_lex_k(lex);
 		// ft_print_list(lex);
 		// REDIRECTION HERE DOC ET OPEN
-		// FT ORGANIZER2 VIRER LES PIPE && NEW LIST POUR EXECVE
+		// FT ORGANIZER2 VIRER ESPACE + VIRER LES PIPE && NEW LIST POUR EXECVE
+		// ft_print_exe(exe);
 		// EXECVE
 		free(input);
 		// free(history);

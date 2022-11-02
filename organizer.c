@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 17:31:10 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/02 17:10:14 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/02 19:35:48 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ void	ft_clear_quotes(t_lex **lex)
 		free(lex_tmp);
 	}
 	first = (*lex);
-	ft_print_lex_k((*lex));
 	while ((*lex) != NULL && (*lex)->next != NULL)
 	{
 		if ((*lex)->next->token == TOK_DQ || (*lex)->next->token == TOK_SQ)
@@ -125,7 +124,6 @@ void	ft_clear_quotes(t_lex **lex)
 	}
 	else
 		(*lex) = first;
-	ft_print_lex_k((*lex));
 }
 
 
@@ -251,7 +249,6 @@ int	ft_check_quotes(t_lex *lex)
 
 void	ft_organizer(t_lex **lex)
 {
-	ft_print_lex_k((*lex));
 	ft_clear_quotes(lex);
 	ft_concat_clear(lex);
 }
