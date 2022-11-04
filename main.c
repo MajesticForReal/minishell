@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:41:14 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/02 19:39:32 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/03 21:00:52 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,11 @@ int	main(int argc, char **argv, char **envp)
 	t_env	*env;
 	char	*input;
 	t_utils *utils;
+	t_exec	*exec;
 	// char	*history;
 
 
+	exec = malloc(sizeof(t_exec));
 	utils = malloc(sizeof(t_utils));
 	utils->home_str = NULL;
 	env = ft_init_fill_env(envp);
@@ -69,15 +71,19 @@ int	main(int argc, char **argv, char **envp)
 		if (ft_parser_k(lex, env) == 0) // $ + quotes
 		{
 			ft_organizer(&lex);        //virer espace et quotes
+			if (ft_parser(lex) == 0)
+			{                //parser redirection et pipe
+				ft_heredoc(lex, env);
+				ft_redirection(lex); // MODIFIER POUR OUVRIR LES FICHIER AVEC A NOUVELLE LISTE CHAINEE EXEC
+				ft_organizer_exec(lex, exec);
+				ft_print_lex_k(lex);
+			}
 		}
-		ft_parser(lex);                //parser redirection et pipe
-		ft_heredoc(lex, env);
-		ft_redirection(lex);
-
 		// REDIRECTION HERE DOC ET OPEN
 		// FT ORGANIZER2 VIRER ESPACE + VIRER LES PIPE && NEW LIST POUR EXECVE
-		// ft_print_exe(exe);
 		// EXECVE
+		// SIGNAUX
+		// RETOUR ERREUR VARIABLE GLOBALE
 		free(input);
 		// free(history);
 		// ft_free(lex, env, utils);
@@ -162,4 +168,3 @@ int	ft_heredoc(t_lex *lex, t_env *env)
 	(void)env;
 	return(0);
 }
-

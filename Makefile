@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+         #
+#    By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/27 16:02:00 by y klaurier        #+#    #+#              #
-#    Updated: 2022/11/02 19:43:19 by klaurier         ###   ########.fr        #
+#    Updated: 2022/11/03 16:51:54 by anrechai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ SRCS 		=	main.c \
 				utils_minishell.c\
 				redirection.c\
 				parser_limiter.c \
-				organizer.c
+				organizer.c\
+				organizer_exec.c
 
 OBJS		=	${SRCS:.c=.o}
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:00:55 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/02 19:43:30 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/03 17:06:06 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,13 @@ typedef struct s_utils
 {
 	char			*home_str;
 }					t_utils;
+
+typedef struct s_exec
+{
+	char			**cmd;
+	char			*redir;
+	struct s_exec	*next;
+}					t_exec;
 
 typedef struct s_pipex
 {
@@ -157,7 +164,7 @@ int					ft_word(char *input, t_lex *lex, int i);
 int					ft_first_lex(t_lex *lex, char *input);
 int					ft_size_str_word(char *input, int i);
 void				ft_parser_doll(t_lex *lex, t_env *env);
-void				ft_parser(t_lex *lex);
+int				ft_parser(t_lex *lex);
 void				ft_tok_fromfrom(t_lex *lex);
 void				ft_tok_toto(t_lex *lex);
 int					ft_quotes(t_lex *lex);
@@ -203,5 +210,8 @@ char				*ft_parser_limiter(t_lex *tmp);
 //redirection
 void	ft_redirection(t_lex *lex);
 void	ft_free(t_lex *lex, t_env *env, t_utils *utils);
+
+// Organizer exec
+void		ft_organizer_exec(t_lex *lex, t_exec *exec);
 
 #endif
