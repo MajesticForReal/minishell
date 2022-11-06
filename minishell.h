@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:00:55 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/03 17:06:06 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/06 20:13:36 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,12 @@ typedef struct s_utils
 typedef struct s_exec
 {
 	char			**cmd;
-	char			*redir;
+	char			*str_cmd;
+	char			**path;
+	char			**file;
+	int				nb_option;
+	int				cmd_size;
+	int				token_before;
 	struct s_exec	*next;
 }					t_exec;
 
@@ -130,13 +135,15 @@ int					ft_builtin_env(char **envp);
 void				test_signal(int code);
 void				ft_builtin_echo_option(t_lex *lex);
 int					ft_print_2_d_tab(char **strs, int index);
+void				ft_print_2_d_tab_test(char **strs);
+
 t_env				*ft_init_env(void);
 t_env				*ft_init_fill_env(char **envp);
 void				ft_fill_env(char **envp, t_env *env);
 void				ft_add_back_envp(t_env *env, char **envp, int j);
 void				ft_print_list_env(t_env *env);
 void				ft_compare_just_a_part(char *complet_str,
-						char *part_to_find, t_utils *utils);
+char				*part_to_find, t_utils *utils);
 void				ft_init_fill_str_home(char *complet_str, t_utils *builtin);
 int					ft_builtin_cd_rac(void);
 void				ft_export_var(t_lex *lex, t_env *env);
@@ -155,7 +162,7 @@ char				*ft_init_prompt_place(t_env *env);
 char				*ft_init_prompt_logname(t_env *env);
 
 // parsing lexer
-int		ft_parser_k(t_lex *lex, t_env *env);
+int					ft_parser_k(t_lex *lex, t_env *env);
 t_lex				*ft_initialize_struct(void);
 int					add_back(t_lex *start, int tok, char *input, int i, char c);
 int					ft_size_str(char *input, int i, char c);
@@ -164,20 +171,20 @@ int					ft_word(char *input, t_lex *lex, int i);
 int					ft_first_lex(t_lex *lex, char *input);
 int					ft_size_str_word(char *input, int i);
 void				ft_parser_doll(t_lex *lex, t_env *env);
-int				ft_parser(t_lex *lex);
+int					ft_parser(t_lex *lex);
 void				ft_tok_fromfrom(t_lex *lex);
 void				ft_tok_toto(t_lex *lex);
 int					ft_quotes(t_lex *lex);
 int					ft_out(t_lex *lex);
 int					ft_in(t_lex *lex);
 int					ft_pipe(t_lex *lex, t_lex *start);
-int	ft_check_quotes(t_lex *lex);
+int					ft_check_quotes(t_lex *lex);
 
 // Organizer
 void				ft_organizer(t_lex **lex);
-void	ft_print_list(t_lex *lex);
-void	ft_concat_clear(t_lex **lex);
-void	ft_clear_quotes(t_lex **lex);
+void				ft_print_list(t_lex *lex);
+void				ft_concat_clear(t_lex **lex);
+void				ft_clear_quotes(t_lex **lex);
 
 //parser_dollar
 int					ft_dollars_only(t_lex *lex);
@@ -208,10 +215,20 @@ void				ft_write_var_env_in_fd(char *input, int fd);
 char				*ft_parser_limiter(t_lex *tmp);
 
 //redirection
-void	ft_redirection(t_lex *lex);
-void	ft_free(t_lex *lex, t_env *env, t_utils *utils);
+void				ft_redirection(t_lex *lex);
+void				ft_free(t_lex *lex, t_env *env, t_utils *utils);
 
 // Organizer exec
-void		ft_organizer_exec(t_lex *lex, t_exec *exec);
+void				ft_organizer_exec(t_lex *lex, t_exec *exec, t_env *env);
+void				ft_init_fill_t_exec(t_lex *lex, t_exec *exec, t_env *env);
+void				ft_init_fill_cmd(t_lex *lex, t_exec *exec);
+void				ft_init_fill_tab_path(t_lex *lex, t_exec *exec, t_env *env);
+void				ft_count_option(t_lex *lex, t_exec *exec);
+char				*ft_malloc_option(t_lex *lex);
+void				ft_init_fill_redir(t_lex *lex, t_exec *exec);
+void				ft_init_fill_redir_out(t_lex *lex, t_exec *exec);
+void				ft_init_one_fill_redir_out(t_lex *lex, t_exec *exec);
+int					ft_count_fd(t_lex *lex, t_exec *exec);
+void				ft_bzero_exec(t_exec *exec);
 
 #endif

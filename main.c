@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:41:14 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/03 21:00:52 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/06 21:59:02 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,15 +75,23 @@ int	main(int argc, char **argv, char **envp)
 			{                //parser redirection et pipe
 				ft_heredoc(lex, env);
 				ft_redirection(lex); // MODIFIER POUR OUVRIR LES FICHIER AVEC A NOUVELLE LISTE CHAINEE EXEC
-				ft_organizer_exec(lex, exec);
-				ft_print_lex_k(lex);
+				ft_organizer_exec(lex, exec, env);
 			}
 		}
+		printf("afficher les tab 2 d\n");
+		// ft_print_2_d_tab_test(exec->path);
+		printf("\n\ntab commande = \n");
+		ft_print_2_d_tab_test(exec->cmd);
+		printf("\n\n tab file = \n");
+		ft_print_2_d_tab_test(exec->file);
+
+		// ft_all_builtin(lex, env, utils);
 		// REDIRECTION HERE DOC ET OPEN
 		// FT ORGANIZER2 VIRER ESPACE + VIRER LES PIPE && NEW LIST POUR EXECVE
 		// EXECVE
 		// SIGNAUX
 		// RETOUR ERREUR VARIABLE GLOBALE
+		(void)exec;
 		free(input);
 		// free(history);
 		// ft_free(lex, env, utils);
@@ -143,8 +151,6 @@ int	ft_heredoc(t_lex *lex, t_env *env)
 			input = limiter + 1;
 		}
 		fd = open(file, O_CREAT | O_RDWR | O_TRUNC, 0744);
-		printf("limiter = %s\n", limiter);
-		printf("input = %s\n", input);
 		while(1)
 		{
 			input = readline(" >>");

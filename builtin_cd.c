@@ -6,7 +6,7 @@
 /*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 17:14:23 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/02 17:14:24 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/04 20:44:43 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	ft_builtin_cd_all(t_lex *lex, t_env *env, t_utils *utils)
 	else if(ft_compare(lex->next->str, "/") == SUCCESS)
 		ft_builtin_cd_rac();
 	else
-		ft_builtin_cd_dir(lex->next->str);
+		ft_builtin_cd_dir(lex->next->next->str);
 
 }
 
