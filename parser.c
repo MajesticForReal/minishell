@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:32:17 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/06 20:18:54 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/06 22:33:09 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	ft_in(t_lex **lex)
 
 	first = (*lex);
 	ft_tok_toto(lex);
-	while (lex != NULL)
+	while ((*lex) != NULL)
 	{
 		if (ft_in_if(lex) == -1)
 		{

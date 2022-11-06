@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:41:14 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/06 18:33:08 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/06 22:37:08 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,30 +75,29 @@ int	main(int argc, char **argv, char **envp)
 				// ft_heredoc(lex, env);
 				// ft_redirection(lex);
 					// MODIFIER POUR OUVRIR LES FICHIER AVEC A NOUVELLE LISTE CHAINEE EXEC
-				ft_print_lex_k(lex);
-				// ft_organizer_exec(lex, exec, env);
+				ft_organizer_exec(lex, exec, env);
 			}
 		}
-		// i = 0;
-		// while (exec != NULL)
-		// {
-		// 	while (exec->redir[i] != NULL)
-		// 	{
-		// 		printf("REDIR %d : %s\n", i, exec->redir[i]);
-		// 		i++;
-		// 	}
-		// 	i = 0;
-		// 	if (exec->next != NULL)
-		// 		exec = exec->next;
-		// 	else
-		// 		break ;
-		// }
-		// i = 0;
-		// while (exec->cmd[i] != NULL)
-		// {
-		// printf("CMD %d : %s\n", i, exec->cmd[i]);
-		// i++;
-		// }
+		i = 0;
+		while (exec != NULL)
+		{
+			while (exec->redir[i] != NULL)
+			{
+				printf("REDIR %d : %s\n", i, exec->redir[i]);
+				i++;
+			}
+			i = 0;
+			if (exec->next != NULL)
+				exec = exec->next;
+			else
+				break ;
+		}
+		i = 0;
+		while (exec->cmd[i] != NULL)
+		{
+		printf("CMD %d : %s\n", i, exec->cmd[i]);
+		i++;
+		}
 		// REDIRECTION HERE DOC ET OPEN
 		// FT ORGANIZER2 VIRER ESPACE + VIRER LES PIPE && NEW LIST POUR EXECVE
 		// EXECVE
