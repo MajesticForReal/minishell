@@ -6,7 +6,7 @@
 /*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:00:55 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/06 20:13:36 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/06 22:12:26 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef struct s_lex
 	char			*str;
 	int				token;
 	struct s_lex	*next;
-	
+
 }					t_lex;
 
 //structure de pipex
@@ -70,6 +70,7 @@ typedef struct s_exec
 	char			**file;
 	int				nb_option;
 	int				cmd_size;
+	char			**redir;
 	int				token_before;
 	struct s_exec	*next;
 }					t_exec;
@@ -118,7 +119,8 @@ char				*ft_concat2(char *str_1, char *str_2);
 //split
 char				**ft_malloc_error(char **strs);
 int					ft_count_words(const char *str, char c);
-void				ft_words_cpy(const char *s, int *start_w, int end, char *strs);
+void				ft_words_cpy(const char *s, int *start_w, int end,
+						char *strs);
 char				**ft_r_split(char const *s, char c, char **strs);
 char				**ft_split(char const *s, char c);
 
@@ -144,6 +146,9 @@ void				ft_add_back_envp(t_env *env, char **envp, int j);
 void				ft_print_list_env(t_env *env);
 void				ft_compare_just_a_part(char *complet_str,
 char				*part_to_find, t_utils *utils);
+void	ft_compare_just_a_part(char *complet_str,
+							char *part_to_find,
+							t_utils *utils);
 void				ft_init_fill_str_home(char *complet_str, t_utils *builtin);
 int					ft_builtin_cd_rac(void);
 void				ft_export_var(t_lex *lex, t_env *env);
@@ -162,9 +167,23 @@ char				*ft_init_prompt_place(t_env *env);
 char				*ft_init_prompt_logname(t_env *env);
 
 // parsing lexer
+int					ft_out_2(t_lex **lex);
+int					ft_out_3(t_lex **lex);
+int					ft_out_elseif_2(t_lex **lex);
+int					ft_out_elseif_3(t_lex **lex);
+int					ft_out_if(t_lex **lex);
+int					ft_in_2(t_lex **lex);
+int					ft_in_22(t_lex **lex);
+int					ft_in_33(t_lex **lex);
+int					ft_in_3(t_lex **lex);
+int					ft_in_elseif_2(t_lex **lex);
+int					ft_in_elseif_3(t_lex **lex);
+int					ft_in_if(t_lex **lex);
+int					ft_pipe_3(t_lex *lex);
+int					ft_pipe_2(t_lex *lex);
 int					ft_parser_k(t_lex *lex, t_env *env);
 t_lex				*ft_initialize_struct(void);
-int					add_back(t_lex *start, int tok, char *input, int i, char c);
+int					add_back(t_lex *start, int tok, char *input, int i);
 int					ft_size_str(char *input, int i, char c);
 void				ft_lexer(char *input, t_lex *lex);
 int					ft_word(char *input, t_lex *lex, int i);
@@ -172,19 +191,26 @@ int					ft_first_lex(t_lex *lex, char *input);
 int					ft_size_str_word(char *input, int i);
 void				ft_parser_doll(t_lex *lex, t_env *env);
 int					ft_parser(t_lex *lex);
-void				ft_tok_fromfrom(t_lex *lex);
-void				ft_tok_toto(t_lex *lex);
+void				ft_tok_fromfrom(t_lex **lex);
+void				ft_tok_toto(t_lex **lex);
 int					ft_quotes(t_lex *lex);
-int					ft_out(t_lex *lex);
-int					ft_in(t_lex *lex);
+int					ft_out(t_lex **lex);
+int					ft_in(t_lex **lex);
 int					ft_pipe(t_lex *lex, t_lex *start);
 int					ft_check_quotes(t_lex *lex);
+int					ft_check_quotes2(t_lex *lex);
 
 // Organizer
 void				ft_organizer(t_lex **lex);
 void				ft_print_list(t_lex *lex);
 void				ft_concat_clear(t_lex **lex);
 void				ft_clear_quotes(t_lex **lex);
+void				ft_clear_quotes2(t_lex **lex, t_lex *lex_tmp);
+t_lex				*ft_initialize_struct2(char *str1, char *str2, t_lex *next);
+void				ft_check_dq(t_lex **lex);
+void				ft_check_sq(t_lex **lex);
+void				ft_concat_clear2(t_lex **lex, t_lex *first);
+void				ft_concat_clear3(t_lex **lex, t_lex *first, t_lex *start);
 
 //parser_dollar
 int					ft_dollars_only(t_lex *lex);
@@ -197,7 +223,7 @@ void				ft_print_lex_k(t_lex *lex);
 void				ft_print_var(t_lex *lex, t_env *env);
 void				ft_print_after_var(t_lex *lex, t_env *env);
 int					ft_compare_just_a_part_2(char *var_more);
-char 				*ft_cut_var_more(char *var_more);
+char				*ft_cut_var_more(char *var_more);
 int					ft_char_after_var(t_lex *lex);
 void				ft_change_list_to_var(t_lex *lex);
 int					ft_after_doll_is_num(t_lex *lex);
@@ -230,5 +256,13 @@ void				ft_init_fill_redir_out(t_lex *lex, t_exec *exec);
 void				ft_init_one_fill_redir_out(t_lex *lex, t_exec *exec);
 int					ft_count_fd(t_lex *lex, t_exec *exec);
 void				ft_bzero_exec(t_exec *exec);
+void				ft_exec_tok_in(t_lex *lex, t_exec *exec);
+t_exec				*ft_initialize_struct_exec(void);
+void				ft_next_exec(t_exec *exec);
+
+// NORME
+int					ft_first_lex_concat(t_lex *lex, char *input, int i,
+						int size);
+void				ft_first_lex_token(t_lex *lex, char *input, int i);
 
 #endif
