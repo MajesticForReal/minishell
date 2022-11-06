@@ -6,7 +6,7 @@
 #    By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/27 16:02:00 by y klaurier        #+#    #+#              #
-#    Updated: 2022/11/03 16:51:54 by anrechai         ###   ########.fr        #
+#    Updated: 2022/11/06 21:51:36 by anrechai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,12 +21,20 @@ SRCS 		=	main.c \
 				init_env.c \
 				split.c \
 				lexer.c \
-				parser_redir.c \
+				lexer2.c\
+				parser.c \
+				parser_pipe.c\
+				parser_in.c\
+				parser_out.c\
+				parser_norme.c\
 				parser_k.c \
 				utils_minishell.c\
+				utils_minishell2.c\
 				redirection.c\
 				parser_limiter.c \
 				organizer.c\
+				organizer2.c\
+				organizer3.c\
 				organizer_exec.c
 
 OBJS		=	${SRCS:.c=.o}
