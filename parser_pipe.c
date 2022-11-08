@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 20:02:05 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/06 20:18:45 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/08 13:37:01 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,11 @@ int	ft_pipe_3(t_lex *lex)
 	else if (lex->next == NULL)
 	{
 		ft_putstr_fd("syntax error near unexpected token `|'\n", 2);
+		return (-1);
+	}
+	else if (ft_strlen(lex->str) >= 2)
+	{
+		ft_putstr_fd("syntax error near unexpected token `||'\n", 2);
 		return (-1);
 	}
 	return (0);

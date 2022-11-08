@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:00:55 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/06 22:08:15 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/08 21:57:28 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,22 @@ typedef struct s_env
 
 typedef struct s_utils
 {
+	int	i;
+	int				infile;
+	int				outfile;
 	char			*home_str;
 }					t_utils;
 
 typedef struct s_exec
 {
+	pid_t	process_id;
+	int	fd_cmd[2];
 	char			**cmd;
-	char			**redir;
+	char			*str_cmd;
+	char			**path;
+	char			**file;
+	int				nb_option;
+	int				cmd_size;
 	int				token_before;
 	struct s_exec	*next;
 }					t_exec;
@@ -132,11 +141,15 @@ int					ft_builtin_env(char **envp);
 void				test_signal(int code);
 void				ft_builtin_echo_option(t_lex *lex);
 int					ft_print_2_d_tab(char **strs, int index);
+void				ft_print_2_d_tab_test(char **strs);
+
 t_env				*ft_init_env(void);
 t_env				*ft_init_fill_env(char **envp);
 void				ft_fill_env(char **envp, t_env *env);
 void				ft_add_back_envp(t_env *env, char **envp, int j);
 void				ft_print_list_env(t_env *env);
+void				ft_compare_just_a_part(char *complet_str,
+char				*part_to_find, t_utils *utils);
 void	ft_compare_just_a_part(char *complet_str,
 							char *part_to_find,
 							t_utils *utils);
@@ -146,7 +159,7 @@ void				ft_export_var(t_lex *lex, t_env *env);
 void				ft_add_back_str(t_env *env, char *str);
 void				ft_unset_var(t_lex *lex, t_env *env);
 void				ft_del_struct(t_env *env);
-void				ft_all_builtin(t_lex *lex, t_env *env, t_utils *utils);
+void				ft_all_builtin(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec);
 void				ft_builtin_cd_all(t_lex *lex, t_env *env, t_utils *utils);
 void				ft_builtin_echo_all(t_lex *lex, t_env *env);
 int					ft_builtin_echo_detect_n(char *lex_str);
@@ -233,10 +246,20 @@ char				*ft_parser_limiter(t_lex *tmp);
 
 //redirection
 void				ft_redirection(t_lex *lex);
-void				ft_free(t_lex *lex, t_env *env, t_utils *utils);
+void				ft_free(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec);
 
 // Organizer exec
 void				ft_organizer_exec(t_lex *lex, t_exec *exec, t_env *env);
+void				ft_init_fill_t_exec(t_lex *lex, t_exec *exec, t_env *env);
+void				ft_init_fill_cmd(t_lex *lex, t_exec *exec);
+void				ft_init_fill_tab_path(t_lex *lex, t_exec *exec, t_env *env);
+void				ft_count_option(t_lex *lex, t_exec *exec);
+char				*ft_malloc_option(t_lex *lex);
+void				ft_init_fill_redir(t_lex *lex, t_exec *exec);
+void				ft_init_fill_redir_out(t_lex *lex, t_exec *exec);
+void				ft_init_one_fill_redir_out(t_lex *lex, t_exec *exec);
+int					ft_count_fd(t_lex *lex, t_exec *exec);
+void				ft_bzero_exec(t_exec *exec);
 void				ft_exec_tok_in(t_lex *lex, t_exec *exec);
 t_exec				*ft_initialize_struct_exec(void);
 void				ft_next_exec(t_exec *exec);
@@ -246,4 +269,9 @@ int					ft_first_lex_concat(t_lex *lex, char *input, int i,
 						int size);
 void				ft_first_lex_token(t_lex *lex, char *input, int i);
 
+
+void	ft_print_exec(t_exec *exec);
+
+// EXEC
+void	ft_exec(t_exec *exec, t_lex *lex, t_env *env, t_utils *utils);
 #endif

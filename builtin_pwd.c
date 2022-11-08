@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 20:42:48 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/06 20:27:49 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/06 22:14:13 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-//permet de faire la commande pwd sans argument ni option
 char	*ft_builtin_pwd(int option)
 {
 	char	*path_dir;

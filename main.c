@@ -6,16 +6,17 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:41:14 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/06 22:37:08 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/08 21:59:49 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_free(t_lex *lex, t_env *env, t_utils *utils)
+void	ft_free(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec)
 {
 	t_lex	*tmp;
 	t_env	*tmp2;
+	// int	i;
 
 	while (lex != NULL && lex->next != NULL)
 	{
@@ -40,6 +41,21 @@ void	ft_free(t_lex *lex, t_env *env, t_utils *utils)
 	if (utils->home_str != NULL)
 		free(utils->home_str);
 	free(utils);
+	// i = 0;
+	// while (exec != NULL)
+	// {
+	// 	free(exec->cmd);
+	// i = 0;
+	// while (exec->file != NULL)
+	// {
+	// 	free(exec->file[i]);
+	// 	i++;
+	// }
+	// free(exec->file);
+	// 	exec = exec->next;
+	// }
+	// free(exec);
+	(void)exec;
 	return ;
 }
 
@@ -50,20 +66,15 @@ int	main(int argc, char **argv, char **envp)
 	char	*input;
 	t_utils	*utils;
 	t_exec	*exec;
-	int		i;
 
-	// t_exec *exe;
-	// char	*history;
 	exec = malloc(sizeof(t_exec));
 	utils = malloc(sizeof(t_utils));
 	utils->home_str = NULL;
 	env = ft_init_fill_env(envp);
 	lex = malloc(sizeof(t_lex));
 	input = NULL;
-	// history = NULL;
 	while (1)
 	{
-		// input = argv[1];
 		input = readline(">");
 		add_history(input);
 		ft_lexer(input, lex);
@@ -71,44 +82,19 @@ int	main(int argc, char **argv, char **envp)
 		{
 			ft_organizer(&lex); //virer espace et quotes
 			if (ft_parser(lex) == 0)
-			{ //parser redirection et pipe
-				// ft_heredoc(lex, env);
-				// ft_redirection(lex);
-					// MODIFIER POUR OUVRIR LES FICHIER AVEC A NOUVELLE LISTE CHAINEE EXEC
-				ft_organizer_exec(lex, exec, env);
-			}
-		}
-		i = 0;
-		while (exec != NULL)
-		{
-			while (exec->redir[i] != NULL)
 			{
-				printf("REDIR %d : %s\n", i, exec->redir[i]);
-				i++;
+				ft_organizer_exec(lex, exec, env);
+				ft_exec(exec, lex, env, utils);
 			}
-			i = 0;
-			if (exec->next != NULL)
-				exec = exec->next;
-			else
-				break ;
 		}
-		i = 0;
-		while (exec->cmd[i] != NULL)
-		{
-		printf("CMD %d : %s\n", i, exec->cmd[i]);
-		i++;
-		}
-		// REDIRECTION HERE DOC ET OPEN
-		// FT ORGANIZER2 VIRER ESPACE + VIRER LES PIPE && NEW LIST POUR EXECVE
+		ft_print_exec(exec);
 		// EXECVE
 		// SIGNAUX
 		// RETOUR ERREUR VARIABLE GLOBALE
 		free(input);
-		// free(history);
-		// ft_free(lex, env, utils);
+		// ft_free(lex, env, utils, exec);
 		// return (0);
 	}
-	(void)i;
 	(void)exec;
 	(void)env;
 	(void)input;
@@ -116,23 +102,67 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 }
 
-void	ft_all_builtin(t_lex *lex, t_env *env, t_utils *utils)
+void	ft_print_exec(t_exec *exec)
 {
-	if (lex->str != NULL)
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 1;
+	if (exec != NULL)
 	{
-		if (ft_compare(lex->str, "pwd") == SUCCESS)
+		while (exec != NULL)
+		{
+			printf("---- EXEC %d ----\n", j);
+			if (exec->cmd != NULL)
+			{
+				while (exec->cmd[i] != NULL)
+				{
+					printf("CMD %d : %s\n", i, exec->cmd[i]);
+					// free(exec->cmd[i]);
+					i++;
+				}
+				// free(exec->cmd);
+			}
+			i = 0;
+			if (exec->file != NULL)
+			{
+				while (exec->file[i] != NULL)
+				{
+					printf("REDIR %d : %s\n", i, exec->file[i]);
+					// free(exec->file[i]);
+					i++;
+				}
+				// free(exec->cmd);
+			}
+			j++;
+			if (exec->next != NULL)
+				exec = exec->next;
+			else
+				break ;
+		}
+		// free (exec);
+	}
+}
+
+void	ft_all_builtin(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec)
+{
+	if (exec != NULL && exec->cmd != NULL && exec->cmd[0] != NULL)
+	{
+		if (ft_compare(exec->cmd[0], "pwd") == SUCCESS)
 			ft_builtin_pwd(1);
-		else if (ft_compare(lex->str, "cd") == SUCCESS)
+		else if (ft_compare(exec->cmd[0], "cd") == SUCCESS)
 			ft_builtin_cd_all(lex, env, utils);
-		else if (ft_compare(lex->str, "echo") == SUCCESS)
+		else if (ft_compare(exec->cmd[0], "echo") == SUCCESS)
 			ft_builtin_echo_all(lex->next, env);
-		else if (ft_compare(lex->str, "env") == SUCCESS)
+		else if (ft_compare(exec->cmd[0], "env") == SUCCESS)
 			ft_print_list_env(env);
-		else if (ft_compare(lex->str, "unset") == SUCCESS)
+		else if (ft_compare(exec->cmd[0], "unset") == SUCCESS)
 			ft_unset_var(lex, env);
-		else if (ft_compare(lex->str, "export") == SUCCESS)
+		else if (ft_compare(exec->cmd[0], "export") == SUCCESS)
 			ft_export_var(lex, env);
 	}
+	return ;
 }
 
 int	ft_heredoc(t_lex *lex, t_env *env)
@@ -163,8 +193,6 @@ int	ft_heredoc(t_lex *lex, t_env *env)
 			input = limiter + 1;
 		}
 		fd = open(file, O_CREAT | O_RDWR | O_TRUNC, 0744);
-		printf("limiter = %s\n", limiter);
-		printf("input = %s\n", input);
 		while (1)
 		{
 			input = readline(" >>");

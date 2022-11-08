@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 20:59:04 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/06 20:59:34 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/08 21:50:57 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	ft_init_fill_str_home(char *complet_str, t_utils *utils)
 
 	i = 5;
 	j = 0;
+	utils->i = 0;
 	utils->home_str = malloc(sizeof(char) * ft_strlen(complet_str) - 4);
 	if (utils->home_str == NULL)
 		return ;
