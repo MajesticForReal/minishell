@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:00:55 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/10 21:17:56 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/10 22:15:39 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # define SUCCESS 1
 # define TRUE 2
 # define FALSE -2
+# define STDERR 2
 
 # include "minishell.h"
 # include <dirent.h>
@@ -28,6 +29,8 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
+
+extern int	g_exstat;
 
 enum				e_token
 {
@@ -57,6 +60,12 @@ typedef struct s_env
 	char			*str;
 	struct s_env	*next;
 }					t_env;
+
+typedef struct s_export
+{
+	char			*str;
+	struct s_env	*next;
+}					t_export;
 
 typedef struct s_utils
 {
@@ -100,6 +109,17 @@ char				**ft_r_split(char const *s, char c, char **strs);
 char				**ft_split(char const *s, char c);
 
 //buitin
+void				ft_copy_env_n_rate(t_env *env);
+int					ft_rate_str(t_env *env, int	last_rate);
+int					ft_compare_index(t_env *env, char *str);
+void				ft_replace_t_env(t_env *env, char *str);
+int					ft_compare_stop_egal(char *str, char *str2);
+void				ft_is_not_valid_n(t_lex *lex);
+void				ft_print_argument(t_lex *lex, int valid_n);
+void				ft_is_valid_n(t_lex *lex);
+int					ft_first_is_alpha(char *lex_str);
+int					ft_str_have_egal(char *lex_str);
+int					ft_detect_special_char_export(char *lex_str);
 char				*ft_builtin_pwd(int option);
 int					ft_builtin_cd_dir(char *input);
 char				*ft_parsing_cd_dir(char *lex_str);
@@ -113,18 +133,17 @@ void				test_signal(int code);
 void				ft_builtin_echo_option(t_lex *lex);
 int					ft_print_2_d_tab(char **strs, int index);
 void				ft_print_2_d_tab_test(char **strs);
-
+int					ft_builtin_detect_path_a_r(char *lex_str);
+int					ft_builtin_path_a(char *lex_str);
 t_env				*ft_init_env(void);
 t_env				*ft_init_fill_env(char **envp);
 void				ft_fill_env(char **envp, t_env *env);
 void				ft_add_back_envp(t_env *env, char **envp, int j);
 void				ft_print_list_env(t_env *env);
-void	ft_compare_just_a_part(char *complet_str,
-							char *part_to_find,
-							t_utils *utils);
-void	ft_compare_just_a_part(char *complet_str,
-							char *part_to_find,
-							t_utils *utils);
+void				ft_compare_just_a_part(char *complet_str,
+char				*part_to_find, t_utils *utils);
+void				ft_compare_just_a_part(char *complet_str,
+char 				*part_to_find, t_utils *utils);
 void				ft_init_fill_str_home(char *complet_str, t_utils *builtin);
 int					ft_builtin_cd_rac(void);
 void				ft_export_var(t_lex *lex, t_env *env);
@@ -138,7 +157,7 @@ int					ft_builtin_echo_detect_n(char *lex_str);
 void				ft_builtin_echo_option(t_lex *lex);
 void				ft_not_n(t_lex *lex, int *valide_n);
 int					ft_find_variable_in_env(char *var_env, char *lex_str);
-int					ft_check_valid_export(char *lex_str);
+int					ft_check_valid_export_env(char *lex_str);
 char				*ft_init_prompt_place(t_env *env);
 char				*ft_init_prompt_logname(t_env *env);
 
@@ -224,6 +243,8 @@ void				ft_free_write_var_fd(char *concat, char *str, int fd);
 int					ft_last_alpha_num(t_lex *lex);
 void				ft_cut_after_special_char(t_lex *lex);
 void				ft_supp_2_list(t_lex *lex);
+int					ft_doll_interogation(t_lex *lex);
+void				ft_change_doll_to_exit(t_lex *lex);
 
 //heredoc
 void				ft_heredoc(t_lex *lex);
@@ -259,6 +280,14 @@ void				ft_heredoc0(t_lex **tmp);
 void				ft_print_1_exec(t_exec *exec);
 void				ft_print_2_exec(t_exec *exec);
 void				ft_print_3_exec(t_exec *exec);
+
+//signal
+char				*ft_itoa(int n);
+long int			ft_len(int n);
+char				*ft_array(char *x, unsigned int number, long int len);
+void				ft_putendl_fd(char *s, int fd);
+void				*ft_memdel(void *ptr);
+void				ft_detect_sig(int sig);
 
 // NORME
 int					ft_first_lex_concat(t_lex *lex, char *input, int i,

@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:24:58 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/10 01:18:26 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/10 22:14:19 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,9 @@ void	ft_dollar(t_lex *lex, t_env *env)
 
 void	ft_dollar_2(t_lex *lex, t_env *env)
 {
-	if (ft_compare_just_a_part_2(lex->next->str) == SUCCESS)
+	if (ft_doll_interogation(lex) == SUCCESS)
+		ft_change_doll_to_exit(lex);
+	else if (ft_compare_just_a_part_2(lex->next->str) == SUCCESS)
 		ft_change_list_to_var(lex);
 	else if (ft_after_doll_is_num(lex) == SUCCESS)
 	{

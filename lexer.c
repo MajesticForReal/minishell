@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:18:43 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/10 01:24:16 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/10 22:14:43 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	ft_first_lex(t_lex *lex, char *input)
 void	ft_lexer(char *input, t_lex *lex)
 {
 	int	i;
-
+	
 	i = ft_first_lex(lex, input);
 	while (input[i])
 	{
