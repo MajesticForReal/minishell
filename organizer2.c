@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 21:16:59 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/06 21:17:27 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/10 01:32:25 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,6 @@ void	ft_organizer(t_lex **lex)
 {
 	ft_clear_quotes(lex);
 	ft_concat_clear(lex);
-}
-
-void	ft_print_list(t_lex *lex)
-{
-	while (lex->str != NULL && lex->next != NULL)
-	{
-		printf("%s\n", lex->str);
-		lex = lex->next;
-	}
-	if (lex->str != NULL)
-		printf("%s\n", lex->str);
 }
 
 t_lex	*ft_initialize_struct2(char *str1, char *str2, t_lex *next)

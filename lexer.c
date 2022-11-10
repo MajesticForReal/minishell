@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:18:43 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/05 16:00:28 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/10 01:24:16 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,21 @@ int	ft_first_lex_concat(t_lex *lex, char *input, int i, int size)
 
 	j = 0;
 	lex->str = malloc(sizeof(char) * (size + 1));
+	if (!lex->str)
+		return (0);
+	lex->str = NULL;
 	j = 0;
-	while (j < size)
+	if (input[0] != '\0')
 	{
-		lex->str[j] = input[i];
-		i++;
-		j++;
+		while (j < size)
+		{
+			lex->str[j] = input[i];
+			i++;
+			j++;
+		}
+		lex->str[j] = '\0';
+		lex->next = NULL;
 	}
-	lex->str[j] = '\0';
-	lex->next = NULL;
 	return (i);
 }
 
@@ -53,7 +59,7 @@ int	ft_first_lex(t_lex *lex, char *input)
 	int	size;
 
 	i = 0;
-	while (input[i] == ' ' || input[i] == '\t')
+	while (input[i] != '\0' && (input[i] == ' ' || input[i] == '\t'))
 	{
 		lex->token = TOK_SPACE;
 		i++;
@@ -62,8 +68,8 @@ int	ft_first_lex(t_lex *lex, char *input)
 		|| input[i] == 39 || input[i] == '|')
 		ft_first_lex_token(lex, input, i);
 	else if (input[i] != '|' && input[i] != 34 && input[i] != 36
-		&& input[i] != 39 && input[i] != '<' && input[i] != '>'
-		&& input[i] != ' ' && input[i] != '\t' && input[i] != '\0')
+			&& input[i] != 39 && input[i] != '<' && input[i] != '>'
+			&& input[i] != ' ' && input[i] != '\t' && input[i] != '\0')
 	{
 		i = ft_word(input, lex, i);
 		return (i);

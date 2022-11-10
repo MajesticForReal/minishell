@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 17:14:23 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/06 22:12:58 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/08 22:50:14 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,8 @@ void	ft_builtin_cd_all(t_lex *lex, t_env *env, t_utils *utils)
 		ft_builtin_cd_rac();
 	else
 		ft_builtin_cd_dir(lex->next->next->str);
-
-		// ft_builtin_cd_dir(lex->next->str);
 }
+		/* ft_builtin_cd_dir(lex->next->str);*/
 
 int	ft_builtin_cd_dir(char *lex_str)
 {

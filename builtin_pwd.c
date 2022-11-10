@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 20:42:48 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/06 22:14:13 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/08 22:50:58 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 char	*ft_builtin_pwd(int option)
 {
 	char	*path_dir;

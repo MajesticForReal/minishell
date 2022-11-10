@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 21:56:30 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/08 22:39:38 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/10 21:43:21 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,222 +26,154 @@ void	ft_init_fd_cmd(t_exec *exec)
 	return ;
 }
 
-void	ft_exec_pipe(t_exec *exec)
+void	ft_constructor_cmd(t_exec *exec)
 {
-	ft_init_fd_cmd(exec);
-}
+	int		i;
+	char	*new_path;
+	char	*my_cmd;
+	char	*cmd_base;
 
-int	ft_check_builtin(t_exec *exec)
-{
-	if (exec != NULL && exec->cmd != NULL && exec->cmd[0] != NULL)
-	{
-		if (ft_compare(exec->cmd[0], "pwd") == SUCCESS)
-			return (SUCCESS);
-		else if (ft_compare(exec->cmd[0], "cd") == SUCCESS)
-			return (SUCCESS);
-		else if (ft_compare(exec->cmd[0], "echo") == SUCCESS)
-			return (SUCCESS);
-		else if (ft_compare(exec->cmd[0], "env") == SUCCESS)
-			return (SUCCESS);
-		else if (ft_compare(exec->cmd[0], "unset") == SUCCESS)
-			return (SUCCESS);
-		else if (ft_compare(exec->cmd[0], "export") == SUCCESS)
-			return (SUCCESS);
-	}
-	return (-1);
-}
-
-int	ft_count_redir(t_exec *exec, char c)
-{
-	int	i;
-	int	nb;
-
+	cmd_base = ft_strdup(exec->cmd[0]);
+	new_path = NULL;
+	my_cmd = ft_strdup(exec->cmd[0]);
 	i = 0;
-	nb = 0;
-	while (exec->file[i])
+	if (ft_check_str(cmd_base, 2) == -1)
 	{
-		if (exec->file[i][0] == c && exec->file[i][1] == '\0')
-			nb++;
+		write(2, cmd_base, ft_strlen(cmd_base));
+		write(2, ": No such file or directory\n", 28);
+		free(my_cmd);
+		free(cmd_base);
+		return ;
+	}
+	while (exec->path && exec->path[i])
+	{
+		free(new_path);
+		new_path = NULL;
+		new_path = ft_strcat_path(exec->path[i], my_cmd);
+		if (new_path == NULL)
+			return ;
+		exec->cmd[0] = new_path;
+		if (access(new_path, X_OK) == 0)
+			execve(new_path, exec->cmd, NULL);
 		i++;
 	}
-	return (nb);
+	write(2, cmd_base, ft_strlen(cmd_base));
+	write(2, ": command not found\n", 20);
+	free(my_cmd);
+	free(cmd_base);
 }
 
-int	ft_count_redir_toto(t_exec *exec, char c)
+int	ft_check_str(char *str, int i)
 {
-	int	i;
-	int	nb;
+	DIR	*d;
 
-	i = 0;
-	nb = 0;
-	while (exec->file[i])
+	if (i == 1)
 	{
-		if (exec->file[i][0] == c && exec->file[i][1] == c)
-			nb++;
-		i++;
+		d = opendir(str);
+		if (d == NULL)
+			return (0);
+		closedir(d);
+		return (-1);
 	}
-	return (nb);
+	else if (i == 2)
+		if (ft_strchr(str, '/') != NULL)
+			return (-1);
+	return (0);
 }
 
-void	ft_open_toto(t_exec *exec, t_utils *utils)
+void	ft_exec_prog_cwd(t_exec *exec, char *cmd_base)
 {
-	int	nb_in;
+	char	*tmp;
+	char	*buf;
+	size_t	size;
 
-	nb_in = ft_count_redir_toto(exec, '>');
-	utils->i = -1;
-	while (exec->file[++utils->i] != NULL && nb_in > 0)
+	size = 0;
+	tmp = NULL;
+	buf = NULL;
+	tmp = getcwd(buf, size);
+	free(exec->cmd[0]);
+	buf = ft_strcat_path(tmp, cmd_base + 2);
+	exec->cmd[0] = buf;
+	if (access(exec->cmd[0], X_OK) == 0)
 	{
-		if (exec->file[utils->i][0] == '>' && exec->file[utils->i][1] == '>')
-		{
-			nb_in--;
-			utils->outfile = open(exec->file[++utils->i],
-									O_CREAT | O_WRONLY | O_APPEND,
-									0644);
-			if (utils->outfile < 0)
-			{
-				perror(exec->file[utils->i]);
-				break ;
-			}
-			else if (nb_in != 0)
-			{
-				close(utils->outfile);
-				utils->i++;
-			}
-		}
-		else
-			utils->i++;
+		execve(exec->cmd[0], exec->cmd, NULL);
 	}
+	free(buf);
+	free(tmp);
+	return ;
 }
 
-void	ft_open_in(t_exec *exec, t_utils *utils)
+void	ft_exec_prog(t_exec *exec)
 {
-	int	nb_in;
-	int	i;
+	int		i;
+	char	*new_path;
+	char	*my_cmd;
+	char	*cmd_base;
 
-	nb_in = ft_count_redir(exec, '<');
+	cmd_base = ft_strdup(exec->cmd[0]);
+	new_path = NULL;
+	my_cmd = ft_strdup(exec->cmd[0] + 2);
 	i = -1;
-	while (exec->file[++i] != NULL && nb_in > 0)
+	if (ft_check_str(cmd_base, 1) == -1)
 	{
-		if (exec->file[i][0] == '<' && exec->file[i][1] == '\0')
-		{
-			nb_in--;
-			utils->infile = open(exec->file[++i], O_RDONLY);
-			if (utils->infile < 0)
-			{
-				perror(exec->file[i]);
-				break ;
-			}
-			else if (nb_in != 0)
-			{
-				close(utils->infile);
-				i++;
-			}
-		}
-		else
-			i++;
+		write(2, "minishell: ", 11);
+		write(2, cmd_base, ft_strlen(cmd_base));
+		write(2, ": Is a directory\n", 17);
+		return ;
 	}
+	while (exec->path && exec->path[++i])
+	{
+		free(exec->cmd[0]);
+		exec->cmd[0] = NULL;
+		new_path = ft_strcat_path(exec->path[i], my_cmd);
+		if (new_path == NULL)
+			return ;
+		exec->cmd[0] = new_path;
+		if (access(new_path, X_OK) == 0)
+			execve(new_path, exec->cmd, NULL);
+	}
+	ft_exec_prog_cwd(exec, cmd_base);
+	write(2, cmd_base, ft_strlen(cmd_base));
+	write(2, ": command not found\n", 20);
+	free(my_cmd);
+	free(cmd_base);
 }
 
-void	ft_open_out(t_exec *exec, t_utils *utils)
+void	ft_exec(t_exec *exec, t_env *env, t_utils *utils, t_lex *lex)
 {
-	int	nb_in;
-	int	i;
-
-	nb_in = ft_count_redir(exec, '>');
-	i = -1;
-	printf("NB IN %d\n", nb_in);
-	while (exec->file[++i] != NULL && nb_in > 0)
+	utils->infile = -1;
+	utils->outfile = -1;
+	if (exec->cmd[0] != NULL && exec->next == NULL)
 	{
-		printf("DANS OUT\n");
-		if (exec->file[i][0] == '>' && exec->file[i][1] == '\0')
-		{
-			nb_in--;
-			utils->outfile = open(exec->file[++i], O_CREAT | O_WRONLY | O_TRUNC,
-					0644);
-			if (utils->outfile < 0)
-			{
-				perror(exec->file[i]);
-				break ;
-			}
-			else if (nb_in != 0)
-			{
-				close(utils->outfile);
-				i++;
-			}
-		}
-		else
-			i++;
+		ft_exec_no_pipe(exec, env, utils, lex);
 	}
+	else if (exec->cmd[0] != NULL && exec->next != NULL)
+	{
+		ft_exec_pipe(exec, utils, env, lex);
+		ft_waitpid(exec);
+	}
+	if (exec->cmd[0] != NULL && exec->fd_cmd[0] != STDIN_FILENO)
+		close(exec->fd_cmd[0]);
+	if (exec->cmd[0] != NULL && exec->fd_cmd[1] != STDOUT_FILENO)
+		close(exec->fd_cmd[1]);
+	return ;
 }
 
-void	ft_no_pipe_redir(t_exec *exec, t_utils *utils)
+void	ft_waitpid(t_exec *exec)
 {
-	while (exec != NULL && exec->file != NULL)
+	while (exec != NULL)
 	{
-		printf("DANS LE WHILE\n");
-		ft_open_out(exec, utils);
-		ft_open_in(exec, utils);
-		ft_open_toto(exec, utils);
+		waitpid(exec->process_id, 0, 0);
+		// if (WIFEXITED(g_status))
+		// 	g_status = WEXITSTATUS(g_status);
+		// else if (WIFSIGNALED(g_status))
+		// 	g_status = WTERMSIG(g_status) + 128;
+		// signal(SIGQUIT, SIG_IGN);
+		// signal(SIGINT, handle_sig_parent);
 		if (exec->next != NULL)
 			exec = exec->next;
 		else
 			break ;
 	}
 	return ;
-}
-
-void	ft_processus_no_pipe(t_exec *exec, t_utils *utils, t_env *env)
-{
-	// DUP AND CLOSE AVEC LE INFILE OU OUTFILE EN FONCTION DES REDIR QUE JAI
-	// cmd constructor (ls -> /usr/bin/ls) 
-	// check env if pas de env juste access et si pas d'access alors on return
-	// if env valide on access et si pas daccess alors constructor
-	// acesss cmd[0] pour voir chemin absol
-	// constructor = 
-	// EXECVE
-}
-
-void	ft_exec_no_pipe(t_exec *exec, t_lex *lex, t_env *env, t_utils *utils)
-{
-	ft_init_fd_cmd(exec);
-	if (ft_check_builtin(exec) == -1)
-	{
-		printf("TOUJOURS ICI\n");
-		ft_no_pipe_redir(exec, utils);
-		// IF EXEC ./minishell
-			-> FT_EXEC retirer "./" puis coller a tout le path en access,
-			executer dans execve
-		if (/*CMD EXISTANTE*/)
-		{
-			exec->process_id = fork();
-			if (exec->process_id < 0)
-				return (perror("Minishell: fork:"));
-			else if (exec->process_id == 0))
-				ft_processus_no_pipe();
-			else
-			{
-				// ft_WAITPID + SIGNAUX
-			}
-		}
-	}
-	else if (ft_check_builtin(exec) == 1)
-	{
-		ft_no_pipe_redir(exec, utils);
-		//EXEC BUILTIN ft_all_builtins
-		//close infile et outfile
-		// return;
-	}
-}
-
-void	ft_exec(t_exec *exec, t_lex *lex, t_env *env, t_utils *utils)
-{
-	utils->infile = 0;
-	utils->outfile = 0;
-	if (exec->next == NULL)
-	{
-		printf("NOPIPE\n");
-		ft_exec_no_pipe(exec, lex, env, utils);
-	}
-	else
-		ft_exec_pipe(exec);
 }

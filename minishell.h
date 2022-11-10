@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:00:55 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/08 21:57:28 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/10 21:17:56 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # define FALSE -2
 
 # include "minishell.h"
+# include <dirent.h>
 # include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -59,58 +60,28 @@ typedef struct s_env
 
 typedef struct s_utils
 {
-	int	i;
+	int				i;
 	int				infile;
 	int				outfile;
 	char			*home_str;
+	int				fd_pipe[2];
 }					t_utils;
 
 typedef struct s_exec
 {
-	pid_t	process_id;
-	int	fd_cmd[2];
+	pid_t			process_id;
+	int				fd_cmd[2];
 	char			**cmd;
-	char			*str_cmd;
 	char			**path;
 	char			**file;
+	char			*str_cmd;
+	char			*heredoc;
 	int				nb_option;
+	int				nb_file_redir;
 	int				cmd_size;
 	int				token_before;
 	struct s_exec	*next;
 }					t_exec;
-
-typedef struct s_pipex
-{
-	char			*home_str;
-	int				fd_in;
-	int				fd_out;
-	char			**path;
-	char			**cmd1;
-	char			**cmd2;
-	char			*my_cmd;
-	char			*new_path;
-	int				status_fd_in;
-	int				status_fd_out;
-	int				status;
-	int				pipe_fd[2];
-	pid_t			child;
-	pid_t			child_2;
-
-}					t_pipex;
-
-//struct minishell
-// typedef struct s_minishell
-// {
-// 	char			**builtin;
-// 	int				i;
-// 	int				j;
-// 	int				size_pwd;
-// 	int				size_short_input;
-// 	char			*path_pwd;
-// 	char			*complet_path;
-// 	char			*short_pwd;
-// 	char			*short_input;
-// }					t_minishell;
 
 // utils_minishell
 int					ft_compare(char *str, char *str2);
@@ -148,8 +119,9 @@ t_env				*ft_init_fill_env(char **envp);
 void				ft_fill_env(char **envp, t_env *env);
 void				ft_add_back_envp(t_env *env, char **envp, int j);
 void				ft_print_list_env(t_env *env);
-void				ft_compare_just_a_part(char *complet_str,
-char				*part_to_find, t_utils *utils);
+void	ft_compare_just_a_part(char *complet_str,
+							char *part_to_find,
+							t_utils *utils);
 void	ft_compare_just_a_part(char *complet_str,
 							char *part_to_find,
 							t_utils *utils);
@@ -159,7 +131,7 @@ void				ft_export_var(t_lex *lex, t_env *env);
 void				ft_add_back_str(t_env *env, char *str);
 void				ft_unset_var(t_lex *lex, t_env *env);
 void				ft_del_struct(t_env *env);
-void				ft_all_builtin(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec);
+void				ft_all_builtin(t_lex *lex, t_env *env, t_utils *utils);
 void				ft_builtin_cd_all(t_lex *lex, t_env *env, t_utils *utils);
 void				ft_builtin_echo_all(t_lex *lex, t_env *env);
 int					ft_builtin_echo_detect_n(char *lex_str);
@@ -219,6 +191,7 @@ void				ft_concat_clear3(t_lex **lex, t_lex *first, t_lex *start);
 //parser_dollar
 int					ft_dollars_only(t_lex *lex);
 void				ft_dollar(t_lex *lex, t_env *env);
+void				ft_dollar_2(t_lex *lex, t_env *env);
 void				ft_print_dollars_only(t_lex *lex);
 int					ft_is_num(char *lex_str);
 int					ft_dollar_is_var(char *lex_str, t_env *env);
@@ -236,9 +209,24 @@ void				ft_change_list_to_var_2(t_lex *lex);
 void				ft_dollar_first(t_lex *lex, t_env *env);
 void				ft_change_doll_egal(t_lex *lex);
 int					ft_shearch_special_char(t_lex *lex);
+int					ft_var_in_env(char *var_only);
+void				ft_free_tmp_list_to_var(t_lex *lex, t_lex *tmp);
+void				ft_free_after_1_num(t_lex *lex);
+void				ft_cut_after_special_char2(t_lex *lex, int i);
+void				ft_free_after_special_char2(t_lex *lex);
+void				ft_free_doll_egal(t_lex *lex);
+void				ft_write_var_env_in_fd2(char *input, int fd, int i);
+int					ft_write_var_env_in_fd3(char *concat, char *getenv_result,
+						int j, int i);
+void				ft_write_var_env_in_fd4(char *concat, char *input, int k,
+						int i);
+void				ft_free_write_var_fd(char *concat, char *str, int fd);
+int					ft_last_alpha_num(t_lex *lex);
+void				ft_cut_after_special_char(t_lex *lex);
+void				ft_supp_2_list(t_lex *lex);
 
 //heredoc
-int					ft_heredoc(t_lex *lex, t_env *env);
+void				ft_heredoc(t_lex *lex);
 void				ft_organizer_heredoc(char *input, int fd);
 void				ft_dollar_heredoc(char *input, int fd);
 void				ft_write_var_env_in_fd(char *input, int fd);
@@ -246,32 +234,71 @@ char				*ft_parser_limiter(t_lex *tmp);
 
 //redirection
 void				ft_redirection(t_lex *lex);
-void				ft_free(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec);
+void				ft_free(t_lex *lex, t_env *env, t_utils *utils,
+						t_exec *exec);
 
 // Organizer exec
 void				ft_organizer_exec(t_lex *lex, t_exec *exec, t_env *env);
-void				ft_init_fill_t_exec(t_lex *lex, t_exec *exec, t_env *env);
-void				ft_init_fill_cmd(t_lex *lex, t_exec *exec);
-void				ft_init_fill_tab_path(t_lex *lex, t_exec *exec, t_env *env);
-void				ft_count_option(t_lex *lex, t_exec *exec);
 char				*ft_malloc_option(t_lex *lex);
-void				ft_init_fill_redir(t_lex *lex, t_exec *exec);
-void				ft_init_fill_redir_out(t_lex *lex, t_exec *exec);
-void				ft_init_one_fill_redir_out(t_lex *lex, t_exec *exec);
-int					ft_count_fd(t_lex *lex, t_exec *exec);
 void				ft_bzero_exec(t_exec *exec);
 void				ft_exec_tok_in(t_lex *lex, t_exec *exec);
 t_exec				*ft_initialize_struct_exec(void);
 void				ft_next_exec(t_exec *exec);
+void				ft_malloc_option_execve(t_lex *lex, t_exec *exec);
+void				ft_init_fill_exec(t_lex *lex, t_exec *exec, t_env *env);
+void				ft_fill_tab_cmd(t_lex *lex, t_exec *exec);
+void				ft_malloc_tab_file(t_lex *lex, t_exec *exec);
+void				ft_malloc_tab_file_heredoc(t_lex **lex, t_exec *exec);
+void				ft_fill_tab_file(t_lex *lex, t_exec *exec);
+void				ft_fill_tab_file2(t_lex **lex, t_exec *exec, int *i);
+void				ft_fill_tab_file3(t_lex **lex, t_exec *exec, int *i);
+void				ft_malloc_heredoc_str(t_exec *exec);
+char				*ft_find_path(t_env *env);
+int					ft_heredoc2(char *input, char *limiter, int fd);
+void				ft_heredoc0(t_lex **tmp);
+void				ft_print_1_exec(t_exec *exec);
+void				ft_print_2_exec(t_exec *exec);
+void				ft_print_3_exec(t_exec *exec);
 
 // NORME
 int					ft_first_lex_concat(t_lex *lex, char *input, int i,
 						int size);
 void				ft_first_lex_token(t_lex *lex, char *input, int i);
 
-
-void	ft_print_exec(t_exec *exec);
+void				ft_print_exec(t_exec *exec);
 
 // EXEC
-void	ft_exec(t_exec *exec, t_lex *lex, t_env *env, t_utils *utils);
+void				ft_exec(t_exec *exec, t_env *env, t_utils *utils,
+						t_lex *lex);
+void				ft_exec_no_pipe(t_exec *exec, t_env *env, t_utils *utils,
+						t_lex *lex);
+void				ft_init_fd_cmd(t_exec *exec);
+int					ft_check_builtin(t_exec *exec);
+int					ft_count_redir(t_exec *exec, char c);
+int					ft_count_redir_toto(t_exec *exec, char c);
+int					ft_open_toto(t_exec *exec, t_utils *utils);
+int					ft_open_in(t_exec *exec, t_utils *utils);
+int					ft_open_out(t_exec *exec, t_utils *utils);
+int					ft_no_pipe_redir(t_exec *exec, t_utils *utils);
+char				*ft_strchr(const char *s, int c);
+char				*ft_strcat_path(char *dest, char *src);
+char				*ft_strdup(const char *s);
+char				*ft_strdup_prog(const char *s);
+void				ft_exec_pipe(t_exec *exec, t_utils *utils, t_env *env,
+						t_lex *lex);
+int					ft_pipe_redir(t_exec *exec, t_utils *utils);
+void	ft_processus_no_pipe(t_exec *exec,
+							t_env *env,
+							t_utils *utils);
+void				ft_exec_prog(t_exec *exec);
+void				ft_constructor_cmd(t_exec *exec);
+void				ft_exec_prog_cwd(t_exec *exec, char *cmd_base);
+void				ft_processus_pipe(t_exec *exec, t_env *env, t_lex *lex,
+						t_utils *utils);
+void				ft_connect_redir(t_exec *exec, t_utils *utils);
+void				ft_connect_fd_cmd(t_exec *exec);
+void				ft_waitpid(t_exec *exec);
+
+int					ft_check_str(char *str, int i);
+
 #endif

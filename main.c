@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:41:14 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/08 21:59:49 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/10 21:25:24 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,48 +15,110 @@
 void	ft_free(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec)
 {
 	t_lex	*tmp;
-	t_env	*tmp2;
-	// int	i;
+	t_exec	*tmp2;
+	t_env	*tmp3;
+	int		i;
 
-	while (lex != NULL && lex->next != NULL)
+	while (lex != NULL)
 	{
-		tmp = lex;
+		if (lex->str != NULL)
+			free(lex->str);
 		if (lex->next != NULL)
+		{
+			tmp = lex;
 			lex = lex->next;
-		free(tmp->str);
-		free(tmp);
+			free(tmp);
+		}
+		else
+		{
+			free(lex);
+			break ;
+		}
 	}
-	free(lex->str);
-	free(lex);
-	while (env != NULL && env->next != NULL)
+	if (utils != NULL)
 	{
-		tmp2 = env;
-		if (env->next != NULL)
-			env = env->next;
-		free(tmp2->str);
-		free(tmp2);
+		if (utils->home_str != NULL)
+			free(utils->home_str);
+		free(utils);
 	}
-	free(env->str);
-	free(env);
-	if (utils->home_str != NULL)
-		free(utils->home_str);
-	free(utils);
-	// i = 0;
-	// while (exec != NULL)
-	// {
-	// 	free(exec->cmd);
-	// i = 0;
-	// while (exec->file != NULL)
-	// {
-	// 	free(exec->file[i]);
-	// 	i++;
-	// }
-	// free(exec->file);
-	// 	exec = exec->next;
-	// }
-	// free(exec);
-	(void)exec;
+	i = 0;
+	while (exec != NULL)
+	{
+		if (exec->str_cmd != NULL)
+			free(exec->str_cmd);
+		if (exec->heredoc != NULL)
+			free(exec->heredoc);
+		if (exec->cmd)
+			free(exec->cmd);
+		if (exec->path)
+		{
+			while (exec->path[i])
+			{
+				free(exec->path[i]);
+				i++;
+			}
+			free(exec->path);
+		}
+		if (exec->file)
+			free(exec->file);
+		if (exec->next != NULL)
+		{
+			tmp2 = exec;
+			exec = exec->next;
+			free(tmp2);
+		}
+		else
+		{
+			free(exec);
+			break ;
+		}
+	}
+	while (env != NULL)
+	{
+		if (env->str != NULL)
+			free(env->str);
+		if (env->next != NULL)
+		{
+			tmp3 = env;
+			env = env->next;
+			free(tmp3);
+		}
+		else
+		{
+			free(env);
+			break ;
+		}
+	}
 	return ;
+}
+
+int	ft_init(t_lex **lex, t_utils **utils, t_exec **exec)
+{
+	(*lex) = malloc(sizeof(t_lex));
+	if (!(*lex))
+		return (-1);
+	(*lex)->next = NULL;
+	(*utils) = malloc(sizeof(t_utils));
+	if (!utils)
+	{
+		free((*lex));
+		return (-1);
+	}
+	(*utils)->home_str = NULL;
+	(*exec) = malloc(sizeof(t_exec));
+	if (!(*exec))
+	{
+		free((*utils));
+		free((*lex));
+		return (-1);
+	}
+	(*exec)->str_cmd = NULL;
+	(*exec)->heredoc = NULL;
+	(*exec)->next = NULL;
+	(*exec)->cmd = NULL;
+	(*exec)->path = NULL;
+	(*exec)->file = NULL;
+	return (0);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -67,151 +129,30 @@ int	main(int argc, char **argv, char **envp)
 	t_utils	*utils;
 	t_exec	*exec;
 
-	exec = malloc(sizeof(t_exec));
-	utils = malloc(sizeof(t_utils));
-	utils->home_str = NULL;
-	env = ft_init_fill_env(envp);
-	lex = malloc(sizeof(t_lex));
+	lex = NULL;
+	utils = NULL;
+	exec = NULL;
 	input = NULL;
 	while (1)
 	{
 		input = readline(">");
+		env = ft_init_fill_env(envp);
+		if (ft_init(&lex, &utils, &exec) == -1)
+			return (-1);
 		add_history(input);
 		ft_lexer(input, lex);
-		if (ft_parser_k(lex, env) == 0) // $ + quotes
+		if (ft_parser_k(lex, env) == 0)
 		{
-			ft_organizer(&lex); //virer espace et quotes
+			ft_organizer(&lex);
 			if (ft_parser(lex) == 0)
 			{
 				ft_organizer_exec(lex, exec, env);
-				ft_exec(exec, lex, env, utils);
+				ft_exec(exec, env, utils, lex);
 			}
 		}
-		ft_print_exec(exec);
-		// EXECVE
-		// SIGNAUX
-		// RETOUR ERREUR VARIABLE GLOBALE
+		ft_free(lex, env, utils, exec);
 		free(input);
-		// ft_free(lex, env, utils, exec);
-		// return (0);
 	}
-	(void)exec;
-	(void)env;
-	(void)input;
 	(void)argc;
 	(void)argv;
-}
-
-void	ft_print_exec(t_exec *exec)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 1;
-	if (exec != NULL)
-	{
-		while (exec != NULL)
-		{
-			printf("---- EXEC %d ----\n", j);
-			if (exec->cmd != NULL)
-			{
-				while (exec->cmd[i] != NULL)
-				{
-					printf("CMD %d : %s\n", i, exec->cmd[i]);
-					// free(exec->cmd[i]);
-					i++;
-				}
-				// free(exec->cmd);
-			}
-			i = 0;
-			if (exec->file != NULL)
-			{
-				while (exec->file[i] != NULL)
-				{
-					printf("REDIR %d : %s\n", i, exec->file[i]);
-					// free(exec->file[i]);
-					i++;
-				}
-				// free(exec->cmd);
-			}
-			j++;
-			if (exec->next != NULL)
-				exec = exec->next;
-			else
-				break ;
-		}
-		// free (exec);
-	}
-}
-
-void	ft_all_builtin(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec)
-{
-	if (exec != NULL && exec->cmd != NULL && exec->cmd[0] != NULL)
-	{
-		if (ft_compare(exec->cmd[0], "pwd") == SUCCESS)
-			ft_builtin_pwd(1);
-		else if (ft_compare(exec->cmd[0], "cd") == SUCCESS)
-			ft_builtin_cd_all(lex, env, utils);
-		else if (ft_compare(exec->cmd[0], "echo") == SUCCESS)
-			ft_builtin_echo_all(lex->next, env);
-		else if (ft_compare(exec->cmd[0], "env") == SUCCESS)
-			ft_print_list_env(env);
-		else if (ft_compare(exec->cmd[0], "unset") == SUCCESS)
-			ft_unset_var(lex, env);
-		else if (ft_compare(exec->cmd[0], "export") == SUCCESS)
-			ft_export_var(lex, env);
-	}
-	return ;
-}
-
-int	ft_heredoc(t_lex *lex, t_env *env)
-{
-	t_lex	*tmp;
-	int		fd;
-	char	*limiter;
-	char	*input;
-	char	*file;
-
-	file = ".HEREDOC";
-	tmp = lex;
-	fd = 0;
-	while (tmp->token != TOK_TOTO && tmp != NULL && tmp->next != NULL)
-		tmp = tmp->next;
-	if (tmp->token == TOK_TOTO)
-	{
-		if (lex->next != NULL)
-			tmp = tmp->next;
-		if (tmp->next == NULL)
-		{
-			limiter = NULL;
-			input = NULL;
-		}
-		else
-		{
-			limiter = tmp->next->str;
-			input = limiter + 1;
-		}
-		fd = open(file, O_CREAT | O_RDWR | O_TRUNC, 0744);
-		while (1)
-		{
-			input = readline(" >>");
-			if (ft_strlen(input) == 0 && limiter != NULL)
-				ft_organizer_heredoc(input, fd);
-			else if (ft_strlen(input) != 0 && limiter == NULL)
-				ft_organizer_heredoc(input, fd);
-			else if (ft_strlen(input) == 0 && limiter == NULL)
-				break ;
-			else if (ft_compare(input, limiter) != SUCCESS)
-				ft_organizer_heredoc(input, fd);
-			else
-				break ;
-		}
-	}
-	else
-	{
-		return (1);
-	}
-	(void)env;
-	return (0);
 }
