@@ -6,11 +6,13 @@
 /*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:41:14 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/08 22:36:17 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/10 20:57:49 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_exstat;
 
 void	ft_free(t_lex *lex, t_env *env, t_utils *utils)
 {
@@ -47,19 +49,33 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_lex	*lex;
 	t_env	*env;
+	// t_env	*export;
 	char	*input;
 	t_utils	*utils;
 	t_exec	*exec;
-
+	
 	exec = malloc(sizeof(t_exec));
 	utils = malloc(sizeof(t_utils));
 	utils->home_str = NULL;
 	env = ft_init_fill_env(envp);
+	// export = ft_init_fill_env(envp);
 	lex = malloc(sizeof(t_lex));
-	input = NULL;
+	
+	// signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, ft_detect_sig);
+	signal(SIGQUIT, ft_detect_sig);
+	
 	while (1)
 	{
-		input = readline(">");
+	
+		input = readline("minishell > ");
+		if(!input)
+		{
+			ft_putstr_fd("exit", 2);
+			ft_putstr_fd("\n", 2);
+			g_exstat = 0;
+			return(1) ;
+		}
 		add_history(input);
 		ft_lexer(input, lex);
 		if (ft_parser_k(lex, env) == 0) // $ + quotes
@@ -71,9 +87,16 @@ int	main(int argc, char **argv, char **envp)
 				ft_organizer_exec(lex, exec, env);
 			}
 		}
-		ft_print_3_exec(exec);
+		// ft_print_lex_k(lex);
+		ft_all_builtin(lex, env, utils);
+		// ft_print_3_exec(exec);
+		// ft_print_lex_k(lex);
 		free(input);
 	}
 	(void)argc;
 	(void)argv;
+	(void)exec;
+	(void)lex;
+	(void)input;
+	(void)env;
 }

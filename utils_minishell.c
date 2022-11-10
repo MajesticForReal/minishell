@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_minishell.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 16:19:32 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/06 20:59:32 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/10 16:48:21 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,14 +116,14 @@ void	ft_print_lex_k(t_lex *lex)
 		printf("lex != NULL\n");
 	while (lex->next != NULL)
 	{
-		printf("%d = tokken: %d / STR: %s\n", i, lex->token, lex->str);
+		printf("%d = tokken: %d / STR: %s.\n", i, lex->token, lex->str);
 		if (lex->next != NULL)
 			lex = lex->next;
 		i++;
 	}
 	if (lex != NULL)
 	{
-		printf("%d = tokken: %d / STR: %s\n", i, lex->token, lex->str);
+		printf("%d = tokken: %d / STR: %s.\n", i, lex->token, lex->str);
 		printf("----end----\n\n");
 	}
 }

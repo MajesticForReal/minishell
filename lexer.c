@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:18:43 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/05 16:00:28 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/10 15:37:38 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	ft_first_lex(t_lex *lex, char *input)
 void	ft_lexer(char *input, t_lex *lex)
 {
 	int	i;
-
+	
 	i = ft_first_lex(lex, input);
 	while (input[i])
 	{

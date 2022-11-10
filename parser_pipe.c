@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_pipe.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 20:02:05 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/06 20:18:45 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/10 15:52:48 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	ft_quotes(t_lex *lex)
 	if (nb_dq % 2 != 0 || nb_sq % 2 != 0)
 	{
 		ft_putstr_fd("syntax error quotes\n", 2);
+		g_exstat = 2;
 		return (-1);
 	}
 	return (1);
@@ -40,12 +41,14 @@ int	ft_pipe_2(t_lex *lex)
 	if (ft_strlen(lex->str) < 2)
 	{
 		ft_putstr_fd("syntax error near unexpected token `|'\n", 2);
+		g_exstat = 2;
 		return (-1);
 	}
 	else if (ft_strlen(lex->str) > 1)
 	{
 		ft_putstr_fd("syntax error near unexpected token `||'\n",
 			2);
+		g_exstat = 2;
 		return (-1);
 	}
 	return (0);
@@ -57,6 +60,7 @@ int	ft_pipe_3(t_lex *lex)
 		&& ft_strlen(lex->next->str) < 2)
 	{
 		ft_putstr_fd("syntax error near unexpected token `|'\n", 2);
+		g_exstat = 2;
 		return (-1);
 	}
 	else if (lex->next != NULL && lex->next->token == TOK_PIPE
@@ -64,11 +68,13 @@ int	ft_pipe_3(t_lex *lex)
 	{
 		ft_putstr_fd("syntax error near unexpected token `||'\n",
 			2);
+		g_exstat = 2;
 		return (-1);
 	}
 	else if (lex->next == NULL)
 	{
 		ft_putstr_fd("syntax error near unexpected token `|'\n", 2);
+		g_exstat = 2;
 		return (-1);
 	}
 	return (0);

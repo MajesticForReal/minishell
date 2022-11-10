@@ -6,7 +6,7 @@
 #    By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/27 16:02:00 by y klaurier        #+#    #+#              #
-#    Updated: 2022/11/08 22:02:52 by klaurier         ###   ########.fr        #
+#    Updated: 2022/11/10 20:11:27 by klaurier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,11 @@
 
 SRCS 		=	main.c \
 				builtin_cd.c \
+				builtin_cd2.c \
 				builtin_echo.c \
+				builtin_echo_2.c \
+				builtin_env.c \
+				builtin_env2.c \
 				builtin_export.c \
 				builtin_pwd.c \
 				builtin_unset.c \
@@ -44,6 +48,9 @@ SRCS 		=	main.c \
 				dollar.c \
 				fill_tab_file.c \
 				fill_tab_cmd.c \
+				signal.c \
+				itoa.c \
+				doll_exit.c\
 				organizer_exec.c
 
 OBJS		=	${SRCS:.c=.o}

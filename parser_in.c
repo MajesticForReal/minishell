@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parser_in.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 19:53:28 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/06 20:25:57 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/09 23:19:13 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 
 int	ft_in_22(t_lex **lex)
 {
@@ -19,6 +20,7 @@ int	ft_in_22(t_lex **lex)
 	{
 		ft_putstr_fd("syntax error near unexpected token `<'\n",
 			2);
+		g_exstat = 2;
 		return (-1);
 	}
 	else if (((*lex)->token == TOK_IN || (*lex)->token == TOK_TOTO)
@@ -26,6 +28,7 @@ int	ft_in_22(t_lex **lex)
 	{
 		ft_putstr_fd("syntax error near unexpected token `<<'\n",
 			2);
+		g_exstat = 2;
 		return (-1);
 	}
 	else if (((*lex)->token == TOK_IN || (*lex)->token == TOK_TOTO)
@@ -33,6 +36,7 @@ int	ft_in_22(t_lex **lex)
 	{
 		ft_putstr_fd("syntax error near unexpected token `<<<'\n",
 			2);
+		g_exstat = 2;
 		return (-1);
 	}
 	return (0);
@@ -45,6 +49,7 @@ int	ft_in_2(t_lex **lex)
 	{
 		ft_putstr_fd("syntax error near unexpected token `newline'\n",
 			2);
+		g_exstat = 2;
 		return (-1);
 	}
 	else if (ft_in_22(lex) == -1)
@@ -64,6 +69,7 @@ int	ft_in_elseif_2(t_lex **lex)
 		ft_putchar_fd((*lex)->next->next->str[0], 2);
 		ft_putchar_fd((*lex)->next->next->str[1], 2);
 		ft_putstr_fd("'\n", 2);
+		g_exstat = 2;
 		return (-1);
 	}
 	return (0);
@@ -80,6 +86,7 @@ int	ft_in_elseif_3(t_lex **lex)
 		ft_putchar_fd((*lex)->next->str[0], 2);
 		ft_putchar_fd((*lex)->next->str[1], 2);
 		ft_putstr_fd("'\n", 2);
+		g_exstat = 2;
 		return (-1);
 	}
 	return (0);

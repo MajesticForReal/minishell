@@ -6,7 +6,7 @@
 /*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 16:44:55 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/01 14:19:05 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/10 15:53:23 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,13 @@ void	ft_redirection(t_lex *lex)
 			&& lex->str[1] == '\0' && lex->next == NULL)
 		{
 			ft_putstr_fd("syntax error near unexpected token `newline'\n", 2);;
+			g_exstat = 2;
 		}
 		else if(lex->token == TOK_OUT && lex->str[0] == '>'
 			&& lex->str[1] == '>' && lex->next == NULL)
 		{
 			ft_putstr_fd("syntax error near unexpected token `newline'\n", 2);;
+			g_exstat = 2;
 		}
 		else if(lex->token == TOK_OUT && lex->next->token == TOK_WORD
 			&& lex->str[0] == '>' && lex->str[1] == '\0')
