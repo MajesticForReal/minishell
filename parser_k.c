@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser_k.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 19:02:36 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/08 14:26:29 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/08 22:53:00 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 int	ft_compare_just_a_part_2(char *var_more)
 {
@@ -34,12 +33,12 @@ int	ft_compare_just_a_part_2(char *var_more)
 	while (++j < i)
 		var_only[j] = var_more[j];
 	var_only[j] = '\0';
-	return(ft_var_in_env(var_only));
+	return (ft_var_in_env(var_only));
 }
 
-int		ft_var_in_env(char *var_only)
+int	ft_var_in_env(char *var_only)
 {
-	if(getenv(var_only) != NULL)
+	if (getenv(var_only) != NULL)
 	{
 		free(var_only);
 		return (SUCCESS);
@@ -51,11 +50,10 @@ int		ft_var_in_env(char *var_only)
 	}
 }
 
-
 void	ft_change_doll_egal(t_lex *lex)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 1;
@@ -80,8 +78,8 @@ void	ft_change_doll_egal(t_lex *lex)
 void	ft_free_doll_egal(t_lex *lex)
 {
 	t_lex	*tmp;
-	
-	if(lex == NULL)
+
+	if (lex == NULL)
 		return ;
 	if (lex->next->next != NULL)
 	{
@@ -97,8 +95,6 @@ void	ft_free_doll_egal(t_lex *lex)
 		free(tmp->str);
 		free(tmp);
 	}
-
-	
 }
 
 void	ft_free_write_var_fd(char *concat, char *str, int fd)
@@ -107,5 +103,4 @@ void	ft_free_write_var_fd(char *concat, char *str, int fd)
 	ft_putstr_fd("\n", fd);
 	free(concat);
 	free(str);
-
 }

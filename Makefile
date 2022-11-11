@@ -3,14 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+         #
+#    By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/27 16:02:00 by y klaurier        #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2022/11/10 22:20:37 by klaurier         ###   ########.fr        #
+=======
+#    Updated: 2022/11/10 22:20:42 by anrechai         ###   ########.fr        #
+>>>>>>> dab90028671da72fa7a8909efaf280db05bac059
 #                                                                              #
 # **************************************************************************** #
-
-
 
 SRCS 		=	main.c \
 				builtin_cd.c \
@@ -35,11 +37,15 @@ SRCS 		=	main.c \
 				utils_minishell.c\
 				utils_minishell2.c\
 				utils_minishell3.c\
-				redirection.c\
+				utils_minishell4.c\
 				parser_limiter.c \
 				organizer.c\
 				organizer2.c\
 				organizer3.c\
+				open.c\
+				exec.c\
+				exec_no_pipe.c\
+				exec_w_pipe.c\
 				heredoc_doll.c\
 				heredoc.c\
 				var_doll.c \

@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:00:55 by klaurier          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/11/11 21:43:14 by klaurier         ###   ########.fr       */
+=======
+/*   Updated: 2022/11/11 19:37:09 by anrechai         ###   ########.fr       */
+>>>>>>> dab90028671da72fa7a8909efaf280db05bac059
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +23,7 @@
 # define STDERR 2
 
 # include "minishell.h"
+# include <dirent.h>
 # include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -62,11 +67,17 @@ typedef struct s_env
 
 typedef struct s_utils
 {
+	int				i;
+	int				infile;
+	int				outfile;
 	char			*home_str;
+	int				fd_pipe[2];
 }					t_utils;
 
 typedef struct s_exec
 {
+	pid_t			process_id;
+	int				fd_cmd[2];
 	char			**cmd;
 	char			**path;
 	char			**file;
@@ -75,11 +86,11 @@ typedef struct s_exec
 	int				nb_option;
 	int				nb_file_redir;
 	int				cmd_size;
-	char			**redir;
 	int				token_before;
 	struct s_exec	*next;
 }					t_exec;
 
+<<<<<<< HEAD
 typedef struct s_pipex
 {
 	char			*home_str;
@@ -99,6 +110,8 @@ typedef struct s_pipex
 
 }					t_pipex;
 
+=======
+>>>>>>> dab90028671da72fa7a8909efaf280db05bac059
 // utils_minishell
 int					ft_compare(char *str, char *str2);
 void				ft_putstr(char *str);
@@ -129,23 +142,22 @@ char				**ft_size_up_tab(char **strs, int i);
 int					ft_compare_index(t_env *export, char *str);
 void				ft_replace_t_env(t_env *env, char *str);
 int					ft_compare_stop_egal(char *str, char *str2);
-void				ft_is_not_valid_n(t_lex *lex);
-void				ft_print_argument(t_lex *lex, int valid_n);
-void				ft_is_valid_n(t_lex *lex);
+void				ft_is_not_valid_n(t_lex *lex, t_exec *exec);
+void				ft_print_argument(t_lex *lex, int valid_n, t_exec *exec);
+void				ft_is_valid_n(t_lex *lex, t_exec *exec);
 int					ft_first_is_alpha(char *lex_str);
 int					ft_str_have_egal(char *lex_str);
 int					ft_detect_special_char_export(char *lex_str);
-char				*ft_builtin_pwd(int option);
-int					ft_builtin_cd_dir(char *input);
+char				*ft_builtin_pwd(int option, t_exec *exec);
+int					ft_builtin_cd_dir(char *input, t_exec *exec);
 char				*ft_parsing_cd_dir(char *lex_str);
 char				*ft_concat(char *str_1, char *str_2);
 int					ft_builtin_cd_only(t_env *env, t_utils *utils);
-int					ft_builtin_cd_back(void);
+int					ft_builtin_cd_back(t_exec *exec);
 int					ft_cd_is_back(char *input);
-int					ft_builtin_echo_only(void);
+int					ft_builtin_echo_only(t_exec *exec);
 int					ft_builtin_env(char **envp);
 void				test_signal(int code);
-void				ft_builtin_echo_option(t_lex *lex);
 int					ft_print_2_d_tab(char **strs, int index);
 void				ft_print_2_d_tab_test(char **strs);
 int					ft_builtin_detect_path_a_r(char *lex_str);
@@ -165,11 +177,17 @@ void				ft_export_var(t_lex *lex, t_env *env, t_env *export);
 void				ft_add_back_str(t_env *env, char *str);
 void				ft_unset_var(t_lex *lex, t_env *env);
 void				ft_del_struct(t_env *env);
+<<<<<<< HEAD
 void				ft_all_builtin(t_lex *lex, t_env *env, t_utils *utils, t_env *export);
 void				ft_builtin_cd_all(t_lex *lex, t_env *env, t_utils *utils);
 void				ft_builtin_echo_all(t_lex *lex, t_env *env);
+=======
+void				ft_all_builtin(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec);
+void				ft_builtin_cd_all(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec);
+void				ft_builtin_echo_all(t_lex *lex, t_env *env, t_exec *exec);
+>>>>>>> dab90028671da72fa7a8909efaf280db05bac059
 int					ft_builtin_echo_detect_n(char *lex_str);
-void				ft_builtin_echo_option(t_lex *lex);
+void				ft_builtin_echo_option(t_lex *lex, t_exec *exec);
 void				ft_not_n(t_lex *lex, int *valide_n);
 int					ft_find_variable_in_env(char *var_env, char *lex_str);
 int					ft_check_valid_export_env(char *lex_str);
@@ -251,8 +269,10 @@ void				ft_cut_after_special_char2(t_lex *lex, int i);
 void				ft_free_after_special_char2(t_lex *lex);
 void				ft_free_doll_egal(t_lex *lex);
 void				ft_write_var_env_in_fd2(char *input, int fd, int i);
-int					ft_write_var_env_in_fd3(char *concat, char *getenv_result, int j, int i);
-void				ft_write_var_env_in_fd4(char *concat, char *input, int k, int i);
+int					ft_write_var_env_in_fd3(char *concat, char *getenv_result,
+						int j, int i);
+void				ft_write_var_env_in_fd4(char *concat, char *input, int k,
+						int i);
 void				ft_free_write_var_fd(char *concat, char *str, int fd);
 int					ft_last_alpha_num(t_lex *lex);
 void				ft_cut_after_special_char(t_lex *lex);
@@ -269,8 +289,8 @@ char				*ft_parser_limiter(t_lex *tmp);
 
 //redirection
 void				ft_redirection(t_lex *lex);
-void				ft_free(t_lex *lex, t_env *env, t_utils *utils);
-// ls -lma 1 > 2 3 | cat m4 < 5 < 6 | echo -n 7 8 >> 9 10
+void				ft_free(t_lex *lex, t_env *env, t_utils *utils,
+						t_exec *exec);
 
 // Organizer exec
 void				ft_organizer_exec(t_lex *lex, t_exec *exec, t_env *env);
@@ -280,7 +300,7 @@ void				ft_exec_tok_in(t_lex *lex, t_exec *exec);
 t_exec				*ft_initialize_struct_exec(void);
 void				ft_next_exec(t_exec *exec);
 void				ft_malloc_option_execve(t_lex *lex, t_exec *exec);
-void 				ft_init_fill_exec(t_lex *lex, t_exec *exec, t_env *env);
+void				ft_init_fill_exec(t_lex *lex, t_exec *exec, t_env *env);
 void				ft_fill_tab_cmd(t_lex *lex, t_exec *exec);
 void				ft_malloc_tab_file(t_lex *lex, t_exec *exec);
 void				ft_malloc_tab_file_heredoc(t_lex **lex, t_exec *exec);
@@ -291,7 +311,7 @@ void				ft_malloc_heredoc_str(t_exec *exec);
 char				*ft_find_path(t_env *env);
 int					ft_heredoc2(char *input, char *limiter, int fd);
 void				ft_heredoc0(t_lex **tmp);
-void 				ft_print_1_exec(t_exec *exec);
+void				ft_print_1_exec(t_exec *exec);
 void				ft_print_2_exec(t_exec *exec);
 void				ft_print_3_exec(t_exec *exec);
 
@@ -303,11 +323,46 @@ void				ft_putendl_fd(char *s, int fd);
 void				*ft_memdel(void *ptr);
 void				ft_detect_sig(int sig);
 
-// ls -lma 1 2 > 3 4 | << salut | echo 5 < 6 7
 // NORME
 int					ft_first_lex_concat(t_lex *lex, char *input, int i,
 						int size);
 void				ft_first_lex_token(t_lex *lex, char *input, int i);
 
+void				ft_print_exec(t_exec *exec);
+
+// EXEC
+void				ft_exec(t_exec *exec, t_env *env, t_utils *utils,
+						t_lex *lex);
+void				ft_exec_no_pipe(t_exec *exec, t_env *env, t_utils *utils,
+						t_lex *lex);
+void				ft_init_fd_cmd(t_exec *exec);
+int					ft_check_builtin(t_exec *exec);
+int					ft_count_redir(t_exec *exec, char c);
+int					ft_count_redir_toto(t_exec *exec, char c);
+int					ft_open_toto(t_exec *exec, t_utils *utils);
+int					ft_open_in(t_exec *exec, t_utils *utils);
+int					ft_open_out(t_exec *exec, t_utils *utils);
+int					ft_no_pipe_redir(t_exec *exec, t_utils *utils);
+char				*ft_strchr(const char *s, int c);
+char				*ft_strcat_path(char *dest, char *src);
+char				*ft_strdup(const char *s);
+char				*ft_strdup_prog(const char *s);
+void				ft_exec_pipe(t_exec *exec, t_utils *utils, t_env *env,
+						t_lex *lex);
+int					ft_pipe_redir(t_exec *exec, t_utils *utils);
+void	ft_processus_no_pipe(t_exec *exec,
+							t_env *env,
+							t_utils *utils);
+void				ft_exec_prog(t_exec *exec);
+void				ft_constructor_cmd(t_exec *exec);
+void				ft_exec_prog_cwd(t_exec *exec, char *cmd_base);
+void				ft_processus_pipe(t_exec *exec, t_env *env, t_lex *lex,
+						t_utils *utils);
+void				ft_connect_redir(t_exec *exec, t_utils *utils);
+void				ft_connect_fd_cmd(t_exec *exec);
+void				ft_waitpid(t_exec *exec);
+
+int					ft_check_str(char *str, int i);
+void	ft_init_fd_cmd_no_pipe(t_exec *exec);
 
 #endif

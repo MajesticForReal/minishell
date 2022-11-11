@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doll_with_num.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:23:49 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/08 14:24:17 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/08 22:54:01 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	ft_cut_after_1_num(t_lex *lex)
 
 void	ft_free_after_1_num(t_lex *lex)
 {
-	if(lex == NULL)
+	if (lex == NULL)
 		return ;
 	if (lex->next->next != NULL)
 	{
@@ -66,6 +66,7 @@ void	ft_free_after_1_num(t_lex *lex)
 		return ;
 	}
 }
+
 int	ft_after_doll_is_num(t_lex *lex)
 {
 	if (lex->next->str[0] >= '0' && lex->next->str[0] <= '9'

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_doll.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:10:24 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/08 14:11:45 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/08 22:51:11 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 void	ft_dollar_heredoc(char *input, int fd)
 {
@@ -43,7 +43,7 @@ void	ft_dollar_heredoc(char *input, int fd)
 
 void	ft_write_var_env_in_fd(char *input, int fd)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (input[i] != '\0')
@@ -72,7 +72,7 @@ void	ft_write_var_env_in_fd2(char *input, int fd, int i)
 
 	j = -1;
 	k = 0;
-	concat = NULL;	
+	concat = NULL;
 	str = malloc(sizeof(char) * i + 1);
 	if (str == NULL)
 		return ;
@@ -90,7 +90,7 @@ void	ft_write_var_env_in_fd2(char *input, int fd, int i)
 	ft_free_write_var_fd(concat, str, fd);
 }
 
-void ft_write_var_env_in_fd4(char *concat, char *input, int k, int i)
+void	ft_write_var_env_in_fd4(char *concat, char *input, int k, int i)
 {
 	while (input[k] != '\0')
 	{
@@ -110,5 +110,5 @@ int	ft_write_var_env_in_fd3(char *concat, char *getenv_result, int j, int i)
 	j = 0;
 	while (getenv_result[++i] != '\0')
 		concat[i] = getenv_result[i];
-	return(i);
+	return (i);
 }

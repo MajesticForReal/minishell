@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 17:58:17 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/06 20:50:20 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/10 21:20:04 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,20 @@ void	ft_fill_env(char **envp, t_env *env)
 	int	i;
 
 	i = 0;
-	env->str = malloc(sizeof(char) * (ft_strlen(envp[0]) + 1));
-	while (envp[0][i])
+	if (envp)
 	{
-		env->str[i] = envp[0][i];
-		i++;
+		env->str = malloc(sizeof(char) * (ft_strlen(envp[0]) + 1));
+		while (envp[0][i])
+		{
+			env->str[i] = envp[0][i];
+			i++;
+		}
+		env->str[i] = '\0';
+		env->next = NULL;
+		i = 0;
+		while (envp[++i] != NULL)
+			ft_add_back_envp(env, envp, i);
 	}
-	env->str[i] = '\0';
-	env->next = NULL;
-	i = 0;
-	while (envp[++i] != NULL)
-		ft_add_back_envp(env, envp, i);
 }
 
 void	ft_add_back_envp(t_env *env, char **envp, int j)

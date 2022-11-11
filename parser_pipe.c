@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_pipe.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 20:02:05 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/10 15:52:48 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/10 22:15:46 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,11 @@ int	ft_pipe_3(t_lex *lex)
 	{
 		ft_putstr_fd("syntax error near unexpected token `|'\n", 2);
 		g_exstat = 2;
+		return (-1);
+	}
+	else if (ft_strlen(lex->str) >= 2)
+	{
+		ft_putstr_fd("syntax error near unexpected token `||'\n", 2);
 		return (-1);
 	}
 	return (0);

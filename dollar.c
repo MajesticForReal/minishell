@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   dollar.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:24:58 by klaurier          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/11/11 21:57:01 by klaurier         ###   ########.fr       */
+=======
+/*   Updated: 2022/11/11 17:53:07 by anrechai         ###   ########.fr       */
+>>>>>>> dab90028671da72fa7a8909efaf280db05bac059
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +18,8 @@
 
 int	ft_parser_k(t_lex *lex, t_env *env)
 {
+	if (lex->str == NULL || lex->str[0] == '\0')
+		return (-1);
 	if (ft_check_quotes(lex) == 0)
 		ft_parser_doll(lex, env);
 	else

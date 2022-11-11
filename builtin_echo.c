@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:09:54 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/10 17:51:37 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/11 16:14:18 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_is_valid_n(t_lex *lex)
+void	ft_is_valid_n(t_lex *lex, t_exec *exec)
 {
 		if(lex->token == TOK_SPACE && lex->next != NULL
 		&& (lex->next->token == TOK_SPACE
 		|| lex->next->token == TOK_WORD))
 		{
-			ft_putstr_fd(" ", 1);
+			ft_putstr_fd(" ", exec->fd_cmd[1]);
 			return ;
 		}
 		else if(lex->token == TOK_SPACE && lex->next == NULL)
@@ -26,30 +26,30 @@ void	ft_is_valid_n(t_lex *lex)
 		else if(lex->token == TOK_SPACE && lex->next->token != TOK_SPACE && lex->next->token != TOK_WORD)
 			return ;
 		else if(lex->token == TOK_WORD)
-			ft_putstr_fd(lex->str, 1);
+			ft_putstr_fd(lex->str, exec->fd_cmd[1]);
 		return ;
 }
 
 
-void	ft_is_not_valid_n(t_lex *lex)
+void	ft_is_not_valid_n(t_lex *lex, t_exec *exec)
 {
 		if(lex->token == TOK_SPACE && lex->next != NULL
 			&& (lex->next->token == TOK_SPACE
 			|| lex->next->token == TOK_WORD))
-			ft_putstr_fd(" ", 1);
+			ft_putstr_fd(" ", exec->fd_cmd[1]);
 		else if(lex->token == TOK_SPACE && lex->next == NULL)
-			ft_putstr_fd("\n", 1);
+			ft_putstr_fd("\n", exec->fd_cmd[1]);
 		else if(lex->token == TOK_SPACE && lex->next->token != TOK_SPACE && lex->next->token != TOK_WORD)
-			ft_putstr_fd("\n", 1);
+			ft_putstr_fd("\n", exec->fd_cmd[1]);
 		else if(lex->token == TOK_WORD && lex->next == NULL)
 		{
-			ft_putstr_fd(lex->str, 1);
-			ft_putstr_fd("\n", 1);
+			ft_putstr_fd(lex->str, exec->fd_cmd[1]);
+			ft_putstr_fd("\n", exec->fd_cmd[1]);
 		}
 		else if(lex->token == TOK_WORD && lex->next != NULL)
-			ft_putstr_fd(lex->str, 1);
+			ft_putstr_fd(lex->str, exec->fd_cmd[1]);
 		else if(lex->token == TOK_WORD && lex->next->token != TOK_WORD && lex->next->token != TOK_SPACE)
-			ft_putstr_fd(lex->str, 1);
+			ft_putstr_fd(lex->str, exec->fd_cmd[1]);
 		return ;
 }
 
@@ -72,20 +72,20 @@ int	ft_builtin_echo_detect_n(char *lex_str)
 	return (1);
 }
 
-void	ft_builtin_echo_all(t_lex *lex, t_env *env)
+void	ft_builtin_echo_all(t_lex *lex, t_env *env, t_exec *exec)
 {
 	if(lex->next != NULL && lex->next->token == TOK_SPACE)
 	{
 		lex = lex->next;
-		if(lex->next != NULL && lex->next->token == TOK_WORD)
+		if(lex->next != NULL)
 		{
-			ft_builtin_echo_option(lex);
+			ft_builtin_echo_option(lex, exec);
 		}
 		else
-			ft_builtin_echo_only();
+			ft_builtin_echo_only(exec);
 	}
 	else
-		ft_builtin_echo_only();
+		ft_builtin_echo_only(exec);
 		
 	(void)env;
 	(void)lex;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_doll.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:15:21 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/08 14:18:41 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/08 22:52:15 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	ft_change_list_to_var(t_lex *lex)
 
 	tmp = NULL;
 	i = 0;
-	j = ft_last_alpha_num(lex);
+	j = (ft_last_alpha_num(lex) - 1);
 	i = ft_strlen(getenv(ft_cut_var_more(lex->next->str)));
 	i = i + ft_char_after_var(lex);
 	tmp_var = getenv(ft_cut_var_more(lex->next->str));
@@ -105,11 +105,10 @@ void	ft_change_list_to_var(t_lex *lex)
 	i = -1;
 	while (tmp_var[++i] != '\0')
 		lex->str[i] = tmp_var[i];
-	while (lex->next->str[j] != '\0')
+	while (lex->next->str[++j] != '\0')
 	{
 		lex->str[i] = lex->next->str[j];
 		i++;
-		j++;
 	}
 	lex->str[i] = '\0';
 	ft_free_tmp_list_to_var(lex, tmp);

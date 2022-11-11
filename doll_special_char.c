@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doll_special_char.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:19:15 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/08 14:21:55 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/08 22:52:27 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_cut_after_special_char(t_lex *lex)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	free(lex->str);
@@ -62,8 +62,8 @@ void	ft_cut_after_special_char2(t_lex *lex, int i)
 void	ft_free_after_special_char2(t_lex *lex)
 {
 	t_lex	*tmp;
-	
-	if(lex == NULL)
+
+	if (lex == NULL)
 		return ;
 	if (lex->next->next != NULL)
 	{

@@ -3,30 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 17:50:22 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/10 17:51:40 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/11 16:08:30 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_builtin_echo_only(void)
+int	ft_builtin_echo_only(t_exec *exec)
 {
-	ft_putstr_fd("\n", 1);
+	ft_putstr_fd("\n", exec->fd_cmd[1]);
 	return (SUCCESS);
 }
 
-void	ft_print_argument(t_lex *lex, int valid_n)
+void	ft_print_argument(t_lex *lex, int valid_n, t_exec *exec)
 {
 	if (valid_n == 1)
-		ft_is_valid_n(lex);
+		ft_is_valid_n(lex, exec);
 	else
-		ft_is_not_valid_n(lex);
+		ft_is_not_valid_n(lex, exec);
 }
 
-void	ft_builtin_echo_option(t_lex *lex)
+void	ft_builtin_echo_option(t_lex *lex, t_exec *exec)
 {
 	int	valide_n;
 	int	print_n_now;
@@ -46,7 +46,7 @@ void	ft_builtin_echo_option(t_lex *lex)
 		}
 		else
 		{
-			ft_print_argument(lex, valide_n);
+			ft_print_argument(lex, valide_n, exec);
 			lex = lex->next;
 			print_n_now = 1;
 		}
