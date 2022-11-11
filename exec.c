@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 21:56:30 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/10 21:43:21 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/11 21:53:31 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,22 @@ void	ft_init_fd_cmd(t_exec *exec)
 {
 	while (exec != NULL)
 	{
-		exec->fd_cmd[0] = STDIN_FILENO;
-		exec->fd_cmd[1] = STDOUT_FILENO;
+		exec->fd_cmd[0] = dup(STDIN_FILENO);
+		exec->fd_cmd[1] = dup(STDOUT_FILENO);
+		if (exec->next != NULL)
+			exec = exec->next;
+		else
+			break ;
+	}
+	return ;
+}
+
+void	ft_init_fd_cmd_no_pipe(t_exec *exec)
+{
+	while (exec != NULL)
+	{
+		exec->fd_cmd[0] = dup(STDIN_FILENO);
+		exec->fd_cmd[1] = dup(STDOUT_FILENO);
 		if (exec->next != NULL)
 			exec = exec->next;
 		else
@@ -59,6 +73,7 @@ void	ft_constructor_cmd(t_exec *exec)
 	}
 	write(2, cmd_base, ft_strlen(cmd_base));
 	write(2, ": command not found\n", 20);
+	free(new_path);
 	free(my_cmd);
 	free(cmd_base);
 }
@@ -92,6 +107,7 @@ void	ft_exec_prog_cwd(t_exec *exec, char *cmd_base)
 	buf = NULL;
 	tmp = getcwd(buf, size);
 	free(exec->cmd[0]);
+	exec->cmd[0] = NULL;
 	buf = ft_strcat_path(tmp, cmd_base + 2);
 	exec->cmd[0] = buf;
 	if (access(exec->cmd[0], X_OK) == 0)
@@ -123,14 +139,20 @@ void	ft_exec_prog(t_exec *exec)
 	}
 	while (exec->path && exec->path[++i])
 	{
-		free(exec->cmd[0]);
-		exec->cmd[0] = NULL;
+		free(new_path);
+		new_path = NULL;
 		new_path = ft_strcat_path(exec->path[i], my_cmd);
 		if (new_path == NULL)
 			return ;
 		exec->cmd[0] = new_path;
 		if (access(new_path, X_OK) == 0)
-			execve(new_path, exec->cmd, NULL);
+		{
+			write(2, cmd_base, ft_strlen(cmd_base));
+			write(2, ": No such file or directory\n", 28);
+			free(my_cmd);
+			free(cmd_base);
+			return ;
+		}
 	}
 	ft_exec_prog_cwd(exec, cmd_base);
 	write(2, cmd_base, ft_strlen(cmd_base));
@@ -143,11 +165,11 @@ void	ft_exec(t_exec *exec, t_env *env, t_utils *utils, t_lex *lex)
 {
 	utils->infile = -1;
 	utils->outfile = -1;
-	if (exec->cmd[0] != NULL && exec->next == NULL)
+	if (exec->next == NULL)
 	{
 		ft_exec_no_pipe(exec, env, utils, lex);
 	}
-	else if (exec->cmd[0] != NULL && exec->next != NULL)
+	else if (exec->next != NULL)
 	{
 		ft_exec_pipe(exec, utils, env, lex);
 		ft_waitpid(exec);
@@ -168,6 +190,7 @@ void	ft_waitpid(t_exec *exec)
 		// 	g_status = WEXITSTATUS(g_status);
 		// else if (WIFSIGNALED(g_status))
 		// 	g_status = WTERMSIG(g_status) + 128;
+		// SIGNAUX
 		// signal(SIGQUIT, SIG_IGN);
 		// signal(SIGINT, handle_sig_parent);
 		if (exec->next != NULL)

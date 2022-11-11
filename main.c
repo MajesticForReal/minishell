@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:41:14 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/10 22:16:51 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/11 17:59:20 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ int	ft_init(t_lex **lex, t_utils **utils, t_exec **exec)
 	(*lex) = malloc(sizeof(t_lex));
 	if (!(*lex))
 		return (-1);
+	(*lex)->str = NULL;
 	(*lex)->next = NULL;
 	(*utils) = malloc(sizeof(t_utils));
 	if (!utils)
@@ -133,9 +134,19 @@ int	main(int argc, char **argv, char **envp)
 	utils = NULL;
 	exec = NULL;
 	input = NULL;
+	signal(SIGINT, ft_detect_sig);
+	signal(SIGQUIT, ft_detect_sig);
 	while (1)
 	{
-		input = readline(">");
+		input = readline("minishell > ");
+		if (!input)
+		{
+			// ft_free(lex, env, utils, exec);
+			ft_putstr_fd("exit", 2);
+			ft_putstr_fd("\n", 2);
+			g_exstat = 0;
+			return (1);
+		}
 		env = ft_init_fill_env(envp);
 		if (ft_init(&lex, &utils, &exec) == -1)
 			return (-1);
@@ -155,8 +166,4 @@ int	main(int argc, char **argv, char **envp)
 	}
 	(void)argc;
 	(void)argv;
-	(void)exec;
-	(void)lex;
-	(void)input;
-	(void)env;
 }

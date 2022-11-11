@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 15:18:23 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/10 21:26:06 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/11 19:36:55 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,62 +30,49 @@ int	ft_count_redir(t_exec *exec, char c)
 
 void	ft_exec_no_pipe(t_exec *exec, t_env *env, t_utils *utils, t_lex *lex)
 {
-	ft_init_fd_cmd(exec);
+	ft_init_fd_cmd_no_pipe(exec);
 	if (ft_no_pipe_redir(exec, utils) == EXIT_FAILURE)
 		return ;
 	if (ft_check_builtin(exec) == -1)
 	{
-			exec->process_id = fork();
-			if (exec->process_id < 0)
-				return (perror("minishell: fork:"));
-			// SIGNAUX
-			// signal(SIGQUIT, handle_sig_child);
-			// signal(SIGINT, handle_sig_child);
-			if (exec->process_id== 0 && exec->cmd != NULL && exec->cmd[0][0] == '.'
-				&& exec->cmd[0][1] == '/')
-					ft_exec_prog(exec);
-			else if (exec->process_id == 0)
-				ft_processus_no_pipe(exec, env, utils);
-			else
-				waitpid(exec->process_id, 0, 0);
+		exec->process_id = fork();
+		if (exec->process_id < 0)
+			return (perror("minishell: fork:"));
+		signal(SIGINT, ft_detect_sig);
+		signal(SIGQUIT, ft_detect_sig);
+		if (exec->process_id == 0 && exec->cmd != NULL && exec->cmd[0][0] == '.'
+			&& exec->cmd[0][1] == '/')
+			ft_exec_prog(exec);
+		else if (exec->process_id == 0)
+			ft_processus_no_pipe(exec, env, utils);
+		else
+			waitpid(exec->process_id, 0, 0);
 	}
 	else if (ft_check_builtin(exec) == 1)
 	{
-		// STDOUT_FILENO = utils->outfile;
-		// if (utils->infile != -1)
-		// {
-		// 	dup2(utils->infile, STDIN_FILENO);
-		// 	close(utils->infile);
-		// }
-		// if (utils->outfile != -1)
-		// {
-		// 	dup2(utils->outfile, STDOUT_FILENO);
-		// 	close(utils->outfile);
-		// }
-		ft_all_builtin(lex, env, utils);
-		// if (STDOUT_FILENO != -1)
-		// {
-		// 	dup2(STDOUT_FILENO, utils->outfile);
-		// 	close(STDOUT_FILENO);
-		// }
-		// exec->fd_cmd[0] = STDIN_FILENO;
-		// exec->fd_cmd[1] = STDOUT_FILENO;
-		// close (exec->fd_cmd[0]);
-		// close (exec->fd_cmd[1]);
+		if (utils->infile != -1)
+		{
+			dup2(utils->infile, exec->fd_cmd[0]);
+			close(utils->infile);
+		}
+		if (utils->outfile != -1)
+		{
+			dup2(utils->outfile, exec->fd_cmd[1]);
+			close(utils->outfile);
+		}
+		ft_all_builtin(lex, env, utils, exec);
 		if (utils->infile != -1)
 			close(utils->infile);
-		if (utils->outfile!= -1)
+		if (utils->outfile != -1)
 			close(utils->outfile);
 		return ;
 	}
-//faire tous les builtins dans fd_cmd[1], parce que c'est le seul dans le code qui a la bonne sortie d'ecriture -> outfile + pipe ou stdout + pipe ?
 }
 
 int	ft_no_pipe_redir(t_exec *exec, t_utils *utils)
 {
 	while (exec != NULL && exec->file != NULL)
 	{
-		// faire les return de out et toto
 		if (ft_open_out(exec, utils) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 		if (ft_open_in(exec, utils) == EXIT_FAILURE)

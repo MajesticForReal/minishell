@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:18:43 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/10 22:14:43 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/11 17:53:16 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int	ft_first_lex_concat(t_lex *lex, char *input, int i, int size)
 	lex->str = malloc(sizeof(char) * (size + 1));
 	if (!lex->str)
 		return (0);
-	lex->str = NULL;
 	j = 0;
 	if (input[0] != '\0')
 	{
@@ -59,11 +58,14 @@ int	ft_first_lex(t_lex *lex, char *input)
 	int	size;
 
 	i = 0;
+	if (input[i] == '\0')
+		return (0);
 	while (input[i] != '\0' && (input[i] == ' ' || input[i] == '\t'))
 	{
 		lex->token = TOK_SPACE;
 		i++;
 	}
+
 	if (input[i] == '<' || input[i] == '>' || input[i] == 34 || input[i] == 36
 		|| input[i] == 39 || input[i] == '|')
 		ft_first_lex_token(lex, input, i);

@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:00:55 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/10 22:15:39 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/11 19:37:09 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,23 +114,22 @@ int					ft_rate_str(t_env *env, int	last_rate);
 int					ft_compare_index(t_env *env, char *str);
 void				ft_replace_t_env(t_env *env, char *str);
 int					ft_compare_stop_egal(char *str, char *str2);
-void				ft_is_not_valid_n(t_lex *lex);
-void				ft_print_argument(t_lex *lex, int valid_n);
-void				ft_is_valid_n(t_lex *lex);
+void				ft_is_not_valid_n(t_lex *lex, t_exec *exec);
+void				ft_print_argument(t_lex *lex, int valid_n, t_exec *exec);
+void				ft_is_valid_n(t_lex *lex, t_exec *exec);
 int					ft_first_is_alpha(char *lex_str);
 int					ft_str_have_egal(char *lex_str);
 int					ft_detect_special_char_export(char *lex_str);
-char				*ft_builtin_pwd(int option);
-int					ft_builtin_cd_dir(char *input);
+char				*ft_builtin_pwd(int option, t_exec *exec);
+int					ft_builtin_cd_dir(char *input, t_exec *exec);
 char				*ft_parsing_cd_dir(char *lex_str);
 char				*ft_concat(char *str_1, char *str_2);
 int					ft_builtin_cd_only(t_env *env, t_utils *utils);
-int					ft_builtin_cd_back(void);
+int					ft_builtin_cd_back(t_exec *exec);
 int					ft_cd_is_back(char *input);
-int					ft_builtin_echo_only(void);
+int					ft_builtin_echo_only(t_exec *exec);
 int					ft_builtin_env(char **envp);
 void				test_signal(int code);
-void				ft_builtin_echo_option(t_lex *lex);
 int					ft_print_2_d_tab(char **strs, int index);
 void				ft_print_2_d_tab_test(char **strs);
 int					ft_builtin_detect_path_a_r(char *lex_str);
@@ -150,11 +149,11 @@ void				ft_export_var(t_lex *lex, t_env *env);
 void				ft_add_back_str(t_env *env, char *str);
 void				ft_unset_var(t_lex *lex, t_env *env);
 void				ft_del_struct(t_env *env);
-void				ft_all_builtin(t_lex *lex, t_env *env, t_utils *utils);
-void				ft_builtin_cd_all(t_lex *lex, t_env *env, t_utils *utils);
-void				ft_builtin_echo_all(t_lex *lex, t_env *env);
+void				ft_all_builtin(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec);
+void				ft_builtin_cd_all(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec);
+void				ft_builtin_echo_all(t_lex *lex, t_env *env, t_exec *exec);
 int					ft_builtin_echo_detect_n(char *lex_str);
-void				ft_builtin_echo_option(t_lex *lex);
+void				ft_builtin_echo_option(t_lex *lex, t_exec *exec);
 void				ft_not_n(t_lex *lex, int *valide_n);
 int					ft_find_variable_in_env(char *var_env, char *lex_str);
 int					ft_check_valid_export_env(char *lex_str);
@@ -329,5 +328,6 @@ void				ft_connect_fd_cmd(t_exec *exec);
 void				ft_waitpid(t_exec *exec);
 
 int					ft_check_str(char *str, int i);
+void	ft_init_fd_cmd_no_pipe(t_exec *exec);
 
 #endif
