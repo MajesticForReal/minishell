@@ -6,7 +6,7 @@
 /*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 16:19:32 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/10 16:48:21 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/11 21:08:35 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,33 @@ int	ft_print_2_d_tab(char **strs, int index)
 		}
 	}
 	return (SUCCESS);
+}
+
+void	ft_print_list_export(t_env *env)
+{
+	while (env != NULL)
+	{
+		if(env->str[ft_strlen(env->str) - 1] == '=')
+		{
+			ft_putstr_fd(env->str, 1);
+			ft_putstr_fd("\"\"", 1);
+			ft_putstr_fd("\n", 1);
+			if(env->next != NULL)
+				env = env->next;
+			else
+				return ;
+		}
+		else
+		{
+			ft_putstr_fd(env->str, 1);
+			ft_putstr_fd("\n", 1);
+			if(env->next != NULL)
+				env = env->next;
+			else
+				return ;
+		}
+
+	}
 }
 
 void	ft_print_list_env(t_env *env)

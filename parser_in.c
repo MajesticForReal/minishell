@@ -6,7 +6,7 @@
 /*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 19:53:28 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/09 23:19:13 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/11 22:01:07 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int	ft_in_elseif_2(t_lex **lex)
 			&& (*lex)->next->next->token != TOK_DOLL))
 	{
 		ft_putstr_fd("syntax error near unexpected token `", 2);
+		ft_putstr_fd("-----", 2);
 		ft_putchar_fd((*lex)->next->next->str[0], 2);
 		ft_putchar_fd((*lex)->next->next->str[1], 2);
 		ft_putstr_fd("'\n", 2);

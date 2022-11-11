@@ -6,7 +6,7 @@
 /*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:00:55 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/10 21:11:56 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/11 21:43:14 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,6 @@ typedef struct s_env
 	struct s_env	*next;
 }					t_env;
 
-typedef struct s_export
-{
-	char			*str;
-	struct s_env	*next;
-}					t_export;
-
 typedef struct s_utils
 {
 	char			*home_str;
@@ -105,20 +99,6 @@ typedef struct s_pipex
 
 }					t_pipex;
 
-//struct minishell
-// typedef struct s_minishell
-// {
-// 	char			**builtin;
-// 	int				i;
-// 	int				j;
-// 	int				size_pwd;
-// 	int				size_short_input;
-// 	char			*path_pwd;
-// 	char			*complet_path;
-// 	char			*short_pwd;
-// 	char			*short_input;
-// }					t_minishell;
-
 // utils_minishell
 int					ft_compare(char *str, char *str2);
 void				ft_putstr(char *str);
@@ -136,9 +116,17 @@ char				**ft_r_split(char const *s, char c, char **strs);
 char				**ft_split(char const *s, char c);
 
 //buitin
-void				ft_copy_env_n_rate(t_env *env);
-int					ft_rate_str(t_env *env, int	last_rate);
-int					ft_compare_index(t_env *env, char *str);
+void				ft_print_list_export(t_env *env);
+void				ft_add_back_export(t_env *export, char *strs);
+t_env				*ft_export_list(char **strs);
+t_env				*ft_copy_env(t_env *env);
+void				ft_copy_env_to_tab(t_env *env, char **strs);
+void				ft_sort_tab(char **strs);
+int					ft_diff_tab(char *strs, char *strs2);
+int					ft_count_line_tab(t_env *env);
+char				**ft_size_up_tab(char **strs, int i);
+
+int					ft_compare_index(t_env *export, char *str);
 void				ft_replace_t_env(t_env *env, char *str);
 int					ft_compare_stop_egal(char *str, char *str2);
 void				ft_is_not_valid_n(t_lex *lex);
@@ -173,11 +161,11 @@ void				ft_compare_just_a_part(char *complet_str,
 char 				*part_to_find, t_utils *utils);
 void				ft_init_fill_str_home(char *complet_str, t_utils *builtin);
 int					ft_builtin_cd_rac(void);
-void				ft_export_var(t_lex *lex, t_env *env);
+void				ft_export_var(t_lex *lex, t_env *env, t_env *export);
 void				ft_add_back_str(t_env *env, char *str);
 void				ft_unset_var(t_lex *lex, t_env *env);
 void				ft_del_struct(t_env *env);
-void				ft_all_builtin(t_lex *lex, t_env *env, t_utils *utils);
+void				ft_all_builtin(t_lex *lex, t_env *env, t_utils *utils, t_env *export);
 void				ft_builtin_cd_all(t_lex *lex, t_env *env, t_utils *utils);
 void				ft_builtin_echo_all(t_lex *lex, t_env *env);
 int					ft_builtin_echo_detect_n(char *lex_str);
@@ -235,6 +223,7 @@ void				ft_concat_clear2(t_lex **lex, t_lex *first);
 void				ft_concat_clear3(t_lex **lex, t_lex *first, t_lex *start);
 
 //parser_dollar
+void				ft_concat_no_expand(t_lex *lex);
 int					ft_dollars_only(t_lex *lex);
 void				ft_dollar(t_lex *lex, t_env *env);
 void				ft_dollar_2(t_lex *lex, t_env *env);

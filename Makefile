@@ -6,7 +6,7 @@
 #    By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/27 16:02:00 by y klaurier        #+#    #+#              #
-#    Updated: 2022/11/10 20:11:27 by klaurier         ###   ########.fr        #
+#    Updated: 2022/11/10 22:20:37 by klaurier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,11 +62,11 @@ FLAG		=	-Wall -Wextra -Werror
 HEADER		=	minishell.h
 
 .c.o:
-			gcc ${FLAG} -c $< -o $@ -I./
+			cc ${FLAG} -c $< -o $@ -I./
 
 
 $(NAME):	$(OBJS)
-			gcc $(FLAGS) $(OBJS) -lreadline -o $(NAME) 
+			cc $(FLAGS) $(OBJS) -lreadline -o $(NAME) 
 
 all:		${NAME}
 

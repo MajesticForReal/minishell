@@ -6,25 +6,32 @@
 /*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 15:45:22 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/10 21:13:40 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/11 19:53:37 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_export_var(t_lex *lex, t_env *env)
+void	ft_export_var(t_lex *lex, t_env *env, t_env *export)
 {
+	if(lex->next == NULL || (lex->next == TOK_SPACE && lex->next->next == NULL)
+	|| lex->next == NULL || lex->next->next == NULL)
+	{
+		ft_print_list_export(export);
+		return ;
+	}
 	if (lex->next != NULL && lex->next->token == TOK_SPACE)
 		lex = lex->next;
 	if(lex->next != NULL && lex->next->token == TOK_WORD)
 		lex = lex->next;
-	printf("retour = %d\n", ft_check_valid_export_env(lex->str));
 	if (ft_check_valid_export_env(lex->str) == 1)
+	{
 		ft_add_back_str(env, lex->str);
+		ft_add_back_export(export, lex->str);
+	}
 	if (ft_check_valid_export_env(lex->str) == 2)
-		ft_copy_env_n_rate(env);
-
-else
+		ft_add_back_export(export, lex->str);
+	else
 		return ;
 }
 

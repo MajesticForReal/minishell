@@ -6,7 +6,7 @@
 /*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:24:58 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/10 00:11:28 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/11 21:57:01 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,46 @@ int	ft_parser_k(t_lex *lex, t_env *env)
 	return (0);
 }
 
+void	ft_concat_no_expand(t_lex *lex)
+{
+	printf("salut\n");
+	char *tmp;
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 1;
+	while(lex->token != TOK_DOLL)
+	{
+		if(lex->next != NULL)
+			lex = lex->next;
+		else
+			break ;
+	}
+	lex->token = TOK_WORD;
+	if(lex->next != NULL)
+	{
+		tmp = lex->next->str;
+		free(lex->str);
+	}	
+	else
+		return ;
+	lex->str = malloc(sizeof(char) * ft_strlen(tmp) + 2);
+	if(lex->str == NULL)
+		return ;
+	lex->str[0] = '$';
+	while(tmp[i] != '\0')
+	{
+		lex->str[j] = tmp[i];
+		j++;
+		i++;
+	}
+	free(lex->next);
+	lex->str[j] = '\0';
+	lex->next = NULL;
+	printf("lex->str = %s", lex->str);
+}
+
 void	ft_parser_doll(t_lex *lex, t_env *env)
 {
 	int	i;
@@ -28,13 +68,29 @@ void	ft_parser_doll(t_lex *lex, t_env *env)
 	i = 0;
 	while (lex != NULL)
 	{
+		if((lex->token == TOK_IN && lex->str[1] == '<' && lex->next != NULL
+		&& lex->next->token == TOK_SPACE && lex->next->next != NULL
+		&& lex->next->next->token == TOK_DOLL) || (lex->token = TOK_IN
+		&& lex->str[1] == '<' && lex->next != NULL
+		&& lex->next->token == TOK_DOLL))
+		{
+			ft_print_lex_k(lex);
+			ft_concat_no_expand(lex->next);
+			ft_print_lex_k(lex);
+		}
+		if(i == 1)
+		{
+			if(lex->next != NULL)
+				lex = lex->next;
+			else
+				break ;
+		}
 		if (lex->token == TOK_DOLL)
 			ft_dollar(lex, env);
 		if (lex->next != NULL)
 			lex = lex->next;
 		else
 			break ;
-		i++;
 	}
 	(void)i;
 	(void)env;
