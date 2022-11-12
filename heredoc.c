@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 22:03:00 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/12 22:51:15 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/13 00:21:04 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	ft_heredoc(t_lex *lex)
 	fd = -1;
 	while (tmp != NULL && tmp->token != TOK_PIPE)
 	{
-		
 		ft_heredoc0(&tmp);
 		if (tmp->token == TOK_TOTO)
 		{

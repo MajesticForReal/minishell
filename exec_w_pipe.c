@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:41:27 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/13 00:19:49 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/13 00:48:59 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,4 +173,5 @@ void	ft_connect_redir(t_exec *exec, t_utils *utils)
 		close(utils->outfile);
 	}
 	return ;
+	(void)exec;
 }

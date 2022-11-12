@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:00:55 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/12 23:53:52 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/13 00:51:29 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,8 +250,7 @@ void				ft_cut_after_special_char2(t_lex *lex, int i);
 void				ft_free_after_special_char2(t_lex *lex);
 void				ft_free_doll_egal(t_lex *lex);
 void				ft_write_var_env_in_fd2(char *input, int fd, int i);
-int					ft_write_var_env_in_fd3(char *concat, char *getenv_result,
-						int j, int i);
+char				*ft_write_var_env_in_fd3(char *concat, char *getenv_result, int k, int j, char *input);
 void				ft_write_var_env_in_fd4(char *concat, char *input, int k,
 						int i);
 void				ft_free_write_var_fd(char *concat, char *str, int fd);
@@ -262,9 +261,10 @@ int					ft_doll_interogation(t_lex *lex);
 void				ft_change_doll_to_exit(t_lex *lex);
 
 //heredoc
+void				ft_dollar_heredoc(char *input, int fd);
 void				ft_heredoc(t_lex *lex);
 void				ft_organizer_heredoc(char *input, int fd);
-void				ft_dollar_heredoc(char *input, int fd);
+void				ar_heredoc(char *input, int fd);
 void				ft_write_var_env_in_fd(char *input, int fd);
 char				*ft_parser_limiter(t_lex *tmp);
 
@@ -333,7 +333,7 @@ void				ft_exec_pipe(t_exec *exec, t_utils *utils, t_env *env,
 						t_lex *lex, t_env *export);
 int					ft_pipe_redir(t_exec *exec, t_utils *utils);
 void				ft_processus_no_pipe(t_exec *exec, t_env *env,
-						t_utils *utils, t_env *export);
+						t_utils *utils);
 void				ft_exec_prog(t_exec *exec);
 void				ft_constructor_cmd(t_exec *exec);
 void				ft_exec_prog_cwd(t_exec *exec, char *cmd_base);
