@@ -6,7 +6,7 @@
 /*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 17:14:23 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/11 22:42:26 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/13 00:45:14 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,12 @@ int	ft_builtin_cd_only(t_env *env, t_utils *utils)
 
 void	ft_builtin_cd_all(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec)
 {
-	if (lex->next == NULL
+	printf("1 ft_builtin");
+	ft_print_lex_k(lex);
+	if(lex->next != NULL && lex->next->token == TOK_SPACE
+	&& lex->next->next == NULL)
+		ft_builtin_cd_only(env, utils);
+	else if (lex->next == NULL
 		|| ft_compare(lex->next->next->str, "~") == SUCCESS
 		|| ft_compare(lex->next->next->str, "~/") == SUCCESS)
 		ft_builtin_cd_only(env, utils);
@@ -75,7 +80,6 @@ void	ft_builtin_cd_all(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec)
 	else
 		ft_builtin_cd_dir(lex->next->next->str, exec);
 }
-		/* ft_builtin_cd_dir(lex->next->str);*/
 
 
 int	ft_builtin_cd_dir(char *lex_str, t_exec *exec)

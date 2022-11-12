@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_no_pipe.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 15:18:23 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/12 22:47:45 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/12 23:19:52 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,5 @@ void	dup_n_close(int infile_to_close, int infile_to_copy,
 		dup2(outfile_to_close, outfile_to_copy);
 		close(outfile_to_close);
 	}
+	(void)infile_to_copy;
 }

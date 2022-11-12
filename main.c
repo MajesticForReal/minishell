@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:41:14 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/12 22:45:42 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/13 00:30:57 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,11 @@ int	main(int argc, char **argv, char **envp)
 			if (ft_parser(lex, utils) == 0)
 			{
 				if(ft_organizer_exec(lex, exec, env, utils) == SUCCESS)
+				{
+					printf("1 main\n");
 					ft_exec(exec, env, utils, lex, export);
+					printf("2 main\n");
+				}
 				else
 					printf("FAIL\n");
 			}
