@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser_norme.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 20:25:20 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/09 23:19:11 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/12 22:09:57 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 int	ft_in_33(t_lex **lex)
 {

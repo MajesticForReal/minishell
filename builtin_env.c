@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 15:45:22 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/10 21:13:40 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/12 21:31:42 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	ft_export_var(t_lex *lex, t_env *env)
 		lex = lex->next;
 	if(lex->next != NULL && lex->next->token == TOK_WORD)
 		lex = lex->next;
-	printf("retour = %d\n", ft_check_valid_export_env(lex->str));
 	if (ft_check_valid_export_env(lex->str) == 1)
 		ft_add_back_str(env, lex->str);
 	if (ft_check_valid_export_env(lex->str) == 2)

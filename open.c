@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 15:19:02 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/10 20:38:57 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/12 22:11:57 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int	ft_open_toto(t_exec *exec, t_utils *utils)
 			utils->i++;
 	}
 	return (EXIT_SUCCESS);
-	// IF PERROR -> FT_EXIT
 }
 
 int	ft_open_in(t_exec *exec, t_utils *utils)
@@ -66,7 +65,6 @@ int	ft_open_in(t_exec *exec, t_utils *utils)
 			i++;
 	}
 	return (EXIT_SUCCESS);
-	// IF PERROR -> FT_EXIT
 }
 
 int	ft_open_out(t_exec *exec, t_utils *utils)
@@ -95,5 +93,4 @@ int	ft_open_out(t_exec *exec, t_utils *utils)
 			i++;
 	}
 	return (EXIT_SUCCESS);
-	// IF PERROR -> FT_EXIT
 }

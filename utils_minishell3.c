@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 21:59:29 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/11 16:12:41 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/12 21:34:51 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	ft_all_builtin(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec)
 		else if (ft_compare(lex->str, "echo") == SUCCESS)
 			ft_builtin_echo_all(lex, env, exec);
 		else if (ft_compare(lex->str, "env") == SUCCESS)
-			ft_print_list_env(env);
+			ft_print_list_env(env, exec);
 		else if (ft_compare(lex->str, "unset") == SUCCESS)
 			ft_unset_var(lex, env);
 		else if (ft_compare(lex->str, "export") == SUCCESS)

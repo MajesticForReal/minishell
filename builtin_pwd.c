@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 20:42:48 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/11 16:00:32 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/12 19:40:05 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*ft_builtin_pwd(int option, t_exec *exec)
 	char	*path_dir;
 
 	path_dir = NULL;
-	path_dir = getcwd(path_dir, 2000);
+	path_dir = getcwd(path_dir, 0);
 	if (path_dir == NULL)
 	{
 		free(path_dir);

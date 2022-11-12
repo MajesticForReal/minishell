@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:41:27 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/12 02:21:50 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/12 20:12:18 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,40 +15,21 @@
 void	ft_exec_builtin_pipe(t_exec *exec, t_utils *utils, t_lex *lex,
 		t_env *env)
 {
-	if (exec != NULL && exec->next != NULL)
-		close(exec->next->fd_cmd[0]);
-	ft_pipe_redir(exec, utils);
 	if (utils->infile != -1)
 	{
-		dup2(utils->infile, exec->fd_cmd[0]);
+		dup2(utils->infile, STDIN_FILENO);
 		close(utils->infile);
 	}
 	if (utils->outfile != -1)
 	{
-		dup2(utils->outfile, exec->fd_cmd[1]);
+		dup2(utils->outfile, STDOUT_FILENO);
 		close(utils->outfile);
 	}
 	ft_all_builtin(lex, env, utils, exec);
 	if (utils->fd_pipe[0] != STDIN_FILENO)
-	{
-		dprintf(2, "BUILT 1\n");
 		close(exec->fd_cmd[0]);
-	}
 	if (utils->fd_pipe[1] != STDOUT_FILENO)
-	{
-		dprintf(2, "BUILT 2\n");
 		close(utils->fd_pipe[1]);
-	}
-	if (utils->infile != -1)
-	{
-		dprintf(2, "BUILT 3\n");
-		close(utils->infile);
-	}
-	if (utils->outfile != -1)
-	{
-		dprintf(2, "BUILT 4\n");
-		close(utils->outfile);
-	}
 	return ;
 }
 
@@ -63,35 +44,40 @@ void	ft_exec_pipe(t_exec *exec, t_utils *utils, t_env *env, t_lex *lex)
 		{
 			if (pipe(utils->fd_pipe) == -1)
 				return (perror("minishell: pipe: "));
-			if (exec->fd_cmd[0] != -1)
-				close(exec->fd_cmd[0]);
-			if (exec->fd_cmd[1] != -1)
-				close(exec->fd_cmd[1]);
-			exec->fd_cmd[0] = utils->fd_pipe[0];
+			// if (exec->fd_cmd[0] != -1)
+			// 	close(exec->fd_cmd[0]);
+			// if (exec->fd_cmd[1] != -1)
+			// 	close(exec->fd_cmd[1]);
+			exec->next->fd_cmd[0] = utils->fd_pipe[0];
 			exec->fd_cmd[1] = utils->fd_pipe[1];
 		}
-		if (exec->cmd[0] != NULL && ft_check_builtin(exec) == 1)
-		{
-			ft_exec_builtin_pipe(exec, utils, lex, env);
-		}
-		else if (exec != NULL && exec->next != NULL && exec->cmd[0] != NULL)
-		{
-			exec->process_id = fork();
-			if (exec->process_id < 0)
-				return (perror("minishell: fork: "));
-			signal(SIGINT, ft_detect_sig);
-			signal(SIGQUIT, ft_detect_sig);
-			if (exec->process_id == 0)
-				ft_processus_pipe(exec, env, lex, utils);
-			if (exec->fd_cmd[0] != STDIN_FILENO)
-				close(exec->fd_cmd[0]);
-			if (exec->fd_cmd[1] != STDOUT_FILENO)
-				close(exec->fd_cmd[1]);
-		}
-		if (utils->infile != -1)
-			close(utils->infile);
-		if (utils->outfile != -1)
-			close(utils->outfile);
+		// }
+		// if (exec->cmd[0] != NULL && ft_check_builtin(exec) == 1)
+		// {
+		// 	ft_exec_builtin_pipe(exec, utils, lex, env);
+		// }
+		// if (exec != NULL && exec->cmd[0] != NULL)
+		// {
+		exec->process_id = fork();
+		if (exec->process_id < 0)
+			return (perror("minishell: fork: "));
+		signal(SIGINT, ft_detect_sig);
+		signal(SIGQUIT, ft_detect_sig);
+		// if (exec->cmd[0] != NULL && ft_check_builtin(exec) == 1)
+		// {
+		// 	ft_exec_builtin_pipe(exec, utils, lex, env);
+		// }
+		if (exec->process_id == 0)
+			ft_processus_pipe(exec, env, lex, utils);
+		if (exec->fd_cmd[0] != STDIN_FILENO)
+			close(exec->fd_cmd[0]);
+		if (exec->fd_cmd[1] != STDOUT_FILENO)
+			close(exec->fd_cmd[1]);
+		// }
+		// if (utils->infile != -1)
+		// 	close(utils->infile);
+		// if (utils->outfile != -1)
+		// 	close(utils->outfile);
 		exec = exec->next;
 	}
 }
@@ -102,29 +88,37 @@ void	ft_processus_pipe(t_exec *exec, t_env *env, t_lex *lex, t_utils *utils)
 		close(exec->next->fd_cmd[0]);
 	// if (ft_check_builtin(exec) == -1)
 	// {
-	ft_connect_fd_cmd(exec);
-	ft_connect_redir(exec, utils);
-	if (exec->cmd != NULL && exec->cmd[0][0] == '.' && exec->cmd[0][1] == '/')
-		ft_exec_prog(exec);
+	if (exec->cmd[0] != NULL && ft_check_builtin(exec) == 1)
+	{
+		ft_exec_builtin_pipe(exec, utils, lex, env);
+	}
 	else
 	{
-		if (env->str == NULL)
+		ft_connect_fd_cmd(exec);
+		ft_connect_redir(exec, utils);
+		if (exec->cmd != NULL && exec->cmd[0][0] == '.'
+			&& exec->cmd[0][1] == '/')
+			ft_exec_prog(exec);
+		else
 		{
-			if (access(exec->cmd[0], X_OK) == 0)
-				execve(exec->cmd[0], exec->cmd, NULL);
-			else
+			if (env->str == NULL)
 			{
-				write(2, exec->cmd[0], ft_strlen(exec->cmd[0]));
-				write(2, ": command not found\n", 20);
-				return ;
+				if (access(exec->cmd[0], X_OK) == 0)
+					execve(exec->cmd[0], exec->cmd, NULL);
+				else
+				{
+					write(2, exec->cmd[0], ft_strlen(exec->cmd[0]));
+					write(2, ": command not found\n", 20);
+					return ;
+				}
 			}
-		}
-		if (env->str != NULL)
-		{
-			if (access(exec->cmd[0], X_OK) == 0)
-				execve(exec->cmd[0], exec->cmd, NULL);
-			else
-				ft_constructor_cmd(exec);
+			if (env->str != NULL)
+			{
+				if (access(exec->cmd[0], X_OK) == 0)
+					execve(exec->cmd[0], exec->cmd, NULL);
+				else
+					ft_constructor_cmd(exec);
+			}
 		}
 	}
 	(void)lex;
@@ -142,11 +136,6 @@ void	ft_processus_pipe(t_exec *exec, t_env *env, t_lex *lex, t_utils *utils)
 	// 		dup2(utils->outfile, exec->fd_cmd[1]);
 	// 		close(utils->outfile);
 	// 	}
-	// 	ft_all_builtin(lex, env, utils, exec);
-	// 	if (utils->fd_pipe[0] != STDIN_FILENO)
-	// 		close(exec->fd_cmd[0]);
-	// 	if (utils->fd_pipe[1] != STDOUT_FILENO)
-	// 		close(utils->fd_pipe[1]);
 	// }
 }
 

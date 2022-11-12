@@ -6,79 +6,11 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 15:18:23 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/12 02:12:41 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/12 22:19:19 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	ft_count_redir(t_exec *exec, char c)
-{
-	int	i;
-	int	nb;
-
-	i = 0;
-	nb = 0;
-	while (exec != NULL && exec->file != NULL && exec->file[i])
-	{
-		if (exec->file[i][0] == c && exec->file[i][1] == '\0')
-			nb++;
-		i++;
-	}
-	return (nb);
-}
-
-void	ft_exec_no_pipe(t_exec *exec, t_env *env, t_utils *utils, t_lex *lex)
-{
-	ft_init_fd_cmd_no_pipe(exec);
-	if (ft_no_pipe_redir(exec, utils) == EXIT_FAILURE)
-		return ;
-	if (exec->cmd[0] != NULL && ft_check_builtin(exec) == -1)
-	{
-		exec->process_id = fork();
-		if (exec->process_id < 0)
-			return (perror("minishell: fork:"));
-		signal(SIGINT, ft_detect_sig);
-		signal(SIGQUIT, ft_detect_sig);
-		if (exec->process_id == 0 && exec->cmd != NULL && exec->cmd[0][0] == '.'
-			&& exec->cmd[0][1] == '/')
-			ft_exec_prog(exec);
-		else if (exec->process_id == 0)
-			ft_processus_no_pipe(exec, env, utils);
-		else
-			waitpid(exec->process_id, 0, 0);
-	}
-	else if (exec->cmd[0] != NULL && ft_check_builtin(exec) == 1)
-	{
-		if (utils->infile != -1)
-		{
-			dup2(utils->infile, exec->fd_cmd[0]);
-			close(utils->infile);
-		}
-		if (utils->outfile != -1)
-		{
-			dup2(utils->outfile, exec->fd_cmd[1]);
-			close(utils->outfile);
-		}
-		ft_all_builtin(lex, env, utils, exec);
-		if (utils->infile != -1)
-			close(utils->infile);
-		if (utils->outfile != -1)
-			close(utils->outfile);
-		return ;
-	}
-	// if (exec->cmd[0] != NULL && exec->fd_cmd[0] != STDIN_FILENO)
-	// 	close(exec->fd_cmd[0]);
-	// if (exec->cmd[0] != NULL && exec->fd_cmd[1] != STDOUT_FILENO)
-	// 	close(exec->fd_cmd[1]);
-	// if (utils->infile != -1)
-	// 	close(utils->infile);
-	// if (utils->outfile != -1)
-	// {
-	// 	dprintf(2, "TA GRAND MERE\n");
-	// 	close(utils->outfile);
-	// }
-}
 
 int	ft_no_pipe_redir(t_exec *exec, t_utils *utils)
 {
@@ -100,16 +32,7 @@ int	ft_no_pipe_redir(t_exec *exec, t_utils *utils)
 
 void	ft_processus_no_pipe(t_exec *exec, t_env *env, t_utils *utils)
 {
-	if (utils != NULL && utils->infile != -1)
-	{
-		dup2(utils->infile, STDIN_FILENO);
-		close(utils->infile);
-	}
-	if (utils != NULL && utils->outfile != -1)
-	{
-		dup2(utils->outfile, STDOUT_FILENO);
-		close(utils->outfile);
-	}
+	dup_n_close(utils->infile, STDIN_FILENO, utils->outfile, STDOUT_FILENO);
 	if (!env)
 	{
 		if (access(exec->cmd[0], X_OK) == 0)
@@ -132,4 +55,19 @@ void	ft_processus_no_pipe(t_exec *exec, t_env *env, t_utils *utils)
 		close(utils->infile);
 	if (utils->outfile != -1)
 		close(utils->outfile);
+}
+
+void	dup_n_close(int infile_to_close, int infile_to_copy,
+		int outfile_to_close, int outfile_to_copy)
+{
+	if (infile_to_close != -1)
+	{
+		dup2(infile_to_close, infile_to_close);
+		close(infile_to_close);
+	}
+	if (outfile_to_close != -1)
+	{
+		dup2(outfile_to_close, outfile_to_copy);
+		close(outfile_to_close);
+	}
 }

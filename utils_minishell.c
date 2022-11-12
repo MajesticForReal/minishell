@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_minishell.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 16:19:32 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/10 16:48:21 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/12 21:33:19 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,12 @@ int	ft_print_2_d_tab(char **strs, int index)
 	return (SUCCESS);
 }
 
-void	ft_print_list_env(t_env *env)
+void	ft_print_list_env(t_env *env, t_exec *exec)
 {
 	while (env != NULL)
 	{
-		ft_putstr_fd(env->str, 1);
-		ft_putstr_fd("\n", 1);
+		ft_putstr_fd(env->str, exec->fd_cmd[1]);
+		ft_putstr_fd("\n", exec->fd_cmd[1]);
 		env = env->next;
 	}
 }

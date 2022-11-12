@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 20:03:17 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/10 22:18:19 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/12 22:10:13 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*ft_concat(char *str_1, char *str_2)
 
 int	ft_builtin_path_a(char *lex_str)
 {
-	if(chdir(lex_str) == -1)
+	if (chdir(lex_str) == -1)
 	{
 		perror(lex_str);
 		g_exstat = 1;
@@ -54,9 +54,8 @@ int	ft_builtin_path_a(char *lex_str)
 
 int	ft_builtin_detect_path_a_r(char *lex_str)
 {
-	if(lex_str[0] == '/' && lex_str[1] != '\0')
-		return(SUCCESS);
+	if (lex_str[0] == '/' && lex_str[1] != '\0')
+		return (SUCCESS);
 	else
 		return (FAIL);
 }
-
