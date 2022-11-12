@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 22:03:00 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/10 23:18:56 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/12 01:54:39 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	ft_heredoc(t_lex *lex)
 	tmp = lex;
 	limiter = NULL;
 	input = NULL;
+	fd = -1;
 	while (tmp != NULL && tmp->token != TOK_PIPE)
 	{
 		ft_heredoc0(&tmp);
@@ -40,12 +41,18 @@ void	ft_heredoc(t_lex *lex)
 			ft_heredoc2(input, limiter, fd);
 		}
 		else
+		{
+			if (fd != -1)
+				close(fd);
 			return ;
+		}
 		if (tmp->next != NULL)
 			tmp = tmp->next;
 		else
 			break ;
 	}
+	if (fd != -1)
+		close(fd);
 }
 
 void	ft_heredoc0(t_lex **tmp)
@@ -68,6 +75,7 @@ int	ft_heredoc2(char *input, char *limiter, int fd)
 			ft_putstr_fd("exit", 2);
 			ft_putstr_fd("\n", 2);
 			g_exstat = 0;
+			free(input);
 			return (1);
 		}
 		if (ft_strlen(input) == 0 && limiter != NULL)
@@ -80,6 +88,7 @@ int	ft_heredoc2(char *input, char *limiter, int fd)
 			ft_organizer_heredoc(input, fd);
 		else
 			break ;
+		free(input);
 	}
 	return (1);
 }

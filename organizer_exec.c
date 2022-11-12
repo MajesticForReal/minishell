@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 16:51:31 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/08 22:55:05 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/11 22:53:36 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,9 @@ t_exec	*ft_initialize_struct_exec(void)
 		return (NULL);
 	curr->next = NULL;
 	curr->token_before = -1;
+	curr->str_cmd = NULL;
+	curr->heredoc = NULL;
+	curr->path = NULL;
 	curr->cmd = NULL;
 	curr->file = NULL;
 	return (curr);

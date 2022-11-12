@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 21:56:30 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/11 21:53:31 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/12 02:24:34 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_init_fd_cmd(t_exec *exec)
 {
-	while (exec != NULL)
+	while (exec != NULL && exec->cmd[0] != NULL)
 	{
 		exec->fd_cmd[0] = dup(STDIN_FILENO);
 		exec->fd_cmd[1] = dup(STDOUT_FILENO);
@@ -28,7 +28,7 @@ void	ft_init_fd_cmd(t_exec *exec)
 
 void	ft_init_fd_cmd_no_pipe(t_exec *exec)
 {
-	while (exec != NULL)
+	while (exec != NULL && exec->cmd[0] != NULL)
 	{
 		exec->fd_cmd[0] = dup(STDIN_FILENO);
 		exec->fd_cmd[1] = dup(STDOUT_FILENO);
@@ -183,9 +183,10 @@ void	ft_exec(t_exec *exec, t_env *env, t_utils *utils, t_lex *lex)
 
 void	ft_waitpid(t_exec *exec)
 {
-	while (exec != NULL)
+	while (exec->next != NULL && exec->next->cmd[0] != NULL)
 	{
-		waitpid(exec->process_id, 0, 0);
+		if (ft_check_builtin(exec) != 1)
+			waitpid(exec->process_id, 0, 0);
 		// if (WIFEXITED(g_status))
 		// 	g_status = WEXITSTATUS(g_status);
 		// else if (WIFSIGNALED(g_status))

@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 15:18:23 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/11 19:36:55 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/12 02:12:41 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	ft_exec_no_pipe(t_exec *exec, t_env *env, t_utils *utils, t_lex *lex)
 	ft_init_fd_cmd_no_pipe(exec);
 	if (ft_no_pipe_redir(exec, utils) == EXIT_FAILURE)
 		return ;
-	if (ft_check_builtin(exec) == -1)
+	if (exec->cmd[0] != NULL && ft_check_builtin(exec) == -1)
 	{
 		exec->process_id = fork();
 		if (exec->process_id < 0)
@@ -48,7 +48,7 @@ void	ft_exec_no_pipe(t_exec *exec, t_env *env, t_utils *utils, t_lex *lex)
 		else
 			waitpid(exec->process_id, 0, 0);
 	}
-	else if (ft_check_builtin(exec) == 1)
+	else if (exec->cmd[0] != NULL && ft_check_builtin(exec) == 1)
 	{
 		if (utils->infile != -1)
 		{
@@ -67,6 +67,17 @@ void	ft_exec_no_pipe(t_exec *exec, t_env *env, t_utils *utils, t_lex *lex)
 			close(utils->outfile);
 		return ;
 	}
+	// if (exec->cmd[0] != NULL && exec->fd_cmd[0] != STDIN_FILENO)
+	// 	close(exec->fd_cmd[0]);
+	// if (exec->cmd[0] != NULL && exec->fd_cmd[1] != STDOUT_FILENO)
+	// 	close(exec->fd_cmd[1]);
+	// if (utils->infile != -1)
+	// 	close(utils->infile);
+	// if (utils->outfile != -1)
+	// {
+	// 	dprintf(2, "TA GRAND MERE\n");
+	// 	close(utils->outfile);
+	// }
 }
 
 int	ft_no_pipe_redir(t_exec *exec, t_utils *utils)
@@ -89,12 +100,12 @@ int	ft_no_pipe_redir(t_exec *exec, t_utils *utils)
 
 void	ft_processus_no_pipe(t_exec *exec, t_env *env, t_utils *utils)
 {
-	if (utils->infile != -1)
+	if (utils != NULL && utils->infile != -1)
 	{
 		dup2(utils->infile, STDIN_FILENO);
 		close(utils->infile);
 	}
-	if (utils->outfile != -1)
+	if (utils != NULL && utils->outfile != -1)
 	{
 		dup2(utils->outfile, STDOUT_FILENO);
 		close(utils->outfile);
@@ -117,4 +128,8 @@ void	ft_processus_no_pipe(t_exec *exec, t_env *env, t_utils *utils)
 		else
 			ft_constructor_cmd(exec);
 	}
+	if (utils->infile != -1)
+		close(utils->infile);
+	if (utils->outfile != -1)
+		close(utils->outfile);
 }
