@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   parser_in.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 19:53:28 by anrechai          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/11/12 20:09:37 by klaurier         ###   ########.fr       */
+=======
+/*   Updated: 2022/11/12 22:11:31 by anrechai         ###   ########.fr       */
+>>>>>>> a3b6e9c22c51b26adb7979a8dba4759fbf5328b7
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 int	ft_in_22(t_lex **lex)
 {

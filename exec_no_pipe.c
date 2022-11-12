@@ -6,7 +6,7 @@
 /*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 15:18:23 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/11 22:34:17 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/12 22:36:33 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,16 +89,7 @@ int	ft_no_pipe_redir(t_exec *exec, t_utils *utils)
 
 void	ft_processus_no_pipe(t_exec *exec, t_env *env, t_utils *utils, t_env *export)
 {
-	if (utils->infile != -1)
-	{
-		dup2(utils->infile, STDIN_FILENO);
-		close(utils->infile);
-	}
-	if (utils->outfile != -1)
-	{
-		dup2(utils->outfile, STDOUT_FILENO);
-		close(utils->outfile);
-	}
+	dup_n_close(utils->infile, STDIN_FILENO, utils->outfile, STDOUT_FILENO);
 	if (!env)
 	{
 		if (access(exec->cmd[0], X_OK) == 0)
@@ -117,5 +108,24 @@ void	ft_processus_no_pipe(t_exec *exec, t_env *env, t_utils *utils, t_env *expor
 		else
 			ft_constructor_cmd(exec);
 	(void)export;
+	}
+	if (utils->infile != -1)
+		close(utils->infile);
+	if (utils->outfile != -1)
+		close(utils->outfile);
+}
+
+void	dup_n_close(int infile_to_close, int infile_to_copy,
+		int outfile_to_close, int outfile_to_copy)
+{
+	if (infile_to_close != -1)
+	{
+		dup2(infile_to_close, infile_to_close);
+		close(infile_to_close);
+	}
+	if (outfile_to_close != -1)
+	{
+		dup2(outfile_to_close, outfile_to_copy);
+		close(outfile_to_close);
 	}
 }

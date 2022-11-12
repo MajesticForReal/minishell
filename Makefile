@@ -6,7 +6,11 @@
 #    By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/27 16:02:00 by y klaurier        #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2022/11/12 17:09:55 by klaurier         ###   ########.fr        #
+=======
+#    Updated: 2022/11/12 22:19:53 by anrechai         ###   ########.fr        #
+>>>>>>> a3b6e9c22c51b26adb7979a8dba4759fbf5328b7
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +45,9 @@ SRCS 		=	main.c \
 				organizer3.c\
 				open.c\
 				exec.c\
+				exec2.c\
 				exec_no_pipe.c\
+				exec_no_pipe_2.c\
 				exec_w_pipe.c\
 				heredoc_doll.c\
 				heredoc.c\
@@ -60,7 +66,7 @@ OBJS		=	${SRCS:.c=.o}
 
 NAME		=	minishell
 
-FLAG		=	-Wall -Wextra -Werror
+# FLAG		=	-Wall -Wextra -Werror
 
 HEADER		=	minishell.h
 

@@ -6,7 +6,11 @@
 /*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 22:03:00 by klaurier          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/11/12 18:21:21 by klaurier         ###   ########.fr       */
+=======
+/*   Updated: 2022/11/12 01:54:39 by anrechai         ###   ########.fr       */
+>>>>>>> a3b6e9c22c51b26adb7979a8dba4759fbf5328b7
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +28,7 @@ void	ft_heredoc(t_lex *lex)
 	tmp = lex;
 	limiter = NULL;
 	input = NULL;
+	fd = -1;
 	while (tmp != NULL && tmp->token != TOK_PIPE)
 	{
 		
@@ -41,13 +46,22 @@ void	ft_heredoc(t_lex *lex)
 			ft_heredoc2(input, limiter, fd);
 		}
 		else
+		{
+			if (fd != -1)
+				close(fd);
 			return ;
+		}
 		if (tmp->next != NULL)
 			tmp = tmp->next;
 		else
 			break ;
 	}
+<<<<<<< HEAD
 	close(fd);
+=======
+	if (fd != -1)
+		close(fd);
+>>>>>>> a3b6e9c22c51b26adb7979a8dba4759fbf5328b7
 }
 
 void	ft_heredoc0(t_lex **tmp)
@@ -70,6 +84,7 @@ int	ft_heredoc2(char *input, char *limiter, int fd)
 			ft_putstr_fd("exit", 2);
 			ft_putstr_fd("\n", 2);
 			g_exstat = 0;
+			free(input);
 			return (1);
 		}
 		if (ft_strlen(input) == 0 && limiter != NULL)
@@ -82,6 +97,7 @@ int	ft_heredoc2(char *input, char *limiter, int fd)
 			ft_organizer_heredoc(input, fd);
 		else
 			break ;
+		free(input);
 	}
 	close(fd);
 	return (1);

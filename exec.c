@@ -6,95 +6,15 @@
 /*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 21:56:30 by anrechai          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/11/11 22:31:21 by klaurier         ###   ########.fr       */
+=======
+/*   Updated: 2022/11/12 22:08:21 by anrechai         ###   ########.fr       */
+>>>>>>> a3b6e9c22c51b26adb7979a8dba4759fbf5328b7
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	ft_init_fd_cmd(t_exec *exec)
-{
-	while (exec != NULL)
-	{
-		exec->fd_cmd[0] = dup(STDIN_FILENO);
-		exec->fd_cmd[1] = dup(STDOUT_FILENO);
-		if (exec->next != NULL)
-			exec = exec->next;
-		else
-			break ;
-	}
-	return ;
-}
-
-void	ft_init_fd_cmd_no_pipe(t_exec *exec)
-{
-	while (exec != NULL)
-	{
-		exec->fd_cmd[0] = dup(STDIN_FILENO);
-		exec->fd_cmd[1] = dup(STDOUT_FILENO);
-		if (exec->next != NULL)
-			exec = exec->next;
-		else
-			break ;
-	}
-	return ;
-}
-
-void	ft_constructor_cmd(t_exec *exec)
-{
-	int		i;
-	char	*new_path;
-	char	*my_cmd;
-	char	*cmd_base;
-
-	cmd_base = ft_strdup(exec->cmd[0]);
-	new_path = NULL;
-	my_cmd = ft_strdup(exec->cmd[0]);
-	i = 0;
-	if (ft_check_str(cmd_base, 2) == -1)
-	{
-		write(2, cmd_base, ft_strlen(cmd_base));
-		write(2, ": No such file or directory\n", 28);
-		free(my_cmd);
-		free(cmd_base);
-		return ;
-	}
-	while (exec->path && exec->path[i])
-	{
-		free(new_path);
-		new_path = NULL;
-		new_path = ft_strcat_path(exec->path[i], my_cmd);
-		if (new_path == NULL)
-			return ;
-		exec->cmd[0] = new_path;
-		if (access(new_path, X_OK) == 0)
-			execve(new_path, exec->cmd, NULL);
-		i++;
-	}
-	write(2, cmd_base, ft_strlen(cmd_base));
-	write(2, ": command not found\n", 20);
-	free(new_path);
-	free(my_cmd);
-	free(cmd_base);
-}
-
-int	ft_check_str(char *str, int i)
-{
-	DIR	*d;
-
-	if (i == 1)
-	{
-		d = opendir(str);
-		if (d == NULL)
-			return (0);
-		closedir(d);
-		return (-1);
-	}
-	else if (i == 2)
-		if (ft_strchr(str, '/') != NULL)
-			return (-1);
-	return (0);
-}
 
 void	ft_exec_prog_cwd(t_exec *exec, char *cmd_base)
 {
@@ -119,24 +39,12 @@ void	ft_exec_prog_cwd(t_exec *exec, char *cmd_base)
 	return ;
 }
 
-void	ft_exec_prog(t_exec *exec)
+void	ft_exec_prog_2(t_exec *exec, char *new_path, char *my_cmd,
+		char *cmd_base)
 {
-	int		i;
-	char	*new_path;
-	char	*my_cmd;
-	char	*cmd_base;
+	int	i;
 
-	cmd_base = ft_strdup(exec->cmd[0]);
-	new_path = NULL;
-	my_cmd = ft_strdup(exec->cmd[0] + 2);
 	i = -1;
-	if (ft_check_str(cmd_base, 1) == -1)
-	{
-		write(2, "minishell: ", 11);
-		write(2, cmd_base, ft_strlen(cmd_base));
-		write(2, ": Is a directory\n", 17);
-		return ;
-	}
 	while (exec->path && exec->path[++i])
 	{
 		free(new_path);
@@ -154,6 +62,25 @@ void	ft_exec_prog(t_exec *exec)
 			return ;
 		}
 	}
+}
+
+void	ft_exec_prog(t_exec *exec)
+{
+	char	*new_path;
+	char	*my_cmd;
+	char	*cmd_base;
+
+	cmd_base = ft_strdup(exec->cmd[0]);
+	new_path = NULL;
+	my_cmd = ft_strdup(exec->cmd[0] + 2);
+	if (ft_check_str(cmd_base, 1) == -1)
+	{
+		write(2, "minishell: ", 11);
+		write(2, cmd_base, ft_strlen(cmd_base));
+		write(2, ": Is a directory\n", 17);
+		return ;
+	}
+	ft_exec_prog_2(exec, new_path, my_cmd, cmd_base);
 	ft_exec_prog_cwd(exec, cmd_base);
 	write(2, cmd_base, ft_strlen(cmd_base));
 	write(2, ": command not found\n", 20);
@@ -183,8 +110,10 @@ void	ft_exec(t_exec *exec, t_env *env, t_utils *utils, t_lex *lex, t_env *export
 
 void	ft_waitpid(t_exec *exec)
 {
-	while (exec != NULL)
+	// while (exec != NULL)
+	while (exec->next != NULL && exec->next->cmd[0] != NULL)
 	{
+		// if (ft_check_builtin(exec) != 1)
 		waitpid(exec->process_id, 0, 0);
 		// if (WIFEXITED(g_status))
 		// 	g_status = WEXITSTATUS(g_status);

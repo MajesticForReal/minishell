@@ -6,7 +6,11 @@
 /*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:41:14 by klaurier          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/11/12 22:28:34 by klaurier         ###   ########.fr       */
+=======
+/*   Updated: 2022/11/12 01:46:34 by anrechai         ###   ########.fr       */
+>>>>>>> a3b6e9c22c51b26adb7979a8dba4759fbf5328b7
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +23,10 @@ void	ft_free(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec)
 	t_env	*tmp3;
 	int		i;
 
+	if (utils->infile != -1)
+		close(utils->infile);
+	if (utils->outfile != -1)
+		close(utils->outfile);
 	while (lex != NULL)
 	{
 		if (lex->str != NULL)
