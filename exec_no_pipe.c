@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_no_pipe.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 15:18:23 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/11 19:36:55 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/11 22:34:17 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_count_redir(t_exec *exec, char c)
 	return (nb);
 }
 
-void	ft_exec_no_pipe(t_exec *exec, t_env *env, t_utils *utils, t_lex *lex)
+void	ft_exec_no_pipe(t_exec *exec, t_env *env, t_utils *utils, t_lex *lex, t_env *export)
 {
 	ft_init_fd_cmd_no_pipe(exec);
 	if (ft_no_pipe_redir(exec, utils) == EXIT_FAILURE)
@@ -44,7 +44,7 @@ void	ft_exec_no_pipe(t_exec *exec, t_env *env, t_utils *utils, t_lex *lex)
 			&& exec->cmd[0][1] == '/')
 			ft_exec_prog(exec);
 		else if (exec->process_id == 0)
-			ft_processus_no_pipe(exec, env, utils);
+			ft_processus_no_pipe(exec, env, utils, export);
 		else
 			waitpid(exec->process_id, 0, 0);
 	}
@@ -60,7 +60,7 @@ void	ft_exec_no_pipe(t_exec *exec, t_env *env, t_utils *utils, t_lex *lex)
 			dup2(utils->outfile, exec->fd_cmd[1]);
 			close(utils->outfile);
 		}
-		ft_all_builtin(lex, env, utils, exec);
+		ft_all_builtin(lex, env, utils, exec, export);
 		if (utils->infile != -1)
 			close(utils->infile);
 		if (utils->outfile != -1)
@@ -87,7 +87,7 @@ int	ft_no_pipe_redir(t_exec *exec, t_utils *utils)
 	return (EXIT_SUCCESS);
 }
 
-void	ft_processus_no_pipe(t_exec *exec, t_env *env, t_utils *utils)
+void	ft_processus_no_pipe(t_exec *exec, t_env *env, t_utils *utils, t_env *export)
 {
 	if (utils->infile != -1)
 	{
@@ -116,5 +116,6 @@ void	ft_processus_no_pipe(t_exec *exec, t_env *env, t_utils *utils)
 			execve(exec->cmd[0], exec->cmd, NULL);
 		else
 			ft_constructor_cmd(exec);
+	(void)export;
 	}
 }

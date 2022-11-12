@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_minishell3.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 21:59:29 by klaurier          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/11/11 19:41:20 by klaurier         ###   ########.fr       */
-=======
-/*   Updated: 2022/11/11 16:12:41 by anrechai         ###   ########.fr       */
->>>>>>> dab90028671da72fa7a8909efaf280db05bac059
+/*   Updated: 2022/11/11 22:42:23 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +95,7 @@ void	ft_print_2_exec(t_exec *exec)
 	}
 }
 
-<<<<<<< HEAD
-void	ft_all_builtin(t_lex *lex, t_env *env, t_utils *utils, t_env *export)
-=======
-void	ft_all_builtin(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec)
->>>>>>> dab90028671da72fa7a8909efaf280db05bac059
+void	ft_all_builtin(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec, t_env *export)
 {
 	if (lex->str != NULL)
 	{

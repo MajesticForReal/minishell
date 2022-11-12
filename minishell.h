@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:00:55 by klaurier          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/11/11 21:43:14 by klaurier         ###   ########.fr       */
-=======
-/*   Updated: 2022/11/11 19:37:09 by anrechai         ###   ########.fr       */
->>>>>>> dab90028671da72fa7a8909efaf280db05bac059
+/*   Updated: 2022/11/12 22:11:11 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +68,8 @@ typedef struct s_utils
 	int				outfile;
 	char			*home_str;
 	int				fd_pipe[2];
+	int				ambigous;
+	int				cmd_n_found;
 }					t_utils;
 
 typedef struct s_exec
@@ -90,7 +88,6 @@ typedef struct s_exec
 	struct s_exec	*next;
 }					t_exec;
 
-<<<<<<< HEAD
 typedef struct s_pipex
 {
 	char			*home_str;
@@ -110,8 +107,6 @@ typedef struct s_pipex
 
 }					t_pipex;
 
-=======
->>>>>>> dab90028671da72fa7a8909efaf280db05bac059
 // utils_minishell
 int					ft_compare(char *str, char *str2);
 void				ft_putstr(char *str);
@@ -177,15 +172,10 @@ void				ft_export_var(t_lex *lex, t_env *env, t_env *export);
 void				ft_add_back_str(t_env *env, char *str);
 void				ft_unset_var(t_lex *lex, t_env *env);
 void				ft_del_struct(t_env *env);
-<<<<<<< HEAD
-void				ft_all_builtin(t_lex *lex, t_env *env, t_utils *utils, t_env *export);
-void				ft_builtin_cd_all(t_lex *lex, t_env *env, t_utils *utils);
-void				ft_builtin_echo_all(t_lex *lex, t_env *env);
-=======
-void				ft_all_builtin(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec);
+
+void				ft_all_builtin(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec, t_env *export);
 void				ft_builtin_cd_all(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec);
 void				ft_builtin_echo_all(t_lex *lex, t_env *env, t_exec *exec);
->>>>>>> dab90028671da72fa7a8909efaf280db05bac059
 int					ft_builtin_echo_detect_n(char *lex_str);
 void				ft_builtin_echo_option(t_lex *lex, t_exec *exec);
 void				ft_not_n(t_lex *lex, int *valide_n);
@@ -209,7 +199,7 @@ int					ft_in_elseif_3(t_lex **lex);
 int					ft_in_if(t_lex **lex);
 int					ft_pipe_3(t_lex *lex);
 int					ft_pipe_2(t_lex *lex);
-int					ft_parser_k(t_lex *lex, t_env *env);
+int					ft_parser_k(t_lex *lex, t_env *env, t_utils *utils);
 t_lex				*ft_initialize_struct(void);
 int					add_back(t_lex *start, int tok, char *input, int i);
 int					ft_size_str(char *input, int i, char c);
@@ -217,8 +207,7 @@ void				ft_lexer(char *input, t_lex *lex);
 int					ft_word(char *input, t_lex *lex, int i);
 int					ft_first_lex(t_lex *lex, char *input);
 int					ft_size_str_word(char *input, int i);
-void				ft_parser_doll(t_lex *lex, t_env *env);
-int					ft_parser(t_lex *lex);
+int					ft_parser(t_lex *lex, t_utils *utils);
 void				ft_tok_fromfrom(t_lex **lex);
 void				ft_tok_toto(t_lex **lex);
 int					ft_quotes(t_lex *lex);
@@ -241,10 +230,14 @@ void				ft_concat_clear2(t_lex **lex, t_lex *first);
 void				ft_concat_clear3(t_lex **lex, t_lex *first, t_lex *start);
 
 //parser_dollar
+int					ft_test_access(char *lex_str);
+void				ft_heredoc_no_cmd(t_lex *lex);
+void				ft_heredoc_no_cmd_0(t_lex **tmp);
+int					ft_parser_doll(t_lex *lex, t_env *env, t_utils *utils);
 void				ft_concat_no_expand(t_lex *lex);
 int					ft_dollars_only(t_lex *lex);
-void				ft_dollar(t_lex *lex, t_env *env);
-void				ft_dollar_2(t_lex *lex, t_env *env);
+void				ft_dollar(t_lex *lex, t_env *env, t_utils *utils);
+void				ft_dollar_2(t_lex *lex, t_env *env, t_utils *utils);
 void				ft_print_dollars_only(t_lex *lex);
 int					ft_is_num(char *lex_str);
 int					ft_dollar_is_var(char *lex_str, t_env *env);
@@ -256,7 +249,7 @@ int					ft_compare_just_a_part_2(char *var_more);
 char				*ft_cut_var_more(char *var_more);
 int					ft_char_after_var(t_lex *lex);
 void				ft_change_list_to_var(t_lex *lex);
-int					ft_after_doll_is_num(t_lex *lex);
+int					ft_after_doll_is_num(t_lex *lex, t_utils *utils);
 void				ft_cut_after_1_num(t_lex *lex);
 void				ft_change_list_to_var_2(t_lex *lex);
 void				ft_dollar_first(t_lex *lex, t_env *env);
@@ -293,7 +286,7 @@ void				ft_free(t_lex *lex, t_env *env, t_utils *utils,
 						t_exec *exec);
 
 // Organizer exec
-void				ft_organizer_exec(t_lex *lex, t_exec *exec, t_env *env);
+int				ft_organizer_exec(t_lex *lex, t_exec *exec, t_env *env, t_utils *utils);
 char				*ft_malloc_option(t_lex *lex);
 void				ft_bzero_exec(t_exec *exec);
 void				ft_exec_tok_in(t_lex *lex, t_exec *exec);
@@ -332,9 +325,9 @@ void				ft_print_exec(t_exec *exec);
 
 // EXEC
 void				ft_exec(t_exec *exec, t_env *env, t_utils *utils,
-						t_lex *lex);
+						t_lex *lex, t_env *export);
 void				ft_exec_no_pipe(t_exec *exec, t_env *env, t_utils *utils,
-						t_lex *lex);
+						t_lex *lex, t_env *export);
 void				ft_init_fd_cmd(t_exec *exec);
 int					ft_check_builtin(t_exec *exec);
 int					ft_count_redir(t_exec *exec, char c);
@@ -348,21 +341,21 @@ char				*ft_strcat_path(char *dest, char *src);
 char				*ft_strdup(const char *s);
 char				*ft_strdup_prog(const char *s);
 void				ft_exec_pipe(t_exec *exec, t_utils *utils, t_env *env,
-						t_lex *lex);
+						t_lex *lex, t_env *export);
 int					ft_pipe_redir(t_exec *exec, t_utils *utils);
-void	ft_processus_no_pipe(t_exec *exec,
+void				ft_processus_no_pipe(t_exec *exec,
 							t_env *env,
-							t_utils *utils);
+							t_utils *utils, t_env *export);
 void				ft_exec_prog(t_exec *exec);
 void				ft_constructor_cmd(t_exec *exec);
 void				ft_exec_prog_cwd(t_exec *exec, char *cmd_base);
 void				ft_processus_pipe(t_exec *exec, t_env *env, t_lex *lex,
-						t_utils *utils);
+						t_utils *utils, t_env *m);
 void				ft_connect_redir(t_exec *exec, t_utils *utils);
 void				ft_connect_fd_cmd(t_exec *exec);
 void				ft_waitpid(t_exec *exec);
 
 int					ft_check_str(char *str, int i);
-void	ft_init_fd_cmd_no_pipe(t_exec *exec);
+void				ft_init_fd_cmd_no_pipe(t_exec *exec);
 
 #endif

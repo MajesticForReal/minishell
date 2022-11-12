@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:32:17 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/06 22:52:23 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/12 20:10:21 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_parser(t_lex *lex)
+int	ft_parser(t_lex *lex, t_utils *utils)
 {
 	t_lex	*start;
 
@@ -37,6 +37,7 @@ int	ft_parser(t_lex *lex)
 		lex = lex->next;
 	}
 	return (0);
+	(void)utils;
 }
 
 void	ft_tok_fromfrom(t_lex **lex)

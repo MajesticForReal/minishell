@@ -3,18 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+         #
+#    By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/27 16:02:00 by y klaurier        #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2022/11/10 22:20:37 by klaurier         ###   ########.fr        #
-=======
-#    Updated: 2022/11/10 22:20:42 by anrechai         ###   ########.fr        #
->>>>>>> dab90028671da72fa7a8909efaf280db05bac059
+#    Updated: 2022/11/12 17:09:55 by klaurier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS 		=	main.c \
+				heredoc_no_cmd.c \
 				builtin_cd.c \
 				builtin_cd2.c \
 				builtin_echo.c \

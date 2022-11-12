@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   exec_w_pipe.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:41:27 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/11 21:54:39 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/11 22:34:58 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	ft_exec_builtin_pipe(t_exec *exec, t_utils *utils, t_lex *lex,
-		t_env *env)
+		t_env *env, t_env *export)
 {
 	ft_pipe_redir(exec, utils);
 	if (utils->infile != -1)
@@ -26,7 +26,7 @@ void	ft_exec_builtin_pipe(t_exec *exec, t_utils *utils, t_lex *lex,
 		dup2(utils->outfile, exec->fd_cmd[1]);
 		close(utils->outfile);
 	}
-	ft_all_builtin(lex, env, utils, exec);
+	ft_all_builtin(lex, env, utils, exec, export);
 	if (utils->fd_pipe[0] != STDIN_FILENO)
 		close(exec->fd_cmd[0]);
 	if (utils->fd_pipe[1] != STDOUT_FILENO)
@@ -57,7 +57,7 @@ void	ft_exec_builtin_pipe(t_exec *exec, t_utils *utils, t_lex *lex,
 	// 	close(utils->fd_pipe[1]);
 }
 
-void	ft_exec_pipe(t_exec *exec, t_utils *utils, t_env *env, t_lex *lex)
+void	ft_exec_pipe(t_exec *exec, t_utils *utils, t_env *env, t_lex *lex, t_env *export)
 {
 	ft_init_fd_cmd(exec);
 	while (exec != NULL)
@@ -71,7 +71,7 @@ void	ft_exec_pipe(t_exec *exec, t_utils *utils, t_env *env, t_lex *lex)
 		}
 		if (ft_check_builtin(exec) == 1)
 		{
-			ft_exec_builtin_pipe(exec, utils, lex, env);
+			ft_exec_builtin_pipe(exec, utils, lex, env, export);
 		}
 		else
 		{
@@ -81,7 +81,7 @@ void	ft_exec_pipe(t_exec *exec, t_utils *utils, t_env *env, t_lex *lex)
 			signal(SIGINT, ft_detect_sig);
 			signal(SIGQUIT, ft_detect_sig);
 			if (exec->process_id == 0)
-				ft_processus_pipe(exec, env, lex, utils);
+				ft_processus_pipe(exec, env, lex, utils, export);
 			if (exec->fd_cmd[0] != STDIN_FILENO)
 				close(exec->fd_cmd[0]);
 			if (exec->fd_cmd[1] != STDOUT_FILENO)
@@ -91,7 +91,7 @@ void	ft_exec_pipe(t_exec *exec, t_utils *utils, t_env *env, t_lex *lex)
 	}
 }
 
-void	ft_processus_pipe(t_exec *exec, t_env *env, t_lex *lex, t_utils *utils)
+void	ft_processus_pipe(t_exec *exec, t_env *env, t_lex *lex, t_utils *utils, t_env *export)
 {
 	if (exec != NULL && exec->next != NULL)
 		close(exec->next->fd_cmd[0]);
@@ -137,7 +137,7 @@ void	ft_processus_pipe(t_exec *exec, t_env *env, t_lex *lex, t_utils *utils)
 			dup2(utils->outfile, exec->fd_cmd[1]);
 			close(utils->outfile);
 		}
-		ft_all_builtin(lex, env, utils, exec);
+		ft_all_builtin(lex, env, utils, exec, export);
 		if (utils->fd_pipe[0] != STDIN_FILENO)
 			close(exec->fd_cmd[0]);
 		if (utils->fd_pipe[1] != STDOUT_FILENO)

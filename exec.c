@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 21:56:30 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/11 21:53:31 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/11 22:31:21 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,17 +161,17 @@ void	ft_exec_prog(t_exec *exec)
 	free(cmd_base);
 }
 
-void	ft_exec(t_exec *exec, t_env *env, t_utils *utils, t_lex *lex)
+void	ft_exec(t_exec *exec, t_env *env, t_utils *utils, t_lex *lex, t_env *export)
 {
 	utils->infile = -1;
 	utils->outfile = -1;
 	if (exec->next == NULL)
 	{
-		ft_exec_no_pipe(exec, env, utils, lex);
+		ft_exec_no_pipe(exec, env, utils, lex, export);
 	}
 	else if (exec->next != NULL)
 	{
-		ft_exec_pipe(exec, utils, env, lex);
+		ft_exec_pipe(exec, utils, env, lex, export);
 		ft_waitpid(exec);
 	}
 	if (exec->cmd[0] != NULL && exec->fd_cmd[0] != STDIN_FILENO)

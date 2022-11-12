@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:41:14 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/11 17:59:20 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/12 22:28:34 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_lex	*lex;
 	t_env	*env;
+	t_env	*export;
 	char	*input;
 	t_utils	*utils;
 	t_exec	*exec;
@@ -134,6 +135,7 @@ int	main(int argc, char **argv, char **envp)
 	utils = NULL;
 	exec = NULL;
 	input = NULL;
+
 	signal(SIGINT, ft_detect_sig);
 	signal(SIGQUIT, ft_detect_sig);
 	while (1)
@@ -148,22 +150,26 @@ int	main(int argc, char **argv, char **envp)
 			return (1);
 		}
 		env = ft_init_fill_env(envp);
+		export = ft_init_fill_env(envp);
 		if (ft_init(&lex, &utils, &exec) == -1)
 			return (-1);
 		add_history(input);
 		ft_lexer(input, lex);
-		if (ft_parser_k(lex, env) == 0)
+		if (ft_parser_k(lex, env, utils) == SUCCESS)
 		{
 			ft_organizer(&lex);
-			if (ft_parser(lex) == 0)
+			if (ft_parser(lex, utils) == 0)
 			{
-				ft_organizer_exec(lex, exec, env);
-				ft_exec(exec, env, utils, lex);
+				if(ft_organizer_exec(lex, exec, env, utils) == SUCCESS)
+					ft_exec(exec, env, utils, lex, export);
+				else
+					printf("FAIL\n");
 			}
 		}
 		ft_free(lex, env, utils, exec);
 		free(input);
 	}
 	(void)argc;
+	(void)export;
 	(void)argv;
 }

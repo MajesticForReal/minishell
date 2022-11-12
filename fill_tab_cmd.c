@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_tab_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 21:56:40 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/10 21:08:41 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/12 22:33:01 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,27 @@ void	ft_fill_tab_cmd(t_lex *lex, t_exec *exec)
 	}
 }
 
-void	ft_organizer_exec(t_lex *lex, t_exec *exec, t_env *env)
+int	ft_organizer_exec(t_lex *lex, t_exec *exec, t_env *env, t_utils *utils)
 {
 	while (lex != NULL)
 	{
 		ft_malloc_heredoc_str(exec);
 		ft_heredoc(lex);
+		if(utils->ambigous == 1)
+		{
+			while(lex->str[0] != '$' && lex!= NULL)
+			{
+				if(lex->next != NULL)
+					lex = lex->next;
+				else
+					break ;
+			}
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(lex->str, 2);
+			ft_putstr_fd(lex->next->str, 2);
+			ft_putstr_fd(": ambigous redirect\n", 2);
+			return (FAIL);
+		}
 		exec->path = ft_split(ft_find_path(env), ':');
 		ft_malloc_option_execve(lex, exec);
 		ft_fill_tab_cmd(lex, exec);
@@ -79,7 +94,7 @@ void	ft_organizer_exec(t_lex *lex, t_exec *exec, t_env *env)
 			if (lex->next != NULL)
 				lex = lex->next;
 			else
-				return ;
+				return (SUCCESS);
 		}
 		if (lex->token == TOK_PIPE)
 		{
@@ -90,4 +105,5 @@ void	ft_organizer_exec(t_lex *lex, t_exec *exec, t_env *env)
 				lex = lex->next;
 		}
 	}
+	return (SUCCESS);
 }
