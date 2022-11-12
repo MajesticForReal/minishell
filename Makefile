@@ -6,7 +6,7 @@
 #    By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/27 16:02:00 by y klaurier        #+#    #+#              #
-#    Updated: 2022/11/12 02:03:17 by anrechai         ###   ########.fr        #
+#    Updated: 2022/11/12 22:19:53 by anrechai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,9 @@ SRCS 		=	main.c \
 				organizer3.c\
 				open.c\
 				exec.c\
+				exec2.c\
 				exec_no_pipe.c\
+				exec_no_pipe_2.c\
 				exec_w_pipe.c\
 				heredoc_doll.c\
 				heredoc.c\

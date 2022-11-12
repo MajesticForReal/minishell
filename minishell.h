@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:00:55 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/11 22:49:04 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/12 22:18:29 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-extern int	g_exstat;
+extern int			g_exstat;
 
 enum				e_token
 {
@@ -110,7 +110,7 @@ char				**ft_split(char const *s, char c);
 
 //buitin
 void				ft_copy_env_n_rate(t_env *env);
-int					ft_rate_str(t_env *env, int	last_rate);
+int					ft_rate_str(t_env *env, int last_rate);
 int					ft_compare_index(t_env *env, char *str);
 void				ft_replace_t_env(t_env *env, char *str);
 int					ft_compare_stop_egal(char *str, char *str2);
@@ -138,19 +138,23 @@ t_env				*ft_init_env(void);
 t_env				*ft_init_fill_env(char **envp);
 void				ft_fill_env(char **envp, t_env *env);
 void				ft_add_back_envp(t_env *env, char **envp, int j);
-void				ft_print_list_env(t_env *env);
+void				ft_print_list_env(t_env *env, t_exec *exec);
 void				ft_compare_just_a_part(char *complet_str,
-char				*part_to_find, t_utils *utils);
+						char *part_to_find,
+						t_utils *utils);
 void				ft_compare_just_a_part(char *complet_str,
-char 				*part_to_find, t_utils *utils);
+						char *part_to_find,
+						t_utils *utils);
 void				ft_init_fill_str_home(char *complet_str, t_utils *builtin);
 int					ft_builtin_cd_rac(void);
 void				ft_export_var(t_lex *lex, t_env *env);
 void				ft_add_back_str(t_env *env, char *str);
 void				ft_unset_var(t_lex *lex, t_env *env);
 void				ft_del_struct(t_env *env);
-void				ft_all_builtin(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec);
-void				ft_builtin_cd_all(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec);
+void				ft_all_builtin(t_lex *lex, t_env *env, t_utils *utils,
+						t_exec *exec);
+void				ft_builtin_cd_all(t_lex *lex, t_env *env, t_utils *utils,
+						t_exec *exec);
 void				ft_builtin_echo_all(t_lex *lex, t_env *env, t_exec *exec);
 int					ft_builtin_echo_detect_n(char *lex_str);
 void				ft_builtin_echo_option(t_lex *lex, t_exec *exec);
@@ -315,9 +319,9 @@ char				*ft_strdup_prog(const char *s);
 void				ft_exec_pipe(t_exec *exec, t_utils *utils, t_env *env,
 						t_lex *lex);
 int					ft_pipe_redir(t_exec *exec, t_utils *utils);
-void	ft_processus_no_pipe(t_exec *exec,
-							t_env *env,
-							t_utils *utils);
+void				ft_processus_no_pipe(t_exec *exec,
+						t_env *env,
+						t_utils *utils);
 void				ft_exec_prog(t_exec *exec);
 void				ft_constructor_cmd(t_exec *exec);
 void				ft_exec_prog_cwd(t_exec *exec, char *cmd_base);
@@ -328,6 +332,16 @@ void				ft_connect_fd_cmd(t_exec *exec);
 void				ft_waitpid(t_exec *exec);
 
 int					ft_check_str(char *str, int i);
-void	ft_init_fd_cmd_no_pipe(t_exec *exec);
+void				ft_init_fd_cmd_no_pipe(t_exec *exec);
+void				ft_exec_prog_2(t_exec *exec, char *new_path, char *my_cmd,
+						char *cmd_base);
+void				ft_constructor_cmd_2(t_exec *exec, char *new_path,
+						char *my_cmd, int i);
+void				exec_builtin_no_pipe(t_exec *exec, t_utils *utils, t_lex *lex,
+						t_env *env);
+void				ft_close_files(int infile, int outfile);
+void				dup_n_close(int infile_to_close, int infile_to_copy,
+						int outfile_to_close, int outfile_to_copy);
+
 
 #endif
