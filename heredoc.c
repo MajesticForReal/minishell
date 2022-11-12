@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 22:03:00 by klaurier          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/11/12 18:21:21 by klaurier         ###   ########.fr       */
-=======
-/*   Updated: 2022/11/12 01:54:39 by anrechai         ###   ########.fr       */
->>>>>>> a3b6e9c22c51b26adb7979a8dba4759fbf5328b7
+/*   Updated: 2022/11/12 22:51:15 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +52,8 @@ void	ft_heredoc(t_lex *lex)
 		else
 			break ;
 	}
-<<<<<<< HEAD
-	close(fd);
-=======
 	if (fd != -1)
 		close(fd);
->>>>>>> a3b6e9c22c51b26adb7979a8dba4759fbf5328b7
 }
 
 void	ft_heredoc0(t_lex **tmp)

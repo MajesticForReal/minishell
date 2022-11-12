@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_w_pipe.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:41:27 by anrechai          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/11/11 22:34:58 by klaurier         ###   ########.fr       */
-=======
-/*   Updated: 2022/11/12 20:12:18 by anrechai         ###   ########.fr       */
->>>>>>> a3b6e9c22c51b26adb7979a8dba4759fbf5328b7
+/*   Updated: 2022/11/12 22:50:47 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +51,6 @@ void	ft_exec_pipe(t_exec *exec, t_utils *utils, t_env *env, t_lex *lex, t_env *e
 			exec->next->fd_cmd[0] = utils->fd_pipe[0];
 			exec->fd_cmd[1] = utils->fd_pipe[1];
 		}
-<<<<<<< HEAD
 		if (ft_check_builtin(exec) == 1)
 		{
 			ft_exec_builtin_pipe(exec, utils, lex, env, export);
@@ -74,35 +69,6 @@ void	ft_exec_pipe(t_exec *exec, t_utils *utils, t_env *env, t_lex *lex, t_env *e
 			if (exec->fd_cmd[1] != STDOUT_FILENO)
 				close(exec->fd_cmd[1]);
 		}
-=======
-		// }
-		// if (exec->cmd[0] != NULL && ft_check_builtin(exec) == 1)
-		// {
-		// 	ft_exec_builtin_pipe(exec, utils, lex, env);
-		// }
-		// if (exec != NULL && exec->cmd[0] != NULL)
-		// {
-		exec->process_id = fork();
-		if (exec->process_id < 0)
-			return (perror("minishell: fork: "));
-		signal(SIGINT, ft_detect_sig);
-		signal(SIGQUIT, ft_detect_sig);
-		// if (exec->cmd[0] != NULL && ft_check_builtin(exec) == 1)
-		// {
-		// 	ft_exec_builtin_pipe(exec, utils, lex, env);
-		// }
-		if (exec->process_id == 0)
-			ft_processus_pipe(exec, env, lex, utils);
-		if (exec->fd_cmd[0] != STDIN_FILENO)
-			close(exec->fd_cmd[0]);
-		if (exec->fd_cmd[1] != STDOUT_FILENO)
-			close(exec->fd_cmd[1]);
-		// }
-		// if (utils->infile != -1)
-		// 	close(utils->infile);
-		// if (utils->outfile != -1)
-		// 	close(utils->outfile);
->>>>>>> a3b6e9c22c51b26adb7979a8dba4759fbf5328b7
 		exec = exec->next;
 	}
 }
@@ -115,7 +81,7 @@ void	ft_processus_pipe(t_exec *exec, t_env *env, t_lex *lex, t_utils *utils, t_e
 	// {
 	if (exec->cmd[0] != NULL && ft_check_builtin(exec) == 1)
 	{
-		ft_exec_builtin_pipe(exec, utils, lex, env);
+		ft_exec_builtin_pipe(exec, utils, lex, env, export);
 	}
 	else
 	{
@@ -146,27 +112,6 @@ void	ft_processus_pipe(t_exec *exec, t_env *env, t_lex *lex, t_utils *utils, t_e
 			}
 		}
 	}
-<<<<<<< HEAD
-	else if (ft_check_builtin(exec) == 1)
-	{
-		ft_pipe_redir(exec, utils);
-		if (utils->infile != -1)
-		{
-			dup2(utils->infile, exec->fd_cmd[0]);
-			close(utils->infile);
-		}
-		if (utils->outfile != -1)
-		{
-			dup2(utils->outfile, exec->fd_cmd[1]);
-			close(utils->outfile);
-		}
-		ft_all_builtin(lex, env, utils, exec, export);
-		if (utils->fd_pipe[0] != STDIN_FILENO)
-			close(exec->fd_cmd[0]);
-		if (utils->fd_pipe[1] != STDOUT_FILENO)
-			close(utils->fd_pipe[1]);
-	}
-=======
 	(void)lex;
 	// }
 	// else if (ft_check_builtin(exec) == 1)
@@ -183,7 +128,6 @@ void	ft_processus_pipe(t_exec *exec, t_env *env, t_lex *lex, t_utils *utils, t_e
 	// 		close(utils->outfile);
 	// 	}
 	// }
->>>>>>> a3b6e9c22c51b26adb7979a8dba4759fbf5328b7
 }
 
 void	ft_connect_fd_cmd(t_exec *exec)

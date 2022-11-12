@@ -6,11 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 16:19:32 by anrechai          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/11/11 21:08:35 by klaurier         ###   ########.fr       */
-=======
-/*   Updated: 2022/11/12 21:33:19 by anrechai         ###   ########.fr       */
->>>>>>> a3b6e9c22c51b26adb7979a8dba4759fbf5328b7
+/*   Updated: 2022/11/12 22:46:04 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +89,6 @@ int	ft_print_2_d_tab(char **strs, int index)
 	return (SUCCESS);
 }
 
-<<<<<<< HEAD
 void	ft_print_list_export(t_env *env)
 {
 	while (env != NULL)
@@ -121,10 +116,7 @@ void	ft_print_list_export(t_env *env)
 	}
 }
 
-void	ft_print_list_env(t_env *env)
-=======
 void	ft_print_list_env(t_env *env, t_exec *exec)
->>>>>>> a3b6e9c22c51b26adb7979a8dba4759fbf5328b7
 {
 	while (env != NULL)
 	{

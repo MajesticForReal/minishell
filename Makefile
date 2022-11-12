@@ -3,14 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+         #
+#    By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/27 16:02:00 by y klaurier        #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2022/11/12 17:09:55 by klaurier         ###   ########.fr        #
-=======
-#    Updated: 2022/11/12 22:19:53 by anrechai         ###   ########.fr        #
->>>>>>> a3b6e9c22c51b26adb7979a8dba4759fbf5328b7
+#    Updated: 2022/11/12 22:41:59 by anrechai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
