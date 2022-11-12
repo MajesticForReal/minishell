@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 15:18:23 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/12 22:47:45 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/12 23:23:37 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ int	ft_no_pipe_redir(t_exec *exec, t_utils *utils)
 	return (EXIT_SUCCESS);
 }
 
-void	ft_processus_no_pipe(t_exec *exec, t_env *env, t_utils *utils, t_env *export)
+void	ft_processus_no_pipe(t_exec *exec, t_env *env, t_utils *utils,
+			t_env *export)
 {
 	dup_n_close(utils->infile, STDIN_FILENO, utils->outfile, STDOUT_FILENO);
 	if (!env)
@@ -50,7 +51,6 @@ void	ft_processus_no_pipe(t_exec *exec, t_env *env, t_utils *utils, t_env *expor
 			execve(exec->cmd[0], exec->cmd, NULL);
 		else
 			ft_constructor_cmd(exec);
-	(void)export;
 	}
 	if (utils->infile != -1)
 		close(utils->infile);

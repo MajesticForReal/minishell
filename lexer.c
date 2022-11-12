@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:18:43 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/11 17:53:16 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/12 23:22:11 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,12 @@ int	ft_first_lex(t_lex *lex, char *input)
 		lex->token = TOK_SPACE;
 		i++;
 	}
-
 	if (input[i] == '<' || input[i] == '>' || input[i] == 34 || input[i] == 36
 		|| input[i] == 39 || input[i] == '|')
 		ft_first_lex_token(lex, input, i);
 	else if (input[i] != '|' && input[i] != 34 && input[i] != 36
-			&& input[i] != 39 && input[i] != '<' && input[i] != '>'
-			&& input[i] != ' ' && input[i] != '\t' && input[i] != '\0')
+		&& input[i] != 39 && input[i] != '<' && input[i] != '>'
+		&& input[i] != ' ' && input[i] != '\t' && input[i] != '\0')
 	{
 		i = ft_word(input, lex, i);
 		return (i);
@@ -83,7 +82,7 @@ int	ft_first_lex(t_lex *lex, char *input)
 void	ft_lexer(char *input, t_lex *lex)
 {
 	int	i;
-	
+
 	i = ft_first_lex(lex, input);
 	while (input[i])
 	{

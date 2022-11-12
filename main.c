@@ -6,13 +6,14 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:41:14 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/12 22:45:42 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/13 00:27:51 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_free(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec)
+void	ft_free(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec,
+		t_env *export)
 {
 	t_lex	*tmp;
 	t_exec	*tmp2;
@@ -93,6 +94,22 @@ void	ft_free(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec)
 			break ;
 		}
 	}
+	while (export != NULL)
+	{
+		if (export->str != NULL)
+			free(export->str);
+		if (export->next != NULL)
+		{
+			tmp3 = export;
+			export = export->next;
+			free(tmp3);
+		}
+		else
+		{
+			free(export);
+			break ;
+		}
+	}
 	return ;
 }
 
@@ -110,6 +127,10 @@ int	ft_init(t_lex **lex, t_utils **utils, t_exec **exec)
 		return (-1);
 	}
 	(*utils)->home_str = NULL;
+	(*utils)->ambigous = 0;
+	(*utils)->cmd_n_found = 0;
+	(*utils)->infile = -1;
+	(*utils)->outfile = -1;
 	(*exec) = malloc(sizeof(t_exec));
 	if (!(*exec))
 	{
@@ -128,17 +149,18 @@ int	ft_init(t_lex **lex, t_utils **utils, t_exec **exec)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_lex	*lex;
-	t_env	*env;
-	t_env	*export;
-	char	*input;
-	t_utils	*utils;
-	t_exec	*exec;
+	t_lex *lex;
+	t_env *env;
+	t_env *export;
+	char *input;
+	t_utils *utils;
+	t_exec *exec;
 
 	lex = NULL;
 	utils = NULL;
 	exec = NULL;
 	input = NULL;
+	export = NULL;
 
 	signal(SIGINT, ft_detect_sig);
 	signal(SIGQUIT, ft_detect_sig);
@@ -164,13 +186,13 @@ int	main(int argc, char **argv, char **envp)
 			ft_organizer(&lex);
 			if (ft_parser(lex, utils) == 0)
 			{
-				if(ft_organizer_exec(lex, exec, env, utils) == SUCCESS)
+				if (ft_organizer_exec(lex, exec, env, utils) == SUCCESS)
 					ft_exec(exec, env, utils, lex, export);
 				else
 					printf("FAIL\n");
 			}
 		}
-		ft_free(lex, env, utils, exec);
+		ft_free(lex, env, utils, exec, export);
 		free(input);
 	}
 	(void)argc;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 17:14:23 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/11 22:42:26 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/13 00:44:40 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int	ft_builtin_cd_back(t_exec *exec)
 
 	i = -1;
 	
-	size_pwd = ft_strlen(ft_builtin_pwd(2, exec));
 	path_pwd = ft_builtin_pwd(2, exec);
+	size_pwd = ft_strlen(path_pwd);
 	while (path_pwd[size_pwd] != '/')
 		size_pwd--;
 	short_pwd = malloc(sizeof(char) * size_pwd + 1);

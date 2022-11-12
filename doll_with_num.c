@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doll_with_num.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:23:49 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/12 20:18:06 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/12 23:22:48 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	ft_free_after_1_num(t_lex *lex)
 
 int	ft_after_doll_is_num(t_lex *lex, t_utils *utils)
 {
-	if(utils->ambigous == 1)
+	if (utils->ambigous == 1)
 		return (FAIL);
 	if (lex->next->str[0] >= '0' && lex->next->str[0] <= '9'
 		&& lex->next->str[1] == '\0')

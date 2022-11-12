@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_tab_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 21:56:40 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/12 22:35:18 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/13 00:46:11 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	ft_organizer_exec(t_lex *lex, t_exec *exec, t_env *env, t_utils *utils)
 		ft_heredoc(lex);
 		if(utils->ambigous == 1)
 		{
-			while(lex->str[0] != '$' && lex!= NULL)
+			while(lex != NULL && lex->str[0] != '$')
 			{
 				if(lex->next != NULL)
 					lex = lex->next;
@@ -84,7 +84,10 @@ int	ft_organizer_exec(t_lex *lex, t_exec *exec, t_env *env, t_utils *utils)
 			ft_putstr_fd(": ambigous redirect\n", 2);
 			return (FAIL);
 		}
-		exec->path = ft_split(ft_find_path(env), ':');
+		if (exec != NULL && exec->path == NULL)
+		{
+			exec->path = ft_split(ft_find_path(env), ':');
+		}
 		ft_malloc_option_execve(lex, exec);
 		ft_fill_tab_cmd(lex, exec);
 		ft_malloc_tab_file(lex, exec);
@@ -96,7 +99,7 @@ int	ft_organizer_exec(t_lex *lex, t_exec *exec, t_env *env, t_utils *utils)
 			else
 				return (SUCCESS);
 		}
-		if (lex->token == TOK_PIPE)
+		if (lex != NULL && lex->token == TOK_PIPE)
 		{
 			ft_next_exec(exec);
 			if (exec->next != NULL)

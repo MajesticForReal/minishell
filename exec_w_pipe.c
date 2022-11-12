@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:41:27 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/12 22:50:47 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/13 00:19:49 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ void	ft_exec_pipe(t_exec *exec, t_utils *utils, t_env *env, t_lex *lex, t_env *e
 		{
 			if (pipe(utils->fd_pipe) == -1)
 				return (perror("minishell: pipe: "));
-			// if (exec->fd_cmd[0] != -1)
-			// 	close(exec->fd_cmd[0]);
-			// if (exec->fd_cmd[1] != -1)
-			// 	close(exec->fd_cmd[1]);
+			if (exec->fd_cmd[0] != -1)
+				close(exec->fd_cmd[0]);
+			if (exec->fd_cmd[1] != -1)
+				close(exec->fd_cmd[1]);
 			exec->next->fd_cmd[0] = utils->fd_pipe[0];
 			exec->fd_cmd[1] = utils->fd_pipe[1];
 		}
@@ -146,6 +146,10 @@ void	ft_connect_fd_cmd(t_exec *exec)
 
 int	ft_pipe_redir(t_exec *exec, t_utils *utils)
 {
+	if (utils->infile != -1)
+		close(utils->infile);
+	if (utils->outfile != -1)
+		close(utils->outfile);
 	if (ft_open_out(exec, utils) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (ft_open_in(exec, utils) == EXIT_FAILURE)

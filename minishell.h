@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:00:55 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/12 22:48:53 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/12 23:53:52 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,8 +159,10 @@ void				ft_add_back_str(t_env *env, char *str);
 void				ft_unset_var(t_lex *lex, t_env *env);
 void				ft_del_struct(t_env *env);
 
-void				ft_all_builtin(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec, t_env *export);
-void				ft_builtin_cd_all(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec);
+void				ft_all_builtin(t_lex *lex, t_env *env, t_utils *utils,
+						t_exec *exec, t_env *export);
+void				ft_builtin_cd_all(t_lex *lex, t_env *env, t_utils *utils,
+						t_exec *exec);
 void				ft_builtin_echo_all(t_lex *lex, t_env *env, t_exec *exec);
 int					ft_builtin_echo_detect_n(char *lex_str);
 void				ft_builtin_echo_option(t_lex *lex, t_exec *exec);
@@ -269,10 +271,11 @@ char				*ft_parser_limiter(t_lex *tmp);
 //redirection
 void				ft_redirection(t_lex *lex);
 void				ft_free(t_lex *lex, t_env *env, t_utils *utils,
-						t_exec *exec);
+						t_exec *exec, t_env *export);
 
 // Organizer exec
-int				ft_organizer_exec(t_lex *lex, t_exec *exec, t_env *env, t_utils *utils);
+int					ft_organizer_exec(t_lex *lex, t_exec *exec, t_env *env,
+						t_utils *utils);
 char				*ft_malloc_option(t_lex *lex);
 void				ft_bzero_exec(t_exec *exec);
 void				ft_exec_tok_in(t_lex *lex, t_exec *exec);

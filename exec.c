@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 21:56:30 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/12 22:40:14 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/13 00:28:17 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,9 @@ void	ft_exec_prog(t_exec *exec)
 	free(cmd_base);
 }
 
-void	ft_exec(t_exec *exec, t_env *env, t_utils *utils, t_lex *lex, t_env *export)
+void	ft_exec(t_exec *exec, t_env *env, t_utils *utils, t_lex *lex,
+			t_env *export)
 {
-	utils->infile = -1;
-	utils->outfile = -1;
 	if (exec->next == NULL)
 	{
 		ft_exec_no_pipe(exec, env, utils, lex, export);
@@ -106,7 +105,6 @@ void	ft_exec(t_exec *exec, t_env *env, t_utils *utils, t_lex *lex, t_env *export
 
 void	ft_waitpid(t_exec *exec)
 {
-	// while (exec != NULL)
 	while (exec->next != NULL && exec->next->cmd[0] != NULL)
 	{
 		// if (ft_check_builtin(exec) != 1)
