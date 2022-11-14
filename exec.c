@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 21:56:30 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/13 00:28:17 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/13 06:15:39 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	ft_exec_prog(t_exec *exec)
 }
 
 void	ft_exec(t_exec *exec, t_env *env, t_utils *utils, t_lex *lex,
-			t_env *export)
+		t_env *export)
 {
 	if (exec->next == NULL)
 	{
@@ -96,10 +96,6 @@ void	ft_exec(t_exec *exec, t_env *env, t_utils *utils, t_lex *lex,
 		ft_exec_pipe(exec, utils, env, lex, export);
 		ft_waitpid(exec);
 	}
-	if (exec->cmd[0] != NULL && exec->fd_cmd[0] != STDIN_FILENO)
-		close(exec->fd_cmd[0]);
-	if (exec->cmd[0] != NULL && exec->fd_cmd[1] != STDOUT_FILENO)
-		close(exec->fd_cmd[1]);
 	return ;
 }
 

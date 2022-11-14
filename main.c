@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:41:14 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/13 00:49:36 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/14 18:00:09 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,7 @@ int	main(int argc, char **argv, char **envp)
 			return (1);
 		}
 		env = ft_init_fill_env(envp);
-		export = ft_init_fill_env(envp);
+		export = ft_copy_env(env);
 		if (ft_init(&lex, &utils, &exec) == -1)
 			return (-1);
 		add_history(input);

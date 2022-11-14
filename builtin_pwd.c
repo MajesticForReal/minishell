@@ -6,13 +6,13 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 20:42:48 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/13 00:40:50 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/13 03:02:24 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_builtin_pwd(int option, t_exec *exec)
+char	*ft_builtin_pwd(int option, t_exec *exec, t_utils *utils)
 {
 	char	*path_dir;
 
@@ -25,8 +25,16 @@ char	*ft_builtin_pwd(int option, t_exec *exec)
 	}
 	else if (path_dir != NULL && option == 1)
 	{
-		ft_putstr_fd(path_dir, exec->fd_cmd[1]);
-		ft_putstr_fd("\n", exec->fd_cmd[1]);
+		if (utils->outfile != -1)
+		{
+			ft_putstr_fd(path_dir, utils->outfile);
+			ft_putstr_fd("\n", utils->outfile);
+		}
+		else
+		{
+			ft_putstr_fd(path_dir, exec->fd_cmd[1]);
+			ft_putstr_fd("\n", exec->fd_cmd[1]);
+		}
 		free(path_dir);
 		return (NULL);
 	}

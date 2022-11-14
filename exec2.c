@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 22:04:32 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/12 22:05:28 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/13 05:56:00 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	ft_init_fd_cmd(t_exec *exec)
 {
-	while (exec != NULL && exec->cmd[0] != NULL)
+	while (exec != NULL)
 	{
-		exec->fd_cmd[0] = dup(STDIN_FILENO);
-		exec->fd_cmd[1] = dup(STDOUT_FILENO);
+		exec->fd_cmd[0] = STDIN_FILENO;
+		exec->fd_cmd[1] = STDOUT_FILENO;
 		if (exec->next != NULL)
 			exec = exec->next;
 		else
@@ -30,8 +30,8 @@ void	ft_init_fd_cmd_no_pipe(t_exec *exec)
 {
 	while (exec != NULL && exec->cmd[0] != NULL)
 	{
-		exec->fd_cmd[0] = dup(STDIN_FILENO);
-		exec->fd_cmd[1] = dup(STDOUT_FILENO);
+		exec->fd_cmd[0] = STDIN_FILENO;
+		exec->fd_cmd[1] = STDOUT_FILENO;
 		if (exec->next != NULL)
 			exec = exec->next;
 		else

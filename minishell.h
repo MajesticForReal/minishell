@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:00:55 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/13 00:51:29 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/13 03:43:18 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ char				**ft_r_split(char const *s, char c, char **strs);
 char				**ft_split(char const *s, char c);
 
 //buitin
-void				ft_print_list_export(t_env *env);
+void				ft_print_list_export(t_env *env, t_exec *exec, t_utils *utils);
 void				ft_add_back_export(t_env *export, char *strs);
 t_env				*ft_export_list(char **strs);
 t_env				*ft_copy_env(t_env *env);
@@ -121,20 +121,20 @@ int					ft_rate_str(t_env *env, int last_rate);
 int					ft_compare_index(t_env *env, char *str);
 void				ft_replace_t_env(t_env *env, char *str);
 int					ft_compare_stop_egal(char *str, char *str2);
-void				ft_is_not_valid_n(t_lex *lex, t_exec *exec);
-void				ft_print_argument(t_lex *lex, int valid_n, t_exec *exec);
-void				ft_is_valid_n(t_lex *lex, t_exec *exec);
+void				ft_is_not_valid_n(t_lex *lex, t_exec *exec, t_utils *utils);
+void				ft_print_argument(t_lex *lex, int valid_n, t_exec *exec, t_utils *utils);
+void				ft_is_valid_n(t_lex *lex, t_exec *exec, t_utils *utils);
 int					ft_first_is_alpha(char *lex_str);
 int					ft_str_have_egal(char *lex_str);
 int					ft_detect_special_char_export(char *lex_str);
-char				*ft_builtin_pwd(int option, t_exec *exec);
-int					ft_builtin_cd_dir(char *input, t_exec *exec);
+char				*ft_builtin_pwd(int option, t_exec *exec, t_utils *utils);
+int					ft_builtin_cd_dir(char *input, t_exec *exec, t_utils *utils);
 char				*ft_parsing_cd_dir(char *lex_str);
 char				*ft_concat(char *str_1, char *str_2);
 int					ft_builtin_cd_only(t_env *env, t_utils *utils);
-int					ft_builtin_cd_back(t_exec *exec);
+int					ft_builtin_cd_back(t_exec *exec, t_utils *utils);
 int					ft_cd_is_back(char *input);
-int					ft_builtin_echo_only(t_exec *exec);
+int					ft_builtin_echo_only(t_exec *exec, t_utils *utils);
 int					ft_builtin_env(char **envp);
 void				test_signal(int code);
 int					ft_print_2_d_tab(char **strs, int index);
@@ -145,7 +145,7 @@ t_env				*ft_init_env(void);
 t_env				*ft_init_fill_env(char **envp);
 void				ft_fill_env(char **envp, t_env *env);
 void				ft_add_back_envp(t_env *env, char **envp, int j);
-void				ft_print_list_env(t_env *env, t_exec *exec);
+void				ft_print_list_env(t_env *env, t_exec *exec, t_utils *utils);
 void				ft_compare_just_a_part(char *complet_str,
 						char *part_to_find,
 						t_utils *utils);
@@ -154,7 +154,7 @@ void				ft_compare_just_a_part(char *complet_str,
 						t_utils *utils);
 void				ft_init_fill_str_home(char *complet_str, t_utils *builtin);
 int					ft_builtin_cd_rac(void);
-void				ft_export_var(t_lex *lex, t_env *env, t_env *export);
+void				ft_export_var(t_lex *lex, t_env *env, t_env *export, t_exec *exec, t_utils *utils);
 void				ft_add_back_str(t_env *env, char *str);
 void				ft_unset_var(t_lex *lex, t_env *env);
 void				ft_del_struct(t_env *env);
@@ -163,9 +163,9 @@ void				ft_all_builtin(t_lex *lex, t_env *env, t_utils *utils,
 						t_exec *exec, t_env *export);
 void				ft_builtin_cd_all(t_lex *lex, t_env *env, t_utils *utils,
 						t_exec *exec);
-void				ft_builtin_echo_all(t_lex *lex, t_env *env, t_exec *exec);
+void				ft_builtin_echo_all(t_lex *lex, t_env *env, t_exec *exec, t_utils *utils);
 int					ft_builtin_echo_detect_n(char *lex_str);
-void				ft_builtin_echo_option(t_lex *lex, t_exec *exec);
+void				ft_builtin_echo_option(t_lex *lex, t_exec *exec, t_utils *utils);
 void				ft_not_n(t_lex *lex, int *valide_n);
 int					ft_find_variable_in_env(char *var_env, char *lex_str);
 int					ft_check_valid_export_env(char *lex_str);

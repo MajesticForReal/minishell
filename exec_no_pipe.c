@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 15:18:23 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/13 00:50:32 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/14 17:53:31 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,15 @@ void	ft_processus_no_pipe(t_exec *exec, t_env *env, t_utils *utils)
 		if (access(exec->cmd[0], X_OK) == 0)
 			execve(exec->cmd[0], exec->cmd, NULL);
 		else
+		{
 			ft_constructor_cmd(exec);
+		}
 	}
 	if (utils->infile != -1)
 		close(utils->infile);
 	if (utils->outfile != -1)
 		close(utils->outfile);
+	exit(EXIT_FAILURE);
 }
 
 void	dup_n_close(int infile_to_close, int infile_to_copy,
@@ -62,7 +65,7 @@ void	dup_n_close(int infile_to_close, int infile_to_copy,
 {
 	if (infile_to_close != -1)
 	{
-		dup2(infile_to_close, infile_to_close);
+		dup2(infile_to_close, infile_to_copy);
 		close(infile_to_close);
 	}
 	if (outfile_to_close != -1)
@@ -70,5 +73,4 @@ void	dup_n_close(int infile_to_close, int infile_to_copy,
 		dup2(outfile_to_close, outfile_to_copy);
 		close(outfile_to_close);
 	}
-	(void)infile_to_copy;
 }

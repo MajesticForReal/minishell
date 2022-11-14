@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 16:19:32 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/12 22:46:04 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/13 04:00:40 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,39 +89,63 @@ int	ft_print_2_d_tab(char **strs, int index)
 	return (SUCCESS);
 }
 
-void	ft_print_list_export(t_env *env)
+void	ft_print_list_export(t_env *env, t_exec *exec, t_utils *utils)
 {
 	while (env != NULL)
 	{
-		if(env->str[ft_strlen(env->str) - 1] == '=')
+		if (env->str[ft_strlen(env->str) - 1] == '=')
 		{
-			ft_putstr_fd(env->str, 1);
-			ft_putstr_fd("\"\"", 1);
-			ft_putstr_fd("\n", 1);
-			if(env->next != NULL)
+			if (utils->outfile != -1)
+			{
+				ft_putstr_fd(env->str, utils->outfile);
+				ft_putstr_fd("\"\"", utils->outfile);
+				ft_putstr_fd("\n", utils->outfile);
+			}
+			else
+			{
+				ft_putstr_fd(env->str, exec->fd_cmd[1]);
+				ft_putstr_fd("\"\"", exec->fd_cmd[1]);
+				ft_putstr_fd("\n", exec->fd_cmd[1]);
+			}
+			if (env->next != NULL)
 				env = env->next;
 			else
 				return ;
 		}
 		else
 		{
-			ft_putstr_fd(env->str, 1);
-			ft_putstr_fd("\n", 1);
-			if(env->next != NULL)
+			if (utils->outfile != -1)
+			{
+				ft_putstr_fd(env->str, utils->outfile);
+				ft_putstr_fd("\n", utils->outfile);
+			}
+			else
+			{
+				ft_putstr_fd(env->str, exec->fd_cmd[1]);
+				ft_putstr_fd("\n", exec->fd_cmd[1]);
+			}
+			if (env->next != NULL)
 				env = env->next;
 			else
 				return ;
 		}
-
 	}
 }
 
-void	ft_print_list_env(t_env *env, t_exec *exec)
+void	ft_print_list_env(t_env *env, t_exec *exec, t_utils *utils)
 {
 	while (env != NULL)
 	{
-		ft_putstr_fd(env->str, exec->fd_cmd[1]);
-		ft_putstr_fd("\n", exec->fd_cmd[1]);
+		if (utils->outfile != -1)
+		{
+			ft_putstr_fd(env->str, utils->outfile);
+			ft_putstr_fd("\n", utils->outfile);
+		}
+		else
+		{
+			ft_putstr_fd(env->str, exec->fd_cmd[1]);
+			ft_putstr_fd("\n", exec->fd_cmd[1]);
+		}
 		env = env->next;
 	}
 }

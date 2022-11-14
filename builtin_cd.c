@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 17:14:23 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/13 00:48:45 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/13 03:41:33 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	g_exstat;
 
-int	ft_builtin_cd_back(t_exec *exec)
+int	ft_builtin_cd_back(t_exec *exec, t_utils *utils)
 {
 	int		i;
 	int		size_pwd;
@@ -23,7 +23,7 @@ int	ft_builtin_cd_back(t_exec *exec)
 
 	i = -1;
 	
-	path_pwd = ft_builtin_pwd(2, exec);
+	path_pwd = ft_builtin_pwd(2, exec, utils);
 	size_pwd = ft_strlen(path_pwd);
 	while (path_pwd[size_pwd] != '/')
 		size_pwd--;
@@ -64,8 +64,6 @@ int	ft_builtin_cd_only(t_env *env, t_utils *utils)
 
 void	ft_builtin_cd_all(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec)
 {
-	printf("1 ft_builtin");
-	ft_print_lex_k(lex);
 	if(lex->next != NULL && lex->next->token == TOK_SPACE
 	&& lex->next->next == NULL)
 		ft_builtin_cd_only(env, utils);
@@ -74,22 +72,22 @@ void	ft_builtin_cd_all(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec)
 		|| ft_compare(lex->next->next->str, "~/") == SUCCESS)
 		ft_builtin_cd_only(env, utils);
 	else if (ft_compare(lex->next->next->str, "..") == SUCCESS)
-		ft_builtin_cd_back(exec);
+		ft_builtin_cd_back(exec, utils);
 	else if (ft_compare(lex->next->next->str, "/") == SUCCESS)
 		ft_builtin_cd_rac();
 	else
-		ft_builtin_cd_dir(lex->next->next->str, exec);
+		ft_builtin_cd_dir(lex->next->next->str, exec, utils);
 }
 
 
-int	ft_builtin_cd_dir(char *lex_str, t_exec *exec)
+int	ft_builtin_cd_dir(char *lex_str, t_exec *exec, t_utils *utils)
 {
 	char	*complet_path;
 	char	*pwd_return;
 
 	if(ft_builtin_detect_path_a_r(lex_str) == FAIL)
 	{
-		pwd_return = ft_builtin_pwd(2, exec);
+		pwd_return = ft_builtin_pwd(2, exec, utils);
 		complet_path = ft_concat(pwd_return, lex_str);
 		if (chdir(complet_path) == -1)
 		{

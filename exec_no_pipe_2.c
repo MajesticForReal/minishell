@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 21:38:11 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/13 00:50:55 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/13 04:04:51 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,6 @@ void	ft_exec_no_pipe(t_exec *exec, t_env *env, t_utils *utils, t_lex *lex, t_env
 void	exec_builtin_no_pipe(t_exec *exec, t_utils *utils, t_lex *lex,
 		t_env *env, t_env *export)
 {
-	dup_n_close(utils->infile, exec->fd_cmd[0], utils->outfile,
-		exec->fd_cmd[1]);
 	ft_all_builtin(lex, env, utils, exec, export);
 	ft_close_files(utils->infile, utils->outfile);
 }

@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 21:59:29 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/12 22:41:24 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/13 03:43:52 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,17 +100,17 @@ void	ft_all_builtin(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec, t_env 
 	if (lex->str != NULL)
 	{
 		if (ft_compare(lex->str, "pwd") == SUCCESS)
-			ft_builtin_pwd(1, exec);
+			ft_builtin_pwd(1, exec, utils);
 		else if (ft_compare(lex->str, "cd") == SUCCESS)
 			ft_builtin_cd_all(lex, env, utils, exec);
 		else if (ft_compare(lex->str, "echo") == SUCCESS)
-			ft_builtin_echo_all(lex, env, exec);
+			ft_builtin_echo_all(lex, env, exec, utils);
 		else if (ft_compare(lex->str, "env") == SUCCESS)
-			ft_print_list_env(env, exec);
+			ft_print_list_env(env, exec, utils);
 		else if (ft_compare(lex->str, "unset") == SUCCESS)
 			ft_unset_var(lex, env);
 		else if (ft_compare(lex->str, "export") == SUCCESS)
-			ft_export_var(lex, env, export);
+			ft_export_var(lex, env, export, exec, utils);
 	}
 }
 

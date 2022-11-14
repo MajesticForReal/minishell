@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+         #
+#    By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/27 16:02:00 by y klaurier        #+#    #+#              #
-#    Updated: 2022/11/12 23:16:35 by klaurier         ###   ########.fr        #
+#    Updated: 2022/11/13 05:03:30 by anrechai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,7 +62,7 @@ OBJS		=	${SRCS:.c=.o}
 
 NAME		=	minishell
 
-FLAG		=	-Wall -Wextra -Werror
+# FLAG		=	-Wall -Wextra -Werror
 
 HEADER		=	minishell.h
 
