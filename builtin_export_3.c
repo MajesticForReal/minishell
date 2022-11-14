@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 20:06:56 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/14 22:59:29 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 00:44:09 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ t_env	*ft_export_list(char **strs)
 	t_env	*export;
 
 	i = 1;
+	export = NULL;
 	export = malloc(sizeof(t_env));
 	if (export == NULL)
 		return (NULL);

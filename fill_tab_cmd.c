@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 21:56:40 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/14 23:08:02 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 00:31:30 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,11 @@ int	ft_organizer_exec(t_lex *lex, t_exec *exec, t_utils *utils)
 	{
 		ft_malloc_heredoc_str(exec);
 		ft_heredoc(lex);
-		if(utils->ambigous == 1)
+		if (utils->ambigous == 1)
 		{
-			while(lex != NULL && lex->str[0] != '$')
+			while (lex != NULL && lex->str[0] != '$')
 			{
-				if(lex->next != NULL)
+				if (lex->next != NULL)
 					lex = lex->next;
 				else
 					break ;

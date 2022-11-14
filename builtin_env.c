@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 15:45:22 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/14 23:35:33 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 00:32:39 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,17 @@ void	ft_export_var(t_lex *lex, t_exec *exec, t_utils *utils)
 {
 	while (ft_compare(lex->str, "export") != SUCCESS)
 		lex = lex->next;
-	if(lex->next == NULL || (lex->next->token == TOK_SPACE && lex->next->next == NULL) || (lex->next->token == TOK_SPACE && lex->next->next->token != TOK_WORD) || (lex->next->token != TOK_WORD))
+	if (lex->next == NULL || (lex->next->token == TOK_SPACE
+			&& lex->next->next == NULL) || (lex->next->token == TOK_SPACE
+			&& lex->next->next->token != TOK_WORD)
+		|| (lex->next->token != TOK_WORD))
 	{
 		ft_print_list_export(utils->export, exec, utils);
 		return ;
 	}
 	if (lex->next != NULL && lex->next->token == TOK_SPACE)
 		lex = lex->next;
-	if(lex->next != NULL && lex->next->token == TOK_WORD)
+	if (lex->next != NULL && lex->next->token == TOK_WORD)
 		lex = lex->next;
 	if (ft_check_valid_export_env(lex->str) == 1)
 	{
@@ -40,12 +43,12 @@ void	ft_replace_t_env(t_env *env, char *str)
 {
 	int	i;
 
-	if(env == NULL || str == NULL || str[0] == '\0')
+	if (env == NULL || str == NULL || str[0] == '\0')
 		return ;
 	i = ft_compare_index(env, str);
-	while(i > 0)
+	while (i > 0)
 	{
-		if(env->next != NULL)
+		if (env->next != NULL)
 			env = env->next;
 		i--;
 	}
@@ -60,8 +63,7 @@ void	ft_add_back_str(t_env *env, char *str)
 
 	env_cpy = env;
 	new_env = ft_init_env();
-	
-	while (env_cpy != NULL )
+	while (env_cpy != NULL)
 	{
 		if (ft_compare_stop_egal(env_cpy->str, str) == SUCCESS)
 		{
@@ -81,13 +83,13 @@ int	ft_compare_index(t_env *env, char *str)
 	int	i;
 
 	i = 0;
-	while(env != NULL)
+	while (env != NULL)
 	{
-		if(ft_compare_stop_egal(env->str, str) == FAIL)
+		if (ft_compare_stop_egal(env->str, str) == FAIL)
 			i++;
 		else
 			return (i);
-		if(env->next != NULL)
+		if (env->next != NULL)
 			env = env->next;
 	}
 	return (-1);
@@ -100,15 +102,12 @@ int	ft_compare_stop_egal(char *str, char *str2)
 	i = 0;
 	while (str[i] == str2[i] && str[i] != '=' && str2[i] != '=')
 	{
-		if(str[i] != str2[i])
+		if (str[i] != str2[i])
 			return (FAIL);
 		i++;
 	}
-	if(str[i] == str2[i])
+	if (str[i] == str2[i])
 		return (SUCCESS);
 	else
 		return (FAIL);
-		
 }
-
-

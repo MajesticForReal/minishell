@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:41:14 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/14 23:39:19 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 00:35:57 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@ void	ft_free(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec)
 	}
 	while (utils->export != NULL)
 	{
-		// if (export->str != NULL)
-		// 	free(export->str);
+		if (utils->export->str != NULL)
+			free(utils->export->str);
 		if (utils->export->next != NULL)
 		{
 			tmp3 = utils->export;

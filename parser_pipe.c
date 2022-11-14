@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 20:02:05 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/10 22:15:46 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 00:30:21 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ int	ft_pipe_3(t_lex *lex)
 		&& ft_strlen(lex->next->str) < 2)
 	{
 		ft_putstr_fd("syntax error near unexpected token `|'\n", 2);
-		g_exstat = 2;
 		return (-1);
 	}
 	else if (lex->next != NULL && lex->next->token == TOK_PIPE
@@ -68,13 +67,11 @@ int	ft_pipe_3(t_lex *lex)
 	{
 		ft_putstr_fd("syntax error near unexpected token `||'\n",
 			2);
-		g_exstat = 2;
 		return (-1);
 	}
 	else if (lex->next == NULL)
 	{
 		ft_putstr_fd("syntax error near unexpected token `|'\n", 2);
-		g_exstat = 2;
 		return (-1);
 	}
 	else if (ft_strlen(lex->str) >= 2)
@@ -97,7 +94,10 @@ int	ft_pipe(t_lex *lex, t_lex *start)
 		else if (start->token != TOK_PIPE && lex->token == TOK_PIPE)
 		{
 			if (ft_pipe_3(lex) == -1)
+			{
+				g_exstat = 2;
 				return (-1);
+			}
 		}
 		lex = lex->next;
 	}

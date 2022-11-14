@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 21:56:30 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/14 22:45:48 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 00:34:32 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	ft_exec(t_exec *exec, t_utils *utils, t_lex *lex)
 {
 	if (exec->next == NULL)
 	{
-		ft_exec_no_pipe(exec,utils, lex);
+		ft_exec_no_pipe(exec, utils, lex);
 	}
 	else if (exec->next != NULL)
 	{

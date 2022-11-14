@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 22:03:00 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/14 23:15:39 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 00:26:15 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,7 @@ void	ft_heredoc(t_lex *lex)
 	int		fd;
 	char	*limiter;
 	char	*input;
-	char	*file;
 
-	file = ".HEREDOC";
 	tmp = lex;
 	limiter = NULL;
 	input = NULL;
@@ -28,24 +26,7 @@ void	ft_heredoc(t_lex *lex)
 	while (tmp != NULL && tmp->token != TOK_PIPE)
 	{
 		ft_heredoc0(&tmp);
-		if (tmp->token == TOK_TOTO)
-		{
-			if (tmp->next != NULL && tmp->next->token != TOK_WORD)
-				tmp = tmp->next;
-			if (tmp->next != NULL && tmp->next->token == TOK_WORD)
-			{
-				limiter = tmp->next->str;
-				input = limiter + 1;
-			}
-			fd = open(file, O_CREAT | O_RDWR | O_TRUNC, 0744);
-			ft_heredoc2(input, limiter, fd);
-		}
-		else
-		{
-			if (fd != -1)
-				close(fd);
-			return ;
-		}
+		ft_heredoc00(tmp, input, limiter, fd);
 		if (tmp->next != NULL)
 			tmp = tmp->next;
 		else
@@ -53,6 +34,31 @@ void	ft_heredoc(t_lex *lex)
 	}
 	if (fd != -1)
 		close(fd);
+}
+
+void	ft_heredoc00(t_lex *tmp, char *input, char *limiter, int fd)
+{
+	char	*file;
+
+	file = ".HEREDOC";
+	if (tmp->token == TOK_TOTO)
+	{
+		if (tmp->next != NULL && tmp->next->token != TOK_WORD)
+			tmp = tmp->next;
+		if (tmp->next != NULL && tmp->next->token == TOK_WORD)
+		{
+			limiter = tmp->next->str;
+			input = limiter + 1;
+		}
+		fd = open(file, O_CREAT | O_RDWR | O_TRUNC, 0744);
+		ft_heredoc2(input, limiter, fd);
+	}
+	else
+	{
+		if (fd != -1)
+			close(fd);
+		return ;
+	}
 }
 
 void	ft_heredoc0(t_lex **tmp)

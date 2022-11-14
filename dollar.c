@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:24:58 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/13 01:17:55 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 00:34:09 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,26 +110,26 @@ int	ft_parser_doll(t_lex *lex, t_env *env, t_utils *utils)
 	while (lex != NULL)
 	{
 		if ((lex->token == TOK_OUT || (lex->token == TOK_IN
-					&& lex->str[1] == '\0') || lex->token == TOK_FROMFROM)
+				&& lex->str[1] == '\0') || lex->token == TOK_FROMFROM)
 			&& (lex->next != NULL && lex->next->token == TOK_SPACE
 				&& lex->next->next != NULL
 				&& lex->next->next->token == TOK_DOLL))
 			if (ft_compare_just_a_part_2(lex->next->next->next->str) == FAIL
 				&& (lex->str[1] == '\0' || (lex->str[1] == '>'
-				&& lex->str[2] == '\0')))
+					&& lex->str[2] == '\0')))
 				utils->ambigous = 1;
 		if ((lex->token == TOK_OUT || (lex->token == TOK_IN
-					&& lex->str[1] == '\0') || lex->token == TOK_FROMFROM)
+				&& lex->str[1] == '\0') || lex->token == TOK_FROMFROM)
 			&& (lex->next != NULL && lex->next->token == TOK_DOLL))
 			if (ft_compare_just_a_part_2(lex->next->next->str) == FAIL
 				&& (lex->str[1] == '\0' || (lex->str[1] == '>'
-				&& lex->str[2] == '\0')))
+					&& lex->str[2] == '\0')))
 				utils->ambigous = 1;
 		if ((lex->token == TOK_IN && lex->str[1] == '<' && lex->next != NULL
-			&& lex->next->token == TOK_SPACE && lex->next->next != NULL
-			&& lex->next->next->token == TOK_DOLL) || (lex->token == TOK_IN
-			&& lex->str[1] == '<' && lex->next != NULL
-			&& lex->next->token == TOK_DOLL))
+				&& lex->next->token == TOK_SPACE && lex->next->next != NULL
+				&& lex->next->next->token == TOK_DOLL) || (lex->token == TOK_IN
+				&& lex->str[1] == '<' && lex->next != NULL
+				&& lex->next->token == TOK_DOLL))
 			ft_concat_no_expand(lex->next);
 		if (lex->token == TOK_DOLL)
 			ft_dollar(lex, env, utils);
@@ -179,10 +179,10 @@ void	ft_dollar_2(t_lex *lex, t_env *env, t_utils *utils)
 	else if (ft_after_doll_is_num(lex, utils) == SUCCESS + 2)
 		ft_change_doll_egal(lex);
 	else if (ft_shearch_var(lex->next->str, env) == FAIL
-			&& ft_shearch_special_char(lex) == FAIL && utils->ambigous != 1)
+		&& ft_shearch_special_char(lex) == FAIL && utils->ambigous != 1)
 		ft_supp_2_list(lex);
 	else if (ft_shearch_var(lex->next->str, env) == FAIL
-			&& ft_shearch_special_char(lex) == FAIL && utils->ambigous != 1)
+		&& ft_shearch_special_char(lex) == FAIL && utils->ambigous != 1)
 		ft_supp_2_list(lex);
 	else if (ft_shearch_special_char(lex) == SUCCESS)
 		ft_cut_after_special_char(lex);
@@ -191,7 +191,7 @@ void	ft_dollar_2(t_lex *lex, t_env *env, t_utils *utils)
 
 void	ft_supp_2_list(t_lex *lex)
 {
-	t_lex *tmp;
+	t_lex	*tmp;
 
 	free(lex->str);
 	lex->str = malloc(sizeof(char) * 2);

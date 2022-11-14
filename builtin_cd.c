@@ -6,13 +6,13 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 17:14:23 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/14 23:14:22 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 00:36:42 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	g_exstat;
+int		g_exstat;
 
 int	ft_builtin_cd_back(t_exec *exec, t_utils *utils)
 {
@@ -22,7 +22,6 @@ int	ft_builtin_cd_back(t_exec *exec, t_utils *utils)
 	char	*short_pwd;
 
 	i = -1;
-	
 	path_pwd = ft_builtin_pwd(2, exec, utils);
 	size_pwd = ft_strlen(path_pwd);
 	while (path_pwd[size_pwd] != '/')
@@ -66,12 +65,12 @@ void	ft_builtin_cd_all(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec)
 {
 	while (ft_compare(lex->str, "cd") != SUCCESS)
 		lex = lex->next;
-	if(lex->next != NULL && lex->next->token == TOK_SPACE
-	&& lex->next->next == NULL)
+	if (lex->next != NULL && lex->next->token == TOK_SPACE
+		&& lex->next->next == NULL)
 		ft_builtin_cd_only(env, utils);
-	else if (lex->next == NULL
-		|| ft_compare(lex->next->next->str, "~") == SUCCESS
-		|| ft_compare(lex->next->next->str, "~/") == SUCCESS)
+	else if (lex->next == NULL || ft_compare(lex->next->next->str,
+		"~") == SUCCESS || ft_compare(lex->next->next->str,
+		"~/") == SUCCESS)
 		ft_builtin_cd_only(env, utils);
 	else if (ft_compare(lex->next->next->str, "..") == SUCCESS)
 		ft_builtin_cd_back(exec, utils);
@@ -81,13 +80,12 @@ void	ft_builtin_cd_all(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec)
 		ft_builtin_cd_dir(lex->next->next->str, exec, utils);
 }
 
-
 int	ft_builtin_cd_dir(char *lex_str, t_exec *exec, t_utils *utils)
 {
 	char	*complet_path;
-	char	*pwd_return;
 
-	if(ft_builtin_detect_path_a_r(lex_str) == FAIL)
+	char *pwd_return ;
+	if (ft_builtin_detect_path_a_r(lex_str) == FAIL)
 	{
 		pwd_return = ft_builtin_pwd(2, exec, utils);
 		complet_path = ft_concat(pwd_return, lex_str);
@@ -105,7 +103,7 @@ int	ft_builtin_cd_dir(char *lex_str, t_exec *exec, t_utils *utils)
 	}
 	else
 		ft_builtin_path_a(lex_str);
-	return(SUCCESS);
+	return (SUCCESS);
 }
 
 int	ft_builtin_cd_rac(void)

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+         #
+#    By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/27 16:02:00 by y klaurier        #+#    #+#              #
-#    Updated: 2022/11/14 20:07:44 by klaurier         ###   ########.fr        #
+#    Updated: 2022/11/15 00:05:46 by anrechai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,7 @@ SRCS 		=	main.c \
 				exec_no_pipe.c\
 				exec_no_pipe_2.c\
 				exec_w_pipe.c\
+				exec_w_pipe2.c\
 				heredoc_doll.c\
 				heredoc.c\
 				var_doll.c \
