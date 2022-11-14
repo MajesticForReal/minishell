@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 17:14:23 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/13 03:41:33 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/14 18:48:52 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ int	ft_builtin_cd_only(t_env *env, t_utils *utils)
 
 void	ft_builtin_cd_all(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec)
 {
+	while (ft_compare(lex->str, "cd") != SUCCESS)
+		lex = lex->next;
 	if(lex->next != NULL && lex->next->token == TOK_SPACE
 	&& lex->next->next == NULL)
 		ft_builtin_cd_only(env, utils);

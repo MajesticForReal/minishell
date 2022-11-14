@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 21:59:29 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/13 03:43:52 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/14 18:40:57 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,21 +95,22 @@ void	ft_print_2_exec(t_exec *exec)
 	}
 }
 
-void	ft_all_builtin(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec, t_env *export)
+void	ft_all_builtin(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec,
+		t_env *export)
 {
-	if (lex->str != NULL)
+	if (exec != NULL && exec->cmd != NULL && exec->cmd[0] != NULL)
 	{
-		if (ft_compare(lex->str, "pwd") == SUCCESS)
+		if (ft_compare(exec->cmd[0], "pwd") == SUCCESS)
 			ft_builtin_pwd(1, exec, utils);
-		else if (ft_compare(lex->str, "cd") == SUCCESS)
+		else if (ft_compare(exec->cmd[0], "cd") == SUCCESS)
 			ft_builtin_cd_all(lex, env, utils, exec);
-		else if (ft_compare(lex->str, "echo") == SUCCESS)
+		else if (ft_compare(exec->cmd[0], "echo") == SUCCESS)
 			ft_builtin_echo_all(lex, env, exec, utils);
-		else if (ft_compare(lex->str, "env") == SUCCESS)
+		else if (ft_compare(exec->cmd[0], "env") == SUCCESS)
 			ft_print_list_env(env, exec, utils);
-		else if (ft_compare(lex->str, "unset") == SUCCESS)
+		else if (ft_compare(exec->cmd[0], "unset") == SUCCESS)
 			ft_unset_var(lex, env);
-		else if (ft_compare(lex->str, "export") == SUCCESS)
+		else if (ft_compare(exec->cmd[0], "export") == SUCCESS)
 			ft_export_var(lex, env, export, exec, utils);
 	}
 }

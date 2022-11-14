@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 21:56:30 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/13 06:15:39 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/14 20:37:16 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,8 @@ void	ft_exec(t_exec *exec, t_env *env, t_utils *utils, t_lex *lex,
 
 void	ft_waitpid(t_exec *exec)
 {
-	while (exec->next != NULL && exec->next->cmd[0] != NULL)
+	while (exec != NULL && exec->cmd[0] != NULL)
 	{
-		// if (ft_check_builtin(exec) != 1)
 		waitpid(exec->process_id, 0, 0);
 		// if (WIFEXITED(g_status))
 		// 	g_status = WEXITSTATUS(g_status);

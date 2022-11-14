@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:28:36 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/06 20:30:24 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/14 18:48:27 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	ft_unset_var(t_lex *lex, t_env *env)
 {
+	while (ft_compare(lex->str, "unset") != SUCCESS)
+		lex = lex->next;
 	if (lex->next != NULL)
 		lex = lex->next;
 	while (env->next != NULL)

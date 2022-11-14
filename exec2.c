@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 22:04:32 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/13 05:56:00 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/14 20:25:51 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,10 @@ void	ft_constructor_cmd_2(t_exec *exec, char *new_path, char *my_cmd, int i)
 			return ;
 		exec->cmd[0] = new_path;
 		if (access(new_path, X_OK) == 0)
+		{
+			g_exstat = 0;
 			execve(new_path, exec->cmd, NULL);
+		}
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 15:45:22 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/13 03:42:44 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/14 18:49:38 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	ft_export_var(t_lex *lex, t_env *env, t_env *export, t_exec *exec, t_utils *utils)
 {
+	while (ft_compare(lex->str, "export") != SUCCESS)
+		lex = lex->next;
 	if(lex->next == NULL || (lex->next == TOK_SPACE && lex->next->next == NULL)
 	|| lex->next == NULL || lex->next->next == NULL)
 	{

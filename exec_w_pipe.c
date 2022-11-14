@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:41:27 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/14 18:08:38 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/14 20:23:45 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,33 +15,12 @@
 void	ft_exec_builtin_pipe(t_exec *exec, t_utils *utils, t_lex *lex,
 		t_env *env, t_env *export)
 {
-	if (exec->fd_cmd[0] != STDIN_FILENO)
-	{
-		dup2(exec->fd_cmd[0], STDIN_FILENO);
-		close(exec->fd_cmd[0]);
-	}
-	if (exec->fd_cmd[1] != STDOUT_FILENO)
-	{
-		dup2(exec->fd_cmd[1], STDOUT_FILENO);
-		close(exec->fd_cmd[1]);
-	}
-	// ft_pipe_redir(exec, utils);
-	dprintf(2, "AV INFILE : %d\n", utils->infile);
-	dprintf(2, "AV OUTFILE : %d\n", utils->outfile);
-	dprintf(2, "AV CMD 0 : %d\n", exec->fd_cmd[0]);
-	dprintf(2, "AV CMD 1 : %d\n", exec->fd_cmd[1]);
-	dprintf(2, "AV PIPE 0 : %d\n", utils->fd_pipe[0]);
-	dprintf(2, "AV PIPE 1 : %d\n", utils->fd_pipe[1]);
 	ft_all_builtin(lex, env, utils, exec, export);
 	ft_close_files(utils->infile, utils->outfile);
-	if (exec->next == NULL)
-	{
-		if (utils->fd_pipe[0] != STDIN_FILENO)
-			close(exec->fd_cmd[0]);
-		if (utils->fd_pipe[1] != STDOUT_FILENO)
-			close(utils->fd_pipe[1]);
-	}
-	return ;
+	if (utils->fd_pipe[0] != STDIN_FILENO)
+		close(utils->fd_pipe[0]);
+	if (utils->fd_pipe[1] != STDOUT_FILENO)
+		close(utils->fd_pipe[1]);
 }
 
 void	ft_exec_pipe(t_exec *exec, t_utils *utils, t_env *env, t_lex *lex,
@@ -69,10 +48,10 @@ void	ft_exec_pipe(t_exec *exec, t_utils *utils, t_env *env, t_lex *lex,
 		}
 		else if (ft_check_builtin(exec) == 1 && exec->process_id == 0)
 		{
-			dprintf(2, "COUCOU\n");
 			if (exec != NULL && exec->next != NULL)
 				close(exec->next->fd_cmd[0]);
 			ft_exec_builtin_pipe(exec, utils, lex, env, export);
+			g_exstat = 2;
 			exit(EXIT_FAILURE);
 		}
 		if (exec->fd_cmd[0] != STDIN_FILENO)
@@ -150,7 +129,6 @@ int	ft_pipe_redir(t_exec *exec, t_utils *utils)
 
 void	ft_connect_redir(t_exec *exec, t_utils *utils)
 {
-	// ft_pipe_redir(exec, utils);
 	if (utils->infile != -1)
 	{
 		dup2(utils->infile, STDIN_FILENO);
