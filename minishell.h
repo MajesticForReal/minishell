@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:00:55 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/13 03:43:18 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/14 20:03:01 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,9 @@ void				ft_sort_tab(char **strs);
 int					ft_diff_tab(char *strs, char *strs2);
 int					ft_count_line_tab(t_env *env);
 char				**ft_size_up_tab(char **strs, int i);
+char				**ft_size_up_tab_2(char **strs, int *i);
+void				ft_size_up_tab_3(int *k, int *i, int *j, char **export);
+char				ft_size_up_tab_4(int *i, int *j, int *k, char **strs);
 
 int					ft_compare_index(t_env *export, char *str);
 void				ft_copy_env_n_rate(t_env *env);

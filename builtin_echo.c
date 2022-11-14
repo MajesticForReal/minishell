@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:09:54 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/13 03:37:54 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/14 19:13:15 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,12 +121,14 @@ void	ft_builtin_echo_all(t_lex *lex, t_env *env, t_exec *exec, t_utils *utils)
 	if (lex->next != NULL && lex->next->token == TOK_SPACE)
 	{
 		lex = lex->next;
-		if (lex->next != NULL)
+		if (lex->next != NULL && lex->next->token == TOK_WORD)
 		{
 			ft_builtin_echo_option(lex, exec, utils);
 		}
 		else
+		{
 			ft_builtin_echo_only(exec, utils);
+		}
 	}
 	else
 		ft_builtin_echo_only(exec, utils);

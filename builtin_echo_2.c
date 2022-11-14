@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 17:50:22 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/13 03:27:56 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/14 19:10:01 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,20 @@ void	ft_builtin_echo_option(t_lex *lex, t_exec *exec, t_utils *utils)
 
 	print_n_now = 0;
 	valide_n = 0;
-	lex = lex->next;
+	if(lex != NULL)
+		lex = lex->next;
 	while (lex != NULL)
 	{
 		if (lex->token != TOK_WORD && lex->token != TOK_SPACE)
 			return ;
 		else if (ft_builtin_echo_detect_n(lex->str) == 1 && print_n_now == 0)
 		{
-			lex = lex->next;
-			lex = lex->next;
+			if(lex->next != NULL)
+				lex = lex->next;
+			if(lex->next != NULL)
+				lex = lex->next;
+			if(lex->next == NULL)
+				return ;
 			valide_n = 1;
 		}
 		else
