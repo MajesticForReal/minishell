@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 22:03:00 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/13 00:21:04 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/14 23:15:39 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	ft_malloc_heredoc_str(t_exec *exec)
 	str = ".HEREDOC";
 	i = 0;
 	i = ft_strlen(".HERDOC");
-	exec->heredoc = malloc(sizeof(char *) * i + 1);
+	exec->heredoc = malloc(sizeof(char *) * (i + 1));
 	if (exec->heredoc == NULL)
 		return ;
 	i = 0;

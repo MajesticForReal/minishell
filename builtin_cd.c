@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 17:14:23 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/14 20:44:59 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/14 23:14:22 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	ft_builtin_cd_back(t_exec *exec, t_utils *utils)
 	size_pwd = ft_strlen(path_pwd);
 	while (path_pwd[size_pwd] != '/')
 		size_pwd--;
-	short_pwd = malloc(sizeof(char) * size_pwd + 1);
+	short_pwd = malloc(sizeof(char) * (size_pwd + 1));
 	if (short_pwd == NULL)
 		return (FAIL);
 	while (++i < size_pwd)

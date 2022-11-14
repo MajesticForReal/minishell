@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 20:03:17 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/12 22:10:13 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/14 23:14:40 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_concat(char *str_1, char *str_2)
 
 	i = 0;
 	k = 0;
-	path = malloc(sizeof(char) * ft_strlen(str_1) + ft_strlen(str_2) + 2);
+	path = malloc(sizeof(char) * (ft_strlen(str_1) + ft_strlen(str_2) + 2));
 	if (path == NULL)
 		return (NULL);
 	while (str_1[i] != '\0')

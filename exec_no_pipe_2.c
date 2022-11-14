@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 21:38:11 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/13 04:04:51 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/14 23:05:37 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_count_redir(t_exec *exec, char c)
 	return (nb);
 }
 
-void	ft_exec_no_pipe(t_exec *exec, t_env *env, t_utils *utils, t_lex *lex, t_env *export)
+void	ft_exec_no_pipe(t_exec *exec, t_utils *utils, t_lex *lex)
 {
 	ft_init_fd_cmd_no_pipe(exec);
 	if (ft_no_pipe_redir(exec, utils) == EXIT_FAILURE)
@@ -44,21 +44,20 @@ void	ft_exec_no_pipe(t_exec *exec, t_env *env, t_utils *utils, t_lex *lex, t_env
 			&& exec->cmd[0][1] == '/')
 			ft_exec_prog(exec);
 		else if (exec->process_id == 0)
-			ft_processus_no_pipe(exec, env, utils);
+			ft_processus_no_pipe(exec, utils);
 		else
 			waitpid(exec->process_id, 0, 0);
 	}
 	else if (exec->cmd[0] != NULL && ft_check_builtin(exec) == 1)
 	{
-		exec_builtin_no_pipe(exec, utils, lex, env, export);
+		exec_builtin_no_pipe(exec, utils, lex);
 		return ;
 	}
 }
 
-void	exec_builtin_no_pipe(t_exec *exec, t_utils *utils, t_lex *lex,
-		t_env *env, t_env *export)
+void	exec_builtin_no_pipe(t_exec *exec, t_utils *utils, t_lex *lex)
 {
-	ft_all_builtin(lex, env, utils, exec, export);
+	ft_all_builtin(lex, utils, exec);
 	ft_close_files(utils->infile, utils->outfile);
 }
 

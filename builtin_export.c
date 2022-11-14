@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 20:11:02 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/14 20:08:21 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/14 23:46:21 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ char	**ft_size_up_tab_2(char **strs, int *i)
 {
 	char **export;
 	int	j;
-	// 
+
 	j = 0;
-	export = malloc(sizeof(char *) * *i);
+	export = malloc(sizeof(char *) * (*i + 1));
 	if(export == NULL)
 		return (NULL);
 	*i = 0;

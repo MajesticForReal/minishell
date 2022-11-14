@@ -6,14 +6,13 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:41:14 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/14 20:59:07 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/14 23:39:19 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_free(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec,
-		t_env *export)
+void	ft_free(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec)
 {
 	t_lex	*tmp;
 	t_exec	*tmp2;
@@ -39,12 +38,6 @@ void	ft_free(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec,
 			free(lex);
 			break ;
 		}
-	}
-	if (utils != NULL)
-	{
-		if (utils->home_str != NULL)
-			free(utils->home_str);
-		free(utils);
 	}
 	i = 0;
 	while (exec != NULL)
@@ -94,21 +87,27 @@ void	ft_free(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec,
 			break ;
 		}
 	}
-	while (export != NULL)
+	while (utils->export != NULL)
 	{
 		// if (export->str != NULL)
 		// 	free(export->str);
-		if (export->next != NULL)
+		if (utils->export->next != NULL)
 		{
-			tmp3 = export;
-			export = export->next;
+			tmp3 = utils->export;
+			utils->export = utils->export->next;
 			free(tmp3);
 		}
 		else
 		{
-			free(export);
+			free(utils->export);
 			break ;
 		}
+	}
+	if (utils != NULL)
+	{
+		if (utils->home_str != NULL)
+			free(utils->home_str);
+		free(utils);
 	}
 	return ;
 }
@@ -126,6 +125,8 @@ int	ft_init(t_lex **lex, t_utils **utils, t_exec **exec)
 		free((*lex));
 		return (-1);
 	}
+	(*utils)->env = NULL;
+	(*utils)->export = NULL;
 	(*utils)->home_str = NULL;
 	(*utils)->ambigous = 0;
 	(*utils)->cmd_n_found = 0;
@@ -150,8 +151,6 @@ int	ft_init(t_lex **lex, t_utils **utils, t_exec **exec)
 int	main(int argc, char **argv, char **envp)
 {
 	t_lex *lex;
-	t_env *env;
-	t_env *export;
 	char *input;
 	t_utils *utils;
 	t_exec *exec;
@@ -160,7 +159,6 @@ int	main(int argc, char **argv, char **envp)
 	utils = NULL;
 	exec = NULL;
 	input = NULL;
-	export = NULL;
 
 	signal(SIGINT, ft_detect_sig);
 	signal(SIGQUIT, ft_detect_sig);
@@ -175,25 +173,24 @@ int	main(int argc, char **argv, char **envp)
 			g_exstat = 0;
 			return (1);
 		}
-		env = ft_init_fill_env(envp);
-		export = ft_copy_env(env);
 		if (ft_init(&lex, &utils, &exec) == -1)
 			return (-1);
+		utils->env = ft_init_fill_env(envp);
+		utils->export = ft_copy_env(utils->env);
 		add_history(input);
 		ft_lexer(input, lex);
-		if (ft_parser_k(lex, env, utils) == SUCCESS)
+		if (ft_parser_k(lex, utils->env, utils) == SUCCESS)
 		{
 			ft_organizer(&lex);
 			if (ft_parser(lex, utils) == 0)
 			{
-				if (ft_organizer_exec(lex, exec, env, utils) == SUCCESS)
-					ft_exec(exec, env, utils, lex, export);
+				if (ft_organizer_exec(lex, exec, utils) == SUCCESS)
+					ft_exec(exec, utils, lex);
 			}
 		}
-		ft_free(lex, env, utils, exec, export);
+		ft_free(lex, utils->env, utils, exec);
 		free(input);
 	}
 	(void)argc;
-	(void)export;
 	(void)argv;
 }

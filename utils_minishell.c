@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 16:19:32 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/13 04:00:40 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/14 23:36:38 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*ft_concat2(char *str_1, char *str_2)
 
 	i = -1;
 	k = 0;
-	new_str = malloc(sizeof(char) * ft_strlen(str_1) + ft_strlen(str_2) + 1);
+	new_str = malloc(sizeof(char) * (ft_strlen(str_1) + ft_strlen(str_2) + 1));
 	if (new_str == NULL)
 		return (NULL);
 	while (str_1[++i] != '\0')
@@ -97,12 +97,14 @@ void	ft_print_list_export(t_env *env, t_exec *exec, t_utils *utils)
 		{
 			if (utils->outfile != -1)
 			{
+				ft_putstr_fd("export ", utils->outfile);
 				ft_putstr_fd(env->str, utils->outfile);
 				ft_putstr_fd("\"\"", utils->outfile);
 				ft_putstr_fd("\n", utils->outfile);
 			}
 			else
 			{
+				ft_putstr_fd("export ", exec->fd_cmd[1]);
 				ft_putstr_fd(env->str, exec->fd_cmd[1]);
 				ft_putstr_fd("\"\"", exec->fd_cmd[1]);
 				ft_putstr_fd("\n", exec->fd_cmd[1]);
@@ -116,11 +118,13 @@ void	ft_print_list_export(t_env *env, t_exec *exec, t_utils *utils)
 		{
 			if (utils->outfile != -1)
 			{
+				ft_putstr_fd("export ", utils->outfile);
 				ft_putstr_fd(env->str, utils->outfile);
 				ft_putstr_fd("\n", utils->outfile);
 			}
 			else
 			{
+				ft_putstr_fd("export ", exec->fd_cmd[1]);
 				ft_putstr_fd(env->str, exec->fd_cmd[1]);
 				ft_putstr_fd("\n", exec->fd_cmd[1]);
 			}

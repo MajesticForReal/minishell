@@ -6,16 +6,15 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:41:27 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/14 20:23:45 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/14 23:06:57 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_exec_builtin_pipe(t_exec *exec, t_utils *utils, t_lex *lex,
-		t_env *env, t_env *export)
+void	ft_exec_builtin_pipe(t_exec *exec, t_utils *utils, t_lex *lex)
 {
-	ft_all_builtin(lex, env, utils, exec, export);
+	ft_all_builtin(lex, utils, exec);
 	ft_close_files(utils->infile, utils->outfile);
 	if (utils->fd_pipe[0] != STDIN_FILENO)
 		close(utils->fd_pipe[0]);
@@ -23,8 +22,7 @@ void	ft_exec_builtin_pipe(t_exec *exec, t_utils *utils, t_lex *lex,
 		close(utils->fd_pipe[1]);
 }
 
-void	ft_exec_pipe(t_exec *exec, t_utils *utils, t_env *env, t_lex *lex,
-		t_env *export)
+void	ft_exec_pipe(t_exec *exec, t_utils *utils, t_lex *lex)
 {
 	ft_init_fd_cmd(exec);
 	while (exec != NULL)
@@ -44,13 +42,13 @@ void	ft_exec_pipe(t_exec *exec, t_utils *utils, t_env *env, t_lex *lex,
 		signal(SIGQUIT, ft_detect_sig);
 		if (ft_check_builtin(exec) != 1 && exec->process_id == 0)
 		{
-			ft_processus_pipe(exec, env, lex, utils, export);
+			ft_processus_pipe(exec, lex, utils);
 		}
 		else if (ft_check_builtin(exec) == 1 && exec->process_id == 0)
 		{
 			if (exec != NULL && exec->next != NULL)
 				close(exec->next->fd_cmd[0]);
-			ft_exec_builtin_pipe(exec, utils, lex, env, export);
+			ft_exec_builtin_pipe(exec, utils, lex);
 			g_exstat = 2;
 			exit(EXIT_FAILURE);
 		}
@@ -63,8 +61,7 @@ void	ft_exec_pipe(t_exec *exec, t_utils *utils, t_env *env, t_lex *lex,
 	}
 }
 
-void	ft_processus_pipe(t_exec *exec, t_env *env, t_lex *lex, t_utils *utils,
-		t_env *export)
+void	ft_processus_pipe(t_exec *exec, t_lex *lex, t_utils *utils)
 {
 	if (exec != NULL && exec->next != NULL)
 		close(exec->next->fd_cmd[0]);
@@ -74,7 +71,7 @@ void	ft_processus_pipe(t_exec *exec, t_env *env, t_lex *lex, t_utils *utils,
 		ft_exec_prog(exec);
 	else
 	{
-		if (env->str == NULL)
+		if (utils->env->str == NULL)
 		{
 			if (access(exec->cmd[0], X_OK) == 0)
 				execve(exec->cmd[0], exec->cmd, NULL);
@@ -85,7 +82,7 @@ void	ft_processus_pipe(t_exec *exec, t_env *env, t_lex *lex, t_utils *utils,
 				return ;
 			}
 		}
-		if (env->str != NULL)
+		if (utils->env->str != NULL)
 		{
 			if (access(exec->cmd[0], X_OK) == 0)
 				execve(exec->cmd[0], exec->cmd, NULL);

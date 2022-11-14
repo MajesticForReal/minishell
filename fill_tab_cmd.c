@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 21:56:40 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/13 00:49:06 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/14 23:08:02 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	ft_fill_tab_cmd(t_lex *lex, t_exec *exec)
 	}
 }
 
-int	ft_organizer_exec(t_lex *lex, t_exec *exec, t_env *env, t_utils *utils)
+int	ft_organizer_exec(t_lex *lex, t_exec *exec, t_utils *utils)
 {
 	while (lex != NULL)
 	{
@@ -86,7 +86,7 @@ int	ft_organizer_exec(t_lex *lex, t_exec *exec, t_env *env, t_utils *utils)
 		}
 		if (exec != NULL && exec->path == NULL)
 		{
-			exec->path = ft_split(ft_find_path(env), ':');
+			exec->path = ft_split(ft_find_path(utils->env), ':');
 		}
 		ft_malloc_option_execve(lex, exec);
 		ft_fill_tab_cmd(lex, exec);

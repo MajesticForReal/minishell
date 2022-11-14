@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 22:47:21 by klaurier          #+#    #+#             */
-/*   Updated: 2022/06/20 18:43:14 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/14 23:18:35 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include"minishell.h"
+
+#include "minishell.h"
 
 char	**ft_malloc_error(char **strs)
 {
@@ -78,7 +79,7 @@ char	**ft_r_split(char const *s, char c, char **strs)
 			start_w = i;
 		else if ((s[i] == c || i == ft_strlen(s)) && start_w >= 0)
 		{
-			strs[j] = malloc(sizeof(char) * (i - start_w) + 1);
+			strs[j] = malloc(sizeof(char) * ((i - start_w) + 1));
 			if (strs[j] == NULL)
 				return (ft_malloc_error(strs));
 			ft_words_cpy(s, &start_w, i, strs[j]);

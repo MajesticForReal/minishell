@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_doll.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:10:24 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/13 00:20:25 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/14 23:15:27 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	ft_write_var_env_in_fd2(char *input, int fd, int i)
 	j = -1;
 	k = 0;
 	concat = NULL;
-	str = malloc(sizeof(char) * i + 1);
+	str = malloc(sizeof(char) * (i + 1));
 	if (str == NULL)
 		return ;
 	while (++j < i)

@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:15:21 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/08 22:52:15 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/14 23:18:02 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*ft_cut_var_more(char *var_more)
 			&& var_more[i] >= 'A') || (var_more[i] <= '9'
 			&& var_more[i] >= '0'))
 		i++;
-	var_only = malloc(sizeof(char) * i + 1);
+	var_only = malloc(sizeof(char) * (i + 1));
 	if (var_only == NULL)
 		return (NULL);
 	while (++j < i)
@@ -98,7 +98,7 @@ void	ft_change_list_to_var(t_lex *lex)
 	i = ft_strlen(getenv(ft_cut_var_more(lex->next->str)));
 	i = i + ft_char_after_var(lex);
 	tmp_var = getenv(ft_cut_var_more(lex->next->str));
-	lex->str = malloc(sizeof(char) * i + 1);
+	lex->str = malloc(sizeof(char) * (i + 1));
 	if (lex->str == NULL)
 		return ;
 	lex->token = TOK_WORD;

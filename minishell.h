@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:00:55 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/14 20:03:01 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/14 23:03:32 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ typedef struct s_utils
 	int				fd_pipe[2];
 	int				ambigous;
 	int				cmd_n_found;
+	struct s_env		*env;
+	struct s_env		*export;
 }					t_utils;
 
 typedef struct s_exec
@@ -157,13 +159,13 @@ void				ft_compare_just_a_part(char *complet_str,
 						t_utils *utils);
 void				ft_init_fill_str_home(char *complet_str, t_utils *builtin);
 int					ft_builtin_cd_rac(void);
-void				ft_export_var(t_lex *lex, t_env *env, t_env *export, t_exec *exec, t_utils *utils);
+void				ft_export_var(t_lex *lex, t_exec *exec, t_utils *utils);
 void				ft_add_back_str(t_env *env, char *str);
 void				ft_unset_var(t_lex *lex, t_env *env);
 void				ft_del_struct(t_env *env);
 
-void				ft_all_builtin(t_lex *lex, t_env *env, t_utils *utils,
-						t_exec *exec, t_env *export);
+void				ft_all_builtin(t_lex *lex, t_utils *utils,
+						t_exec *exec);
 void				ft_builtin_cd_all(t_lex *lex, t_env *env, t_utils *utils,
 						t_exec *exec);
 void				ft_builtin_echo_all(t_lex *lex, t_env *env, t_exec *exec, t_utils *utils);
@@ -274,10 +276,10 @@ char				*ft_parser_limiter(t_lex *tmp);
 //redirection
 void				ft_redirection(t_lex *lex);
 void				ft_free(t_lex *lex, t_env *env, t_utils *utils,
-						t_exec *exec, t_env *export);
+						t_exec *exec);
 
 // Organizer exec
-int					ft_organizer_exec(t_lex *lex, t_exec *exec, t_env *env,
+int					ft_organizer_exec(t_lex *lex, t_exec *exec,
 						t_utils *utils);
 char				*ft_malloc_option(t_lex *lex);
 void				ft_bzero_exec(t_exec *exec);
@@ -316,10 +318,8 @@ void				ft_first_lex_token(t_lex *lex, char *input, int i);
 void				ft_print_exec(t_exec *exec);
 
 // EXEC
-void				ft_exec(t_exec *exec, t_env *env, t_utils *utils,
-						t_lex *lex, t_env *export);
-void				ft_exec_no_pipe(t_exec *exec, t_env *env, t_utils *utils,
-						t_lex *lex, t_env *export);
+void				ft_exec(t_exec *exec, t_utils *utils, t_lex *lex);
+void				ft_exec_no_pipe(t_exec *exec, t_utils *utils, t_lex *lex);
 void				ft_init_fd_cmd(t_exec *exec);
 int					ft_check_builtin(t_exec *exec);
 int					ft_count_redir(t_exec *exec, char c);
@@ -332,16 +332,14 @@ char				*ft_strchr(const char *s, int c);
 char				*ft_strcat_path(char *dest, char *src);
 char				*ft_strdup(const char *s);
 char				*ft_strdup_prog(const char *s);
-void				ft_exec_pipe(t_exec *exec, t_utils *utils, t_env *env,
-						t_lex *lex, t_env *export);
+void				ft_exec_pipe(t_exec *exec, t_utils *utils, t_lex *lex);
 int					ft_pipe_redir(t_exec *exec, t_utils *utils);
-void				ft_processus_no_pipe(t_exec *exec, t_env *env,
-						t_utils *utils);
+void				ft_processus_no_pipe(t_exec *exec, t_utils *utils);
 void				ft_exec_prog(t_exec *exec);
 void				ft_constructor_cmd(t_exec *exec);
 void				ft_exec_prog_cwd(t_exec *exec, char *cmd_base);
-void				ft_processus_pipe(t_exec *exec, t_env *env, t_lex *lex,
-						t_utils *utils, t_env *m);
+void				ft_processus_pipe(t_exec *exec, t_lex *lex,
+						t_utils *utils);
 void				ft_connect_redir(t_exec *exec, t_utils *utils);
 void				ft_connect_fd_cmd(t_exec *exec);
 void				ft_waitpid(t_exec *exec);
@@ -352,8 +350,7 @@ void				ft_exec_prog_2(t_exec *exec, char *new_path, char *my_cmd,
 						char *cmd_base);
 void				ft_constructor_cmd_2(t_exec *exec, char *new_path,
 						char *my_cmd, int i);
-void				exec_builtin_no_pipe(t_exec *exec, t_utils *utils, t_lex *lex,
-						t_env *env, t_env *export);
+void				exec_builtin_no_pipe(t_exec *exec, t_utils *utils, t_lex *lex);
 void				ft_close_files(int infile, int outfile);
 void				dup_n_close(int infile_to_close, int infile_to_copy,
 						int outfile_to_close, int outfile_to_copy);

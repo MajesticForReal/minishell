@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 19:02:36 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/08 22:53:00 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/14 23:16:34 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	ft_compare_just_a_part_2(char *var_more)
 			&& var_more[i] >= 'A') || (var_more[i] <= '9' && var_more[i] >= '0')
 		|| var_more[i] == '_')
 		i++;
-	var_only = malloc(sizeof(char) * i + 1);
+	var_only = malloc(sizeof(char) * (i + 1));
 	if (var_only == NULL)
 		return (FAIL);
 	while (++j < i)
@@ -58,7 +58,7 @@ void	ft_change_doll_egal(t_lex *lex)
 	i = 0;
 	j = 1;
 	free(lex->str);
-	lex->str = malloc(sizeof(char) * ft_strlen(lex->next->str) + 2);
+	lex->str = malloc(sizeof(char) * (ft_strlen(lex->next->str) + 2));
 	if (lex->str == NULL)
 		return ;
 	lex->str[0] = '$';

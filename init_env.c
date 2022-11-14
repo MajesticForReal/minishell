@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 17:58:17 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/10 21:20:04 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/14 23:15:54 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	ft_add_back_envp(t_env *env, char **envp, int j)
 	while (env->next != NULL)
 		env = env->next;
 	env->next = new_env;
-	new_env->str = malloc(sizeof(char) * ft_strlen(envp[j]) + 1);
+	new_env->str = malloc(sizeof(char) * (ft_strlen(envp[j]) + 1));
 	if (envp[j] == NULL)
 		return ;
 	while (envp[j][k] != '\0')

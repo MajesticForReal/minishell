@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:19:15 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/08 22:52:27 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/14 23:15:08 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	ft_cut_after_special_char2(t_lex *lex, int i)
 	i--;
 	while (lex->next->str[++i] != '\0')
 		j++;
-	lex->str = malloc(sizeof(char) * j + 1);
+	lex->str = malloc(sizeof(char) * (j + 1));
 	if (lex->str == NULL)
 		return ;
 	i = 0;

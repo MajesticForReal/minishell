@@ -6,20 +6,19 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 15:45:22 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/14 18:49:38 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/14 23:35:33 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_export_var(t_lex *lex, t_env *env, t_env *export, t_exec *exec, t_utils *utils)
+void	ft_export_var(t_lex *lex, t_exec *exec, t_utils *utils)
 {
 	while (ft_compare(lex->str, "export") != SUCCESS)
 		lex = lex->next;
-	if(lex->next == NULL || (lex->next == TOK_SPACE && lex->next->next == NULL)
-	|| lex->next == NULL || lex->next->next == NULL)
+	if(lex->next == NULL || (lex->next->token == TOK_SPACE && lex->next->next == NULL) || (lex->next->token == TOK_SPACE && lex->next->next->token != TOK_WORD) || (lex->next->token != TOK_WORD))
 	{
-		ft_print_list_export(export, exec, utils);
+		ft_print_list_export(utils->export, exec, utils);
 		return ;
 	}
 	if (lex->next != NULL && lex->next->token == TOK_SPACE)
@@ -28,11 +27,11 @@ void	ft_export_var(t_lex *lex, t_env *env, t_env *export, t_exec *exec, t_utils 
 		lex = lex->next;
 	if (ft_check_valid_export_env(lex->str) == 1)
 	{
-		ft_add_back_str(env, lex->str);
-		ft_add_back_export(export, lex->str);
+		ft_add_back_str(utils->env, lex->str);
+		ft_add_back_export(utils->export, lex->str);
 	}
 	if (ft_check_valid_export_env(lex->str) == 2)
-		ft_add_back_export(export, lex->str);
+		ft_add_back_export(utils->export, lex->str);
 	else
 		return ;
 }

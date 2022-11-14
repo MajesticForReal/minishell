@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 20:06:56 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/14 20:52:49 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/14 22:59:29 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@ t_env	*ft_copy_env(t_env *env)
 // int	k;
 //
 // j = 0;
-// export = malloc(sizeof(char *) * i);
-// if(export == NULL)
+// utils->export = malloc(sizeof(char *) * i);
+// if(utils->export == NULL)
 // return (NULL);
 // i = 0;
 // while(strs[j] != NULL)
