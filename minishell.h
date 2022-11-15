@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:00:55 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/15 17:35:51 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 17:58:56 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -274,8 +274,10 @@ void				ft_detect_ambigous(t_lex *lex, t_utils *utils);
 void				ft_detect_ambigous2(t_lex *lex, t_utils *utils);
 void				ft_is_not_valid_n1(t_exec *exec, t_utils *utils);
 void				ft_is_not_valid_n2(t_exec *exec, t_utils *utils);
-void				ft_is_not_valid_n3(t_lex *lex, t_exec *exec, t_utils *utils);
-void				ft_is_not_valid_n4(t_lex *lex, t_exec *exec, t_utils *utils);
+void				ft_is_not_valid_n3(t_lex *lex, t_exec *exec,
+						t_utils *utils);
+void				ft_is_not_valid_n4(t_lex *lex, t_exec *exec,
+						t_utils *utils);
 
 //heredoc
 void				ft_dollar_heredoc(char *input, int fd);
@@ -355,6 +357,7 @@ void				ft_exec_prog_cwd(t_exec *exec, char *cmd_base);
 void				ft_processus_pipe(t_exec *exec, t_lex *lex, t_utils *utils);
 void				ft_connect_redir(t_utils *utils);
 void				ft_connect_fd_cmd(t_exec *exec);
+int					ft_input(char *input);
 void				ft_waitpid(t_exec *exec);
 int					ft_check_str(char *str, int i);
 void				ft_init_fd_cmd_no_pipe(t_exec *exec);
@@ -379,6 +382,7 @@ void				ft_free_lex(t_lex *lex);
 void				ft_free_exec(t_exec *exec);
 int					ft_start(t_lex *lex, t_utils *utils, t_exec *exec,
 						char **envp);
-// int	ft_init(t_lex **lex, t_utils **utils, t_exec **exec, char **envp);
+int					ft_init(t_lex **lex, t_utils **utils, char **envp);
+int					ft_init2(t_lex **lex, t_utils **utils, t_exec **exec);
 
 #endif

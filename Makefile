@@ -6,7 +6,7 @@
 #    By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/27 16:02:00 by y klaurier        #+#    #+#              #
-#    Updated: 2022/11/15 17:30:06 by anrechai         ###   ########.fr        #
+#    Updated: 2022/11/15 17:56:35 by anrechai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,6 +63,7 @@ SRCS 		=	main.c \
 				doll_exit.c\
 				ft_free.c\
 				supp_list.c\
+				ft_init.c\
 				organizer_exec.c
 
 OBJS		=	${SRCS:.c=.o}
