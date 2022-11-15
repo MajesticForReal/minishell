@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_doll.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:10:24 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/15 16:34:14 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/15 17:24:11 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,10 +104,8 @@ char	*ft_write_var_env_in_fd3(char *concat,
 char *getenv_result, int k, char *input)
 {
 	int	i;
-	int	j;
 
 	i = -1;
-	j = 0;
 	while (getenv_result[++i] != '\0')
 		concat[i] = getenv_result[i];
 	while (input[k] != '\0')

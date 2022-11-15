@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 20:05:39 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/15 00:30:52 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 17:19:40 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_first_is_alpha(char *lex_str)
 	if (lex_str != NULL && lex_str[0] != '\0')
 	{
 		if ((lex_str[0] <= 'z' && lex_str[0] >= 'a') || (lex_str[0] >= 'A'
-			&& lex_str[0] <= 'Z') || (lex_str[0] == '_'))
+				&& lex_str[0] <= 'Z') || (lex_str[0] == '_'))
 			return (SUCCESS);
 		else
 			return (FAIL);

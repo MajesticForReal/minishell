@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 20:03:17 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/14 23:14:40 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 16:43:45 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,14 @@ int	ft_builtin_detect_path_a_r(char *lex_str)
 		return (SUCCESS);
 	else
 		return (FAIL);
+}
+
+int	ft_builtin_cd_rac(void)
+{
+	if (chdir("/") == -1)
+	{
+		perror("/");
+		return (FAIL);
+	}
+	return (SUCCESS);
 }

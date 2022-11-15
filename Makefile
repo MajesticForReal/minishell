@@ -6,7 +6,7 @@
 #    By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/27 16:02:00 by y klaurier        #+#    #+#              #
-#    Updated: 2022/11/15 16:05:48 by anrechai         ###   ########.fr        #
+#    Updated: 2022/11/15 17:30:06 by anrechai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ SRCS 		=	main.c \
 				utils_minishell3.c\
 				utils_minishell4.c\
 				parser_limiter.c \
+				is_not_valid_n.c\
 				organizer.c\
 				organizer2.c\
 				organizer3.c\
@@ -54,12 +55,14 @@ SRCS 		=	main.c \
 				doll_special_char.c \
 				doll_with_num.c \
 				dollar.c \
+				dollar_2.c \
 				fill_tab_file.c \
 				fill_tab_cmd.c \
 				signal.c \
 				itoa.c \
 				doll_exit.c\
 				ft_free.c\
+				supp_list.c\
 				organizer_exec.c
 
 OBJS		=	${SRCS:.c=.o}
