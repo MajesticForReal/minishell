@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 20:06:56 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/15 00:44:09 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 15:29:28 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,16 +70,8 @@ t_env	*ft_copy_env(t_env *env)
 	i = 0;
 	export = ft_export_list(tab_export);
 	i = 0;
-	// if (tab_export != NULL)
-	// {
-	// 	while (tab_export[i])
-	// 	{
-	// 		free(tab_export[i]);
-	// 		i++;
-	// 	}
-	// 	free(tab_export);
-	// }
-	// free(strs);
+	free(tab_export);
+	free(strs);
 	return (export);
 }
 

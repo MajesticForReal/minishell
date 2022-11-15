@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 20:11:02 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/15 00:42:53 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 14:58:37 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	**ft_size_up_tab_2(char **strs, int *i)
 	while (strs[j] != NULL)
 	{
 		*i = (ft_strlen(strs[j]) + 3);
-		export[j] = malloc(sizeof(char) * ((*i) + 1));
+		export[j] = malloc(sizeof(char) * ((*i) + 2));
 		if (export[j] == NULL)
 			return (NULL);
 		j++;
@@ -59,17 +59,20 @@ char	**ft_size_up_tab(char **strs, int i)
 	char **export;
 	int j;
 	int k;
+	int nb;
 
 	j = 0;
 	k = 0;
+	nb = 0;
 	export = ft_size_up_tab_2(strs, &i);
 	i = 0;
 	while (strs[i] != NULL)
 	{
 		while (strs[i][k] != '\0')
 		{
-			if (strs[i][k] == '=')
+			if (strs[i][k] == '=' && nb == 0)
 			{
+				nb = 1;
 				export[i][j] = strs[i][k];
 				j++;
 				export[i][j] = '"';

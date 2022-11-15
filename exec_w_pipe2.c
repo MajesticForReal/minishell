@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 00:04:46 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/15 00:05:27 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 16:08:22 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	ft_exec_pipe_fork(t_exec *exec, t_utils *utils, t_lex *lex)
 			close(exec->next->fd_cmd[0]);
 		ft_exec_builtin_pipe(exec, utils, lex);
 		g_exstat = 2;
-		exit(EXIT_FAILURE);
+		ft_exit(lex, utils->env, utils, exec);
 	}
 	if (exec->fd_cmd[0] != STDIN_FILENO)
 		close(exec->fd_cmd[0]);
@@ -71,9 +71,9 @@ void	ft_processus_pipe(t_exec *exec, t_lex *lex, t_utils *utils)
 	if (exec != NULL && exec->next != NULL)
 		close(exec->next->fd_cmd[0]);
 	ft_connect_fd_cmd(exec);
-	ft_connect_redir(exec, utils);
+	ft_connect_redir(utils);
 	if (exec->cmd != NULL && exec->cmd[0][0] == '.' && exec->cmd[0][1] == '/')
 		ft_exec_prog(exec);
 	else
-		ft_processus_pipe_cmd(exec, utils);
+		ft_processus_pipe_cmd(lex, exec, utils);
 }

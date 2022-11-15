@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:00:55 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/15 00:13:27 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 16:25:07 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ void				ft_del_struct(t_env *env);
 void				ft_all_builtin(t_lex *lex, t_utils *utils, t_exec *exec);
 void				ft_builtin_cd_all(t_lex *lex, t_env *env, t_utils *utils,
 						t_exec *exec);
-void				ft_builtin_echo_all(t_lex *lex, t_env *env, t_exec *exec,
+void				ft_builtin_echo_all(t_lex *lex, t_exec *exec,
 						t_utils *utils);
 int					ft_builtin_echo_detect_n(char *lex_str);
 void				ft_builtin_echo_option(t_lex *lex, t_exec *exec,
@@ -336,12 +336,12 @@ char				*ft_strdup(const char *s);
 char				*ft_strdup_prog(const char *s);
 void				ft_exec_pipe(t_exec *exec, t_utils *utils, t_lex *lex);
 int					ft_pipe_redir(t_exec *exec, t_utils *utils);
-void				ft_processus_no_pipe(t_exec *exec, t_utils *utils);
+void				ft_processus_no_pipe(t_lex *lex, t_exec *exec, t_utils *utils);
 void				ft_exec_prog(t_exec *exec);
 void				ft_constructor_cmd(t_exec *exec);
 void				ft_exec_prog_cwd(t_exec *exec, char *cmd_base);
 void				ft_processus_pipe(t_exec *exec, t_lex *lex, t_utils *utils);
-void				ft_connect_redir(t_exec *exec, t_utils *utils);
+void				ft_connect_redir(t_utils *utils);
 void				ft_connect_fd_cmd(t_exec *exec);
 void				ft_waitpid(t_exec *exec);
 int					ft_check_str(char *str, int i);
@@ -356,6 +356,14 @@ void				ft_close_files(int infile, int outfile);
 void				dup_n_close(int infile_to_close, int infile_to_copy,
 						int outfile_to_close, int outfile_to_copy);
 void				ft_exec_pipe_fork(t_exec *exec, t_utils *utils, t_lex *lex);
-void				ft_processus_pipe_cmd(t_exec *exec, t_utils *utils);
+void				ft_processus_pipe_cmd(t_lex *lex, t_exec *exec, t_utils *utils);
+void	ft_exit(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec);
+void	ft_free_utils(t_utils *utils);
+void	ft_free_export(t_utils *utils);
+void	ft_free_env(t_env *env);
+void	ft_free_lex(t_lex *lex);
+void	ft_free_exec(t_exec *exec);
+int	ft_start(t_lex *lex, t_utils *utils, t_exec *exec, char **envp);
+// int	ft_init(t_lex **lex, t_utils **utils, t_exec **exec, char **envp);
 
 #endif

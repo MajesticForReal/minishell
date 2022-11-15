@@ -6,13 +6,13 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:41:27 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/15 00:05:22 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 16:07:44 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_processus_pipe_cmd(t_exec *exec, t_utils *utils)
+void	ft_processus_pipe_cmd(t_lex *lex, t_exec *exec, t_utils *utils)
 {
 	if (utils->env->str == NULL)
 	{
@@ -38,7 +38,7 @@ void	ft_processus_pipe_cmd(t_exec *exec, t_utils *utils)
 		close(utils->infile);
 	if (utils->outfile != -1)
 		close(utils->outfile);
-	exit(EXIT_FAILURE);
+	ft_exit(lex, utils->env, utils, exec);
 }
 
 void	ft_connect_fd_cmd(t_exec *exec)
@@ -66,7 +66,7 @@ int	ft_pipe_redir(t_exec *exec, t_utils *utils)
 	return (EXIT_SUCCESS);
 }
 
-void	ft_connect_redir(t_exec *exec, t_utils *utils)
+void	ft_connect_redir(t_utils *utils)
 {
 	if (utils->infile != -1)
 	{

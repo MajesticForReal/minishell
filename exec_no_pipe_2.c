@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 21:38:11 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/14 23:05:37 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 15:08:59 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	ft_exec_no_pipe(t_exec *exec, t_utils *utils, t_lex *lex)
 			&& exec->cmd[0][1] == '/')
 			ft_exec_prog(exec);
 		else if (exec->process_id == 0)
-			ft_processus_no_pipe(exec, utils);
+			ft_processus_no_pipe(lex, exec, utils);
 		else
 			waitpid(exec->process_id, 0, 0);
 	}

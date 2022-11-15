@@ -6,7 +6,7 @@
 #    By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/27 16:02:00 by y klaurier        #+#    #+#              #
-#    Updated: 2022/11/15 00:05:46 by anrechai         ###   ########.fr        #
+#    Updated: 2022/11/15 16:05:48 by anrechai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,13 +59,14 @@ SRCS 		=	main.c \
 				signal.c \
 				itoa.c \
 				doll_exit.c\
+				ft_free.c\
 				organizer_exec.c
 
 OBJS		=	${SRCS:.c=.o}
 
 NAME		=	minishell
 
-# FLAG		=	-Wall -Wextra -Werror
+FLAG		=	-Wall -Wextra -Werror
 
 HEADER		=	minishell.h
 

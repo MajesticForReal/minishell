@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 21:59:29 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/14 22:48:41 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 16:07:03 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	ft_all_builtin(t_lex *lex, t_utils *utils, t_exec *exec)
 		else if (ft_compare(exec->cmd[0], "cd") == SUCCESS)
 			ft_builtin_cd_all(lex, utils->env, utils, exec);
 		else if (ft_compare(exec->cmd[0], "echo") == SUCCESS)
-			ft_builtin_echo_all(lex, utils->env, exec, utils);
+			ft_builtin_echo_all(lex, exec, utils);
 		else if (ft_compare(exec->cmd[0], "env") == SUCCESS)
 			ft_print_list_env(utils->env, exec, utils);
 		else if (ft_compare(exec->cmd[0], "unset") == SUCCESS)

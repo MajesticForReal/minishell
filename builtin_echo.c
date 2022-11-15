@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:09:54 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/15 00:27:26 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 16:10:18 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int	ft_builtin_echo_detect_n(char *lex_str)
 	return (1);
 }
 
-void	ft_builtin_echo_all(t_lex *lex, t_env *env, t_exec *exec,
+void	ft_builtin_echo_all(t_lex *lex, t_exec *exec,
 		t_utils *utils)
 {
 	while (ft_compare(lex->str, "echo") != SUCCESS)
@@ -121,9 +121,7 @@ void	ft_builtin_echo_all(t_lex *lex, t_env *env, t_exec *exec,
 	{
 		lex = lex->next;
 		if (lex->next != NULL && lex->next->token == TOK_WORD)
-		{
 			ft_builtin_echo_option(lex, exec, utils);
-		}
 		else
 		{
 			ft_builtin_echo_only(exec, utils);
