@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   itoa.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 16:29:49 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/15 16:38:03 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 16:39:04 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 char	*ft_array(char *x, unsigned int number, long int len)
 {
@@ -65,6 +65,7 @@ char	*ft_itoa(int n)
 	x = ft_array(x, number, len);
 	return (x);
 }
+
 void	ft_putendl_fd(char *s, int fd)
 {
 	int	i;
@@ -79,6 +80,7 @@ void	ft_putendl_fd(char *s, int fd)
 	}
 	write(fd, "\n", 1);
 }
+
 void	*ft_memdel(void *ptr)
 {
 	if (ptr)
