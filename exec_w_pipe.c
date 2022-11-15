@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:41:27 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/15 16:07:44 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 17:04:09 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	ft_processus_pipe_cmd(t_lex *lex, t_exec *exec, t_utils *utils)
 			execve(exec->cmd[0], exec->cmd, NULL);
 		else
 		{
+			write(2, "minishell: ", 12);
 			write(2, exec->cmd[0], ft_strlen(exec->cmd[0]));
 			write(2, ": command not found\n", 20);
 			return ;
@@ -30,9 +31,7 @@ void	ft_processus_pipe_cmd(t_lex *lex, t_exec *exec, t_utils *utils)
 		if (access(exec->cmd[0], X_OK) == 0)
 			execve(exec->cmd[0], exec->cmd, NULL);
 		else
-		{
 			ft_constructor_cmd(exec);
-		}
 	}
 	if (utils->infile != -1)
 		close(utils->infile);

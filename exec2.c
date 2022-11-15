@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 22:04:32 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/14 20:25:51 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 17:03:55 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void	ft_constructor_cmd(t_exec *exec)
 		return ;
 	}
 	ft_constructor_cmd_2(exec, new_path, my_cmd, i);
+	write(2, "minishell: ", 12);
 	write(2, cmd_base, ft_strlen(cmd_base));
 	write(2, ": command not found\n", 20);
 	free(new_path);

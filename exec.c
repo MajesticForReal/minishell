@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 21:56:30 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/15 13:57:32 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 17:04:03 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	ft_exec_prog(t_exec *exec)
 	}
 	ft_exec_prog_2(exec, new_path, my_cmd, cmd_base);
 	ft_exec_prog_cwd(exec, cmd_base);
+	write(2, "minishell: ", 12);
 	write(2, cmd_base, ft_strlen(cmd_base));
 	write(2, ": command not found\n", 20);
 	free(my_cmd);

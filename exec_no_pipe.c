@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 15:18:23 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/15 16:54:05 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 17:04:14 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	ft_processus_no_pipe(t_lex *lex, t_exec *exec, t_utils *utils)
 			execve(exec->cmd[0], exec->cmd, NULL);
 		else
 		{
+			write(2, "minishell: ", 12);
 			write(2, exec->cmd[0], ft_strlen(exec->cmd[0]));
 			write(2, ": command not found\n", 20);
 			return ;
