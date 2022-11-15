@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:00:55 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/15 19:06:55 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 19:11:45 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -388,5 +388,6 @@ int					ft_start(t_lex *lex, t_utils *utils, t_exec *exec,
 						char **envp);
 int					ft_init(t_lex **lex, t_utils **utils, char **envp);
 int					ft_init2(t_lex **lex, t_utils **utils, t_exec **exec);
+void				ft_free_exit(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec);
 
 #endif
