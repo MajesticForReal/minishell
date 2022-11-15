@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 17:50:22 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/15 13:55:24 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 16:25:13 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,18 @@ void	ft_print_argument(t_lex *lex, int valid_n, t_exec *exec, t_utils *utils)
 		ft_is_not_valid_n(lex, exec, utils);
 }
 
+int	ft_builtin_echo_option_2(t_lex **lex, int *valide_n)
+{
+	if ((*lex)->next != NULL)
+		(*lex) = (*lex)->next;
+	if ((*lex)->next != NULL && (*lex)->next->token == TOK_WORD)
+		(*lex) = (*lex)->next;
+	else
+		return (FAIL);
+	*valide_n = 1;
+	return (SUCCESS);
+}
+
 void	ft_builtin_echo_option(t_lex *lex, t_exec *exec, t_utils *utils)
 {
 	int	valide_n;
@@ -44,13 +56,8 @@ void	ft_builtin_echo_option(t_lex *lex, t_exec *exec, t_utils *utils)
 			return ;
 		else if (ft_builtin_echo_detect_n(lex->str) == 1 && print_n_now == 0)
 		{
-			// if (lex->next != NULL)
-				lex = lex->next;
-			// if (lex->next != NULL)
-				lex = lex->next;
-			// if (lex->next == NULL)
-				// return ;
-			valide_n = 1;
+			if (ft_builtin_echo_option_2(&lex, &valide_n) == FAIL)
+				return ;
 		}
 		else
 		{
