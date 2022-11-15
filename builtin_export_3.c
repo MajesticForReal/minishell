@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export_3.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 20:06:56 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/15 18:07:59 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 21:22:45 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,31 +26,10 @@ t_env	*ft_export_list(char **strs)
 	export->next = NULL;
 	while (strs[i] != NULL)
 	{
-		ft_add_back_export(export, strs[i]);
+		ft_add_back_str_export_first(export, strs[i]);
 		i++;
 	}
 	return (export);
-}
-
-void	ft_add_back_export(t_env *export, char *strs)
-{
-	t_env	*new;
-
-	if (export == NULL)
-		return ;
-	new = malloc(sizeof(t_env));
-	if (new == NULL)
-		return ;
-	while (export != NULL)
-	{
-		if (export->next != NULL)
-			export = export->next;
-		else
-			break ;
-	}
-	new->str = strs;
-	export->next = new;
-	new->next = NULL;
 }
 
 t_env	*ft_copy_env(t_env *env)
@@ -63,7 +42,7 @@ t_env	*ft_copy_env(t_env *env)
 
 	nb = -1;
 	i = ft_count_line_tab(env) + 2;
-	strs = malloc(sizeof(char *) * (i));
+	strs = malloc(sizeof(char *) * i);
 	ft_copy_env_to_tab(env, strs);
 	while (--i > 0)
 		ft_sort_tab(strs);

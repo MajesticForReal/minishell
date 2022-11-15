@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 20:05:39 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/15 17:19:40 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/16 00:28:33 by klaurier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,21 @@ int	ft_check_valid_export_env(char *lex_str)
 		return (2);
 	else
 		return (0);
+}
+
+int	ft_compare_stop_egal(char *str, char *str2)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] == str2[i] && str[i] != '=' && str2[i] != '=')
+	{
+		if (str[i] != str2[i])
+			return (FAIL);
+		i++;
+	}
+	if (str[i] == str2[i])
+		return (SUCCESS);
+	else
+		return (FAIL);
 }
