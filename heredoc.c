@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 22:03:00 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/15 00:26:15 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/16 00:30:20 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,12 @@ void	ft_heredoc0(t_lex **tmp)
 
 int	ft_heredoc2(char *input, char *limiter, int fd)
 {
-	while (1)
+	signal(SIGINT, ft_detect_sig_heredoc);
+	while (g_exstat != 2)
 	{
 		input = readline(" >>");
 		if (!input)
 		{
-			ft_putstr_fd("exit", 2);
-			ft_putstr_fd("\n", 2);
 			g_exstat = 0;
 			free(input);
 			return (1);
@@ -107,8 +106,8 @@ void	ft_malloc_heredoc_str(t_exec *exec)
 
 	str = ".HEREDOC";
 	i = 0;
-	i = ft_strlen(".HERDOC");
-	exec->heredoc = malloc(sizeof(char *) * (i + 1));
+	i = ft_strlen(".HEREDOC");
+	exec->heredoc = malloc(sizeof(char) * (i + 1));
 	if (exec->heredoc == NULL)
 		return ;
 	i = 0;

@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:41:27 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/15 17:04:09 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/16 00:31:58 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,11 @@ void	ft_processus_pipe_cmd(t_lex *lex, t_exec *exec, t_utils *utils)
 			execve(exec->cmd[0], exec->cmd, NULL);
 		else
 		{
+			g_exstat = 127;
 			write(2, "minishell: ", 12);
 			write(2, exec->cmd[0], ft_strlen(exec->cmd[0]));
 			write(2, ": command not found\n", 20);
-			return ;
+			ft_exit(lex, utils->env, utils, exec);
 		}
 	}
 	if (utils->env->str != NULL)
@@ -32,12 +33,12 @@ void	ft_processus_pipe_cmd(t_lex *lex, t_exec *exec, t_utils *utils)
 			execve(exec->cmd[0], exec->cmd, NULL);
 		else
 			ft_constructor_cmd(exec);
+		if (utils->infile != -1)
+			close(utils->infile);
+		if (utils->outfile != -1)
+			close(utils->outfile);
+		ft_exit(lex, utils->env, utils, exec);
 	}
-	if (utils->infile != -1)
-		close(utils->infile);
-	if (utils->outfile != -1)
-		close(utils->outfile);
-	ft_exit(lex, utils->env, utils, exec);
 }
 
 void	ft_connect_fd_cmd(t_exec *exec)

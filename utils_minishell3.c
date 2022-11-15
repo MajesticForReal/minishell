@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 21:59:29 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/15 18:13:54 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 19:14:49 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ void	ft_all_builtin(t_lex *lex, t_utils *utils, t_exec *exec)
 			ft_unset_var(lex, utils->env);
 		else if (ft_compare(exec->cmd[0], "export") == SUCCESS)
 			ft_export_var(lex, exec, utils);
+		if (ft_compare(exec->cmd[0], "exit") == SUCCESS)
+			ft_exit(lex, utils->env, utils, exec);
 	}
 }
 
@@ -98,6 +100,8 @@ int	ft_check_builtin(t_exec *exec)
 		else if (ft_compare(exec->cmd[0], "unset") == SUCCESS)
 			return (SUCCESS);
 		else if (ft_compare(exec->cmd[0], "export") == SUCCESS)
+			return (SUCCESS);
+		if (ft_compare(exec->cmd[0], "exit") == SUCCESS)
 			return (SUCCESS);
 	}
 	return (-1);

@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:24:58 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/15 17:11:09 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/16 00:27:34 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,13 @@ int	ft_test_access(char *lex_str)
 		if (access(new_path, X_OK) == FAIL)
 			j = FAIL;
 		else
+		{
+			free(path);
 			return (SUCCESS);
+		}
 		i++;
 	}
+	free(path);
 	return (j);
 }
 

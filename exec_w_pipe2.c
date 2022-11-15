@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 00:04:46 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/15 18:38:00 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 23:59:39 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	ft_exec_builtin_pipe(t_exec *exec, t_utils *utils, t_lex *lex)
 {
 	ft_all_builtin(lex, utils, exec);
 	ft_close_files(utils->infile, utils->outfile);
-	if (utils->fd_pipe[0] != STDIN_FILENO)
-		close(utils->fd_pipe[0]);
+	if (exec->fd_cmd[0] != STDIN_FILENO)
+		close(exec->fd_cmd[0]);
 	if (utils->fd_pipe[1] != STDOUT_FILENO)
 		close(utils->fd_pipe[1]);
 }
@@ -47,8 +47,8 @@ void	ft_exec_pipe_fork(t_exec *exec, t_utils *utils, t_lex *lex)
 	exec->process_id = fork();
 	if (exec->process_id < 0)
 		return (perror("minishell: fork: "));
-	signal(SIGINT, ft_detect_sig);
-	signal(SIGQUIT, ft_detect_sig);
+	signal(SIGINT, ft_detect_sig_child);
+	signal(SIGQUIT, ft_detect_sig_child);
 	if (ft_check_builtin(exec) != 1 && exec->process_id == 0)
 	{
 		ft_processus_pipe(exec, lex, utils);

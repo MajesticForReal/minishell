@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:00:55 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/15 19:11:45 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 21:43:38 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,6 @@ int					ft_builtin_cd_back(t_exec *exec, t_utils *utils);
 int					ft_cd_is_back(char *input);
 int					ft_builtin_echo_only(t_exec *exec, t_utils *utils);
 int					ft_builtin_env(char **envp);
-void				test_signal(int code);
 int					ft_print_2_d_tab(char **strs, int index);
 void				ft_print_2_d_tab_test(char **strs);
 int					ft_builtin_detect_path_a_r(char *lex_str);
@@ -295,7 +294,7 @@ void				ft_heredoc00(t_lex *tmp, char *input, char *limiter,
 
 //redirection
 void				ft_redirection(t_lex *lex);
-void				ft_free(t_lex *lex, t_env *env, t_utils *utils,
+void				ft_free(t_lex *lex, t_utils *utils,
 						t_exec *exec);
 
 // Organizer exec
@@ -320,20 +319,21 @@ void				ft_heredoc0(t_lex **tmp);
 void				ft_print_1_exec(t_exec *exec);
 void				ft_print_2_exec(t_exec *exec);
 void				ft_print_3_exec(t_exec *exec);
+void				ft_detect_sig_heredoc(int sig);
 
-//signal
+// signal
 char				*ft_itoa(int n);
 long int			ft_len(int n);
 char				*ft_array(char *x, unsigned int number, long int len);
 void				ft_putendl_fd(char *s, int fd);
 void				*ft_memdel(void *ptr);
-void				ft_detect_sig(int sig);
+void				ft_detect_sig_parent(int sig);
+void				ft_detect_sig_child(int sig);
 
 // NORME
 int					ft_first_lex_concat(t_lex *lex, char *input, int i,
 						int size);
 void				ft_first_lex_token(t_lex *lex, char *input, int i);
-
 void				ft_print_exec(t_exec *exec);
 
 // EXEC
@@ -369,7 +369,7 @@ void				ft_exec_prog_2(t_exec *exec, char *new_path, char *my_cmd,
 						char *cmd_base);
 void				ft_constructor_cmd_2(t_exec *exec, char *new_path,
 						char *my_cmd, int i);
-void				exec_builtin_no_pipe(t_exec *exec, t_utils *utils,
+void				exec_cmd_no_pipe(t_exec *exec, t_utils *utils,
 						t_lex *lex);
 void				ft_close_files(int infile, int outfile);
 void				dup_n_close(int infile_to_close, int infile_to_copy,
@@ -384,10 +384,10 @@ void				ft_free_export(t_utils *utils);
 void				ft_free_env(t_env *env);
 void				ft_free_lex(t_lex *lex);
 void				ft_free_exec(t_exec *exec);
-int					ft_start(t_lex *lex, t_utils *utils, t_exec *exec,
-						char **envp);
-int					ft_init(t_lex **lex, t_utils **utils, char **envp);
-int					ft_init2(t_lex **lex, t_utils **utils, t_exec **exec);
-void				ft_free_exit(t_lex *lex, t_env *env, t_utils *utils, t_exec *exec);
+int					ft_start(t_lex *lex, t_utils *utils, t_exec *exec);
+int					ft_init(t_lex **lex, t_utils **utils, t_exec **exec);
+void				ft_free_exit(t_lex *lex, t_env *env, t_utils *utils,
+						t_exec *exec);
+t_utils				*ft_init_utils(t_utils *utils);
 
 #endif

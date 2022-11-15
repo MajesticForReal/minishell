@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 22:47:21 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/15 15:05:01 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 23:48:47 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ char	**ft_r_split(char const *s, char c, char **strs)
 		}
 		i++;
 	}
-	strs[j] = 0;
+	strs[j] = '\0';
 	return (strs);
 }
 

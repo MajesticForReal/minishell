@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 21:56:30 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/15 18:41:09 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/16 00:35:28 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	ft_exec_prog_cwd(t_exec *exec, char *cmd_base)
 	exec->cmd[0] = buf;
 	if (access(exec->cmd[0], X_OK) == 0)
 	{
+		g_exstat = 0;
 		execve(exec->cmd[0], exec->cmd, NULL);
 	}
 	free(buf);
@@ -78,6 +79,7 @@ void	ft_exec_prog(t_exec *exec)
 	}
 	ft_exec_prog_2(exec, new_path, my_cmd, cmd_base);
 	ft_exec_prog_cwd(exec, cmd_base);
+	g_exstat = 127;
 	write(2, "minishell: ", 12);
 	write(2, cmd_base, ft_strlen(cmd_base));
 	write(2, ": command not found\n", 20);
@@ -90,6 +92,8 @@ void	ft_exec(t_exec *exec, t_utils *utils, t_lex *lex)
 	if (exec->next == NULL)
 	{
 		ft_exec_no_pipe(exec, utils, lex);
+		signal(SIGQUIT, SIG_IGN);
+		signal(SIGINT, ft_detect_sig_parent);
 	}
 	else if (exec->next != NULL)
 	{
@@ -103,7 +107,7 @@ void	ft_waitpid(t_exec *exec)
 {
 	while (exec != NULL && exec->cmd[0] != NULL)
 	{
-		waitpid(exec->process_id, 0, 0);
+		waitpid(exec->process_id, &g_exstat, 0);
 		if (WIFEXITED(g_exstat))
 			g_exstat = WEXITSTATUS(g_exstat);
 		else if (WIFSIGNALED(g_exstat))
@@ -114,6 +118,6 @@ void	ft_waitpid(t_exec *exec)
 			break ;
 	}
 	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, ft_detect_sig);
+	signal(SIGINT, ft_detect_sig_parent);
 	return ;
 }

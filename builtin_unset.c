@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:28:36 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/14 18:48:27 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 21:52:32 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,43 @@ void	ft_del_struct(t_env *env)
 		free(env_to_del->str);
 		free(env_to_del);
 	}
+}
+
+int	ft_spec_case(char *input)
+{
+	if (input[0] == '.' && input[1] == '\0')
+	{
+		ft_putstr_fd("minishell: .: filename argument required\n", 2);
+		ft_putstr_fd(".: usage: . filename [arguments]\n", 2);
+		return (-1);
+	}
+	if (input[0] == '.' && input[1] == '.' && input[2] == '\0')
+	{
+		g_exstat = 127;
+		ft_putstr_fd("minishell: ..: command not found\n", 2);
+		return (-1);
+	}
+	if (input[0] == '.' && input[1] == ' ' && input[2] == '.')
+	{
+		ft_putstr_fd("minishell: .: .: is a directory\n", 2);
+		return (-1);
+	}
+	return (0);
+}
+
+int	ft_input(char *input, t_utils *utils)
+{
+	if (!input)
+	{
+		ft_putstr_fd("exit", 2);
+		ft_putstr_fd("\n", 2);
+		g_exstat = 0;
+		ft_free_env(utils->env);
+		ft_free_export(utils);
+		ft_free_utils(utils);
+		exit(EXIT_SUCCESS);
+	}
+	if (ft_spec_case(input) == -1)
+		return (-1);
+	return (0);
 }
