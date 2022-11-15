@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 20:06:56 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/15 15:29:28 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 18:07:59 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,16 @@ t_env	*ft_copy_env(t_env *env)
 	t_env	*export;
 	char	**tab_export;
 	int		i;
+	int		nb;
 
+	nb = -1;
 	i = ft_count_line_tab(env) + 2;
 	strs = malloc(sizeof(char *) * (i));
 	ft_copy_env_to_tab(env, strs);
 	while (--i > 0)
 		ft_sort_tab(strs);
 	i = ft_count_line_tab(env) + 2;
-	tab_export = ft_size_up_tab(strs, i);
+	tab_export = ft_size_up_tab(strs, i, nb);
 	i = 0;
 	export = ft_export_list(tab_export);
 	i = 0;
@@ -74,56 +76,3 @@ t_env	*ft_copy_env(t_env *env)
 	free(strs);
 	return (export);
 }
-
-// char	**ft_size_up_tab(char **strs, int i)
-// {
-// char **export;
-// int	j;
-// int	k;
-//
-// j = 0;
-// utils->export = malloc(sizeof(char *) * i);
-// if(utils->export == NULL)
-// return (NULL);
-// i = 0;
-// while(strs[j] != NULL)
-// {
-// k = ft_strlen(strs[j]);
-// i = ft_strlen(strs[j]) + 2;
-// export[j] = malloc(sizeof(char *) * i);
-// if(export[j] == NULL)
-// return (NULL);
-// j++;
-// }
-// j = 0;
-// i = 0;
-// k = 0;
-// while(strs[i] != NULL)
-// {
-// while(strs[i][k] != '\0')
-// {
-// if(strs[i][k] == '=')
-// {
-// export[i][j] = strs[i][k];
-// j++;
-// export[i][j] = '"';
-// j++;
-// k++;
-// }
-// else
-// {
-// export[i][j] = strs[i][k];
-// j++;
-// k++;
-// }
-// }
-// export[i][j] = '"';
-// export[i][j + 1] = '\0';
-// k = 0;
-// j = 0;
-// i++;
-// }
-// export[i] = NULL;
-// return (export);
-//
-// }

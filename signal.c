@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 23:44:44 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/12 22:12:26 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 18:41:52 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,25 @@
 
 void	ft_detect_sig(int sig)
 {
-	if (sig == SIGINT)
+	if (sig == SIGINT && g_exstat == 42)
 	{
-		ft_putstr_fd("\n", 2);
-		ft_putstr_fd("minishell > ", 2);
-		g_exstat = 130;
+		sig = SIGQUIT;
+		g_exstat = 2;
+		write(2, "\n", 1);
 	}
-	else
+	else if (sig == SIGINT && g_exstat != 42)
 	{
-		ft_putstr_fd("minishell > ", 2);
-		g_exstat = 127;
-		return ;
+		sig = SIGQUIT;
+		g_exstat = 2;
+	}
+	else if (sig == SIGQUIT && g_exstat == 42)
+	{
+		g_exstat = 3;
+	}
+	else if (sig == SIGQUIT && g_exstat != 42)
+	{
+		g_exstat = 3;
+		write(2, "Quit (core dumped)\n",
+			ft_strlen("Quit (core dumped)\n"));
 	}
 }

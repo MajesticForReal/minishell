@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 15:45:22 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/15 00:32:39 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 18:20:59 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ void	ft_export_var(t_lex *lex, t_exec *exec, t_utils *utils)
 		lex = lex->next;
 	if (lex->next == NULL || (lex->next->token == TOK_SPACE
 			&& lex->next->next == NULL) || (lex->next->token == TOK_SPACE
-			&& lex->next->next->token != TOK_WORD)
-		|| (lex->next->token != TOK_WORD))
+			&& lex->next->next->token != TOK_WORD))
 	{
 		ft_print_list_export(utils->export, exec, utils);
 		return ;

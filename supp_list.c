@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   supp_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 15:58:55 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/15 15:59:21 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/15 18:10:09 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 void	ft_supp_2_list(t_lex *lex)
 {
-	t_lex *tmp;
+	t_lex	*tmp;
 
 	free(lex->str);
 	lex->str = malloc(sizeof(char) * 2);

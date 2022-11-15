@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 21:56:30 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/15 17:04:03 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 18:41:09 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,17 +104,16 @@ void	ft_waitpid(t_exec *exec)
 	while (exec != NULL && exec->cmd[0] != NULL)
 	{
 		waitpid(exec->process_id, 0, 0);
-		// if (WIFEXITED(g_status))
-		// 	g_status = WEXITSTATUS(g_status);
-		// else if (WIFSIGNALED(g_status))
-		// 	g_status = WTERMSIG(g_status) + 128;
-		// SIGNAUX
-		// signal(SIGQUIT, SIG_IGN);
-		// signal(SIGINT, handle_sig_parent);
+		if (WIFEXITED(g_exstat))
+			g_exstat = WEXITSTATUS(g_exstat);
+		else if (WIFSIGNALED(g_exstat))
+			g_exstat = WTERMSIG(g_exstat) + 128;
 		if (exec->next != NULL)
 			exec = exec->next;
 		else
 			break ;
 	}
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, ft_detect_sig);
 	return ;
 }

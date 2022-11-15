@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:00:55 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/15 17:58:56 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 19:06:55 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,10 @@ char				**ft_split(char const *s, char c);
 //buitin
 void				ft_print_list_export(t_env *env, t_exec *exec,
 						t_utils *utils);
+void				ft_print_list_export_no_egal(t_env *env, t_exec *exec,
+						t_utils *utils);
+void				ft_print_list_export_egal(t_env *env, t_exec *exec,
+						t_utils *utils);
 void				ft_add_back_export(t_env *export, char *strs);
 t_env				*ft_export_list(char **strs);
 t_env				*ft_copy_env(t_env *env);
@@ -116,7 +120,7 @@ void				ft_copy_env_to_tab(t_env *env, char **strs);
 void				ft_sort_tab(char **strs);
 int					ft_diff_tab(char *strs, char *strs2);
 int					ft_count_line_tab(t_env *env);
-char				**ft_size_up_tab(char **strs, int i);
+char				**ft_size_up_tab(char **strs, int i, int nb);
 char				**ft_size_up_tab_2(char **strs, int *i);
 void				ft_size_up_tab_3(int *k, int *i, int *j, char **export);
 char				ft_size_up_tab_4(int *i, int *j, int *k, char **strs);
@@ -357,7 +361,7 @@ void				ft_exec_prog_cwd(t_exec *exec, char *cmd_base);
 void				ft_processus_pipe(t_exec *exec, t_lex *lex, t_utils *utils);
 void				ft_connect_redir(t_utils *utils);
 void				ft_connect_fd_cmd(t_exec *exec);
-int					ft_input(char *input);
+int					ft_input(char *input, t_utils *utils);
 void				ft_waitpid(t_exec *exec);
 int					ft_check_str(char *str, int i);
 void				ft_init_fd_cmd_no_pipe(t_exec *exec);

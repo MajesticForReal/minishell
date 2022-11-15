@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 20:11:02 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/15 17:38:06 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 18:06:47 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,28 +65,24 @@ char	ft_size_up_tab_5(int *i, int *j, int *k)
 	(void)i;
 }
 
-char	**ft_size_up_tab(char **strs, int i)
+char	**ft_size_up_tab(char **strs, int i, int nb)
 {
 	char	**export;
 	int		j;
 	int		k;
-	int	nb;
 
 	j = 0;
 	k = 0;
-	nb = 0;
 	export = ft_size_up_tab_2(strs, &i);
 	i = 0;
 	while (strs[i] != NULL)
 	{
 		while (strs[i][k] != '\0')
 		{
-			if (strs[i][k] == '=' && nb == 0)
+			if (strs[i][k] == '=' && ++nb == 0)
 			{
-				nb++;
 				export[i][j] = strs[i][k];
-				j++;
-				export[i][j] = ft_size_up_tab_5(&i, &j, &k);
+				export[i][++j] = ft_size_up_tab_5(&i, &j, &k);
 			}
 			else
 				export[i][j] = ft_size_up_tab_4(&i, &j, &k, strs);

@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 16:19:32 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/14 23:36:38 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 18:13:50 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,20 +95,7 @@ void	ft_print_list_export(t_env *env, t_exec *exec, t_utils *utils)
 	{
 		if (env->str[ft_strlen(env->str) - 1] == '=')
 		{
-			if (utils->outfile != -1)
-			{
-				ft_putstr_fd("export ", utils->outfile);
-				ft_putstr_fd(env->str, utils->outfile);
-				ft_putstr_fd("\"\"", utils->outfile);
-				ft_putstr_fd("\n", utils->outfile);
-			}
-			else
-			{
-				ft_putstr_fd("export ", exec->fd_cmd[1]);
-				ft_putstr_fd(env->str, exec->fd_cmd[1]);
-				ft_putstr_fd("\"\"", exec->fd_cmd[1]);
-				ft_putstr_fd("\n", exec->fd_cmd[1]);
-			}
+			ft_print_list_export_egal(env, exec, utils);
 			if (env->next != NULL)
 				env = env->next;
 			else
@@ -116,41 +103,12 @@ void	ft_print_list_export(t_env *env, t_exec *exec, t_utils *utils)
 		}
 		else
 		{
-			if (utils->outfile != -1)
-			{
-				ft_putstr_fd("export ", utils->outfile);
-				ft_putstr_fd(env->str, utils->outfile);
-				ft_putstr_fd("\n", utils->outfile);
-			}
-			else
-			{
-				ft_putstr_fd("export ", exec->fd_cmd[1]);
-				ft_putstr_fd(env->str, exec->fd_cmd[1]);
-				ft_putstr_fd("\n", exec->fd_cmd[1]);
-			}
+			ft_print_list_export_no_egal(env, exec, utils);
 			if (env->next != NULL)
 				env = env->next;
 			else
 				return ;
 		}
-	}
-}
-
-void	ft_print_list_env(t_env *env, t_exec *exec, t_utils *utils)
-{
-	while (env != NULL)
-	{
-		if (utils->outfile != -1)
-		{
-			ft_putstr_fd(env->str, utils->outfile);
-			ft_putstr_fd("\n", utils->outfile);
-		}
-		else
-		{
-			ft_putstr_fd(env->str, exec->fd_cmd[1]);
-			ft_putstr_fd("\n", exec->fd_cmd[1]);
-		}
-		env = env->next;
 	}
 }
 

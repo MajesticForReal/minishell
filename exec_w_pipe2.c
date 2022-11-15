@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 00:04:46 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/15 16:08:22 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 18:38:00 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	ft_exec_pipe(t_exec *exec, t_utils *utils, t_lex *lex)
 				return (perror("minishell: pipe: "));
 			exec->next->fd_cmd[0] = utils->fd_pipe[0];
 			exec->fd_cmd[1] = utils->fd_pipe[1];
+			signal(SIGQUIT, SIG_IGN);
+			signal(SIGINT, SIG_IGN);
 		}
 		ft_exec_pipe_fork(exec, utils, lex);
 		exec = exec->next;

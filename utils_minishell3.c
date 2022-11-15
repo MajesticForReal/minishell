@@ -6,92 +6,61 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 21:59:29 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/15 16:07:03 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 18:13:54 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_print_2_d_tab_test(char **strs)
+void	ft_print_list_export_egal(t_env *env, t_exec *exec, t_utils *utils)
 {
-	int	i;
-
-	i = 0;
-	if (strs[0] == NULL || strs == NULL)
-		printf("strs = tableau NULL\n");
-	while (strs[i] != NULL)
+	if (utils->outfile != -1)
 	{
-		printf("strs[%d] = %s\n", i, strs[i]);
-		i++;
+		ft_putstr_fd("export ", utils->outfile);
+		ft_putstr_fd(env->str, utils->outfile);
+		ft_putstr_fd("\"\"", utils->outfile);
+		ft_putstr_fd("\n", utils->outfile);
+	}
+	else
+	{
+		ft_putstr_fd("export ", exec->fd_cmd[1]);
+		ft_putstr_fd(env->str, exec->fd_cmd[1]);
+		ft_putstr_fd("\"\"", exec->fd_cmd[1]);
+		ft_putstr_fd("\n", exec->fd_cmd[1]);
 	}
 }
 
-void	ft_print_3_exec(t_exec *exec)
+void	ft_print_list_export_no_egal(t_env *env, t_exec *exec, t_utils *utils)
 {
-	printf("\n----------afficher les tab 2 d--------------\n");
-	printf("\n\ntab commande = \n");
-	ft_print_2_d_tab_test(exec->cmd);
-	printf("\n\n tab file = \n");
-	ft_print_2_d_tab_test(exec->file);
-	printf("\n\ntab path = \n");
-	ft_print_2_d_tab_test(exec->path);
-	if (exec->next != NULL)
+	if (utils->outfile != -1)
 	{
-		exec = exec->next;
-		printf("\n------------afficher les tab 2 d--exec->next------------\n");
-		printf("\n\ntab commande = \n");
-		ft_print_2_d_tab_test(exec->cmd);
-		printf("\n\n tab file = \n");
-		ft_print_2_d_tab_test(exec->file);
-		printf("\n\ntab path = \n");
-		ft_print_2_d_tab_test(exec->path);
+		ft_putstr_fd("export ", utils->outfile);
+		ft_putstr_fd(env->str, utils->outfile);
+		ft_putstr_fd("\n", utils->outfile);
 	}
-	if (exec->next != NULL)
+	else
 	{
-		exec = exec->next;
-		printf("\n------------afficher les tab 2 d--exec->next->next------------\n");
-		printf("\n\ntab commande = \n");
-		ft_print_2_d_tab_test(exec->cmd);
-		printf("\n\n tab file = \n");
-		ft_print_2_d_tab_test(exec->file);
-		printf("\n\ntab path = \n");
-		ft_print_2_d_tab_test(exec->path);
-		printf("\n\n");
+		ft_putstr_fd("export ", exec->fd_cmd[1]);
+		ft_putstr_fd(env->str, exec->fd_cmd[1]);
+		ft_putstr_fd("\n", exec->fd_cmd[1]);
 	}
 }
 
-void	ft_print_1_exec(t_exec *exec)
+void	ft_print_list_env(t_env *env, t_exec *exec, t_utils *utils)
 {
-	printf("\n----------afficher les tab 2 d--------------\n");
-	printf("\n\ntab commande = \n");
-	ft_print_2_d_tab_test(exec->cmd);
-	printf("\n\n tab file = \n");
-	ft_print_2_d_tab_test(exec->file);
-	printf("\n\ntab path = \n");
-	ft_print_2_d_tab_test(exec->path);
-	printf("\n\n");
-}
-
-void	ft_print_2_exec(t_exec *exec)
-{
-	printf("\n----------afficher les tab 2 d--------------\n");
-	printf("\n\ntab commande = \n");
-	ft_print_2_d_tab_test(exec->cmd);
-	printf("\n\n tab file = \n");
-	ft_print_2_d_tab_test(exec->file);
-	printf("\n\ntab path = \n");
-	ft_print_2_d_tab_test(exec->path);
-	if (exec->next != NULL)
+	while (env != NULL)
 	{
-		exec = exec->next;
-		printf("\n------------afficher les tab 2 d--exec->next------------\n");
-		printf("\n\ntab commande = \n");
-		ft_print_2_d_tab_test(exec->cmd);
-		printf("\n\n tab file = \n");
-		ft_print_2_d_tab_test(exec->file);
-		printf("\n\ntab path = \n");
-		ft_print_2_d_tab_test(exec->path);
-		printf("\n\n");
+		if (utils->outfile != -1)
+		{
+			ft_putstr_fd(env->str, utils->outfile);
+			ft_putstr_fd("\n", utils->outfile);
+		}
+		else
+		{
+			ft_putstr_fd(env->str, exec->fd_cmd[1]);
+			ft_putstr_fd("\n", exec->fd_cmd[1]);
+		}
+		env = env->next;
 	}
 }
 

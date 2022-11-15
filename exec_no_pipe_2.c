@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 21:38:11 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/15 15:08:59 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/15 18:50:16 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,13 @@ void	ft_exec_no_pipe(t_exec *exec, t_utils *utils, t_lex *lex)
 		else if (exec->process_id == 0)
 			ft_processus_no_pipe(lex, exec, utils);
 		else
+		{
 			waitpid(exec->process_id, 0, 0);
+			if (WIFEXITED(g_exstat))
+				g_exstat = WEXITSTATUS(g_exstat);
+			else if (WIFSIGNALED(g_exstat))
+				g_exstat = WTERMSIG(g_exstat) + 128;
+		}
 	}
 	else if (exec->cmd[0] != NULL && ft_check_builtin(exec) == 1)
 	{
