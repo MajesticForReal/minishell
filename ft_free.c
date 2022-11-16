@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 15:31:30 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/16 18:48:30 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/16 19:10:29 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,6 @@ void	ft_free_export(t_utils *utils)
 
 	while (utils->export != NULL)
 	{
-		// if (utils->export->str != NULL)
-		// 	free(utils->export->str);
 		if (utils->export->next != NULL)
 		{
 			tmp3 = utils->export;

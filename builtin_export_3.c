@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 20:06:56 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/16 18:47:58 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/16 19:11:30 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_env	*ft_copy_env(t_env *env, t_env *export)
 	i = 0;
 	export = ft_export_list(tab_export, export);
 	i = 0;
-	while(tab_export[i])
+	while (tab_export[i])
 	{
 		free(tab_export[i]);
 		i++;
@@ -59,3 +59,19 @@ t_env	*ft_copy_env(t_env *env, t_env *export)
 	return (export);
 }
 
+int	ft_compare_index(t_env *env, char *str)
+{
+	int	i;
+
+	i = 0;
+	while (env != NULL)
+	{
+		if (ft_compare_stop_egal(env->str, str) == FAIL)
+			i++;
+		else
+			return (i);
+		if (env->next != NULL)
+			env = env->next;
+	}
+	return (-1);
+}

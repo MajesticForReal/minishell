@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 15:45:22 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/16 18:49:25 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/16 19:11:10 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*ft_copy_lex_str(char *str)
 	return (env_str);
 }
 
-t_env *ft_initalize_env(void)
+t_env	*ft_initalize_env(void)
 {
 	t_env	*curr;
 
@@ -57,7 +57,7 @@ t_env *ft_initalize_env(void)
 void	ft_add_back_str_export_first(t_env *export, char *str)
 {
 	t_env	*new_export;
-	
+
 	new_export = ft_initalize_env();
 	while (export->next != NULL)
 		export = export->next;
@@ -89,21 +89,4 @@ void	ft_add_back_str(t_env *env, char *str)
 		env = env->next;
 	env->next = new_env;
 	new_env->str = env_str;
-}
-
-int	ft_compare_index(t_env *env, char *str)
-{
-	int	i;
-
-	i = 0;
-	while (env != NULL)
-	{
-		if (ft_compare_stop_egal(env->str, str) == FAIL)
-			i++;
-		else
-			return (i);
-		if (env->next != NULL)
-			env = env->next;
-	}
-	return (-1);
 }
