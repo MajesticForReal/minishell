@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 00:04:46 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/15 23:59:39 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/16 18:55:10 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	ft_exec_pipe_fork(t_exec *exec, t_utils *utils, t_lex *lex)
 		close(exec->fd_cmd[0]);
 	if (exec->fd_cmd[1] != STDOUT_FILENO)
 		close(exec->fd_cmd[1]);
+	// ft_exit(lex, utils->env, utils, exec);
 	ft_close_files(utils->infile, utils->outfile);
 }
 

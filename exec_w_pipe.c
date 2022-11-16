@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:41:27 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/16 00:31:58 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/16 18:55:58 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	ft_processus_pipe_cmd(t_lex *lex, t_exec *exec, t_utils *utils)
 			close(utils->infile);
 		if (utils->outfile != -1)
 			close(utils->outfile);
+		dprintf(2, "ICIIIIII\n");
 		ft_exit(lex, utils->env, utils, exec);
 	}
 }

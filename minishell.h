@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:00:55 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/16 00:49:13 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/16 18:36:01 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void				ft_replace_t_export(t_env *export, char *env_str);
 void				ft_add_back_str_export(t_env *export, char *str);
 void				ft_add_back_str_export_first(t_env *export, char *str);
 char				*ft_copy_lex_str(char *str);
-t_env				*ft_copy_env(t_env *env);
+t_env				*ft_copy_env(t_env *env, t_env *export);
 void				ft_print_list_export(t_env *env, t_exec *exec,
 						t_utils *utils);
 void				ft_print_list_export_no_egal(t_env *env, t_exec *exec,
@@ -129,14 +129,13 @@ void				ft_print_list_export_no_egal(t_env *env, t_exec *exec,
 void				ft_print_list_export_egal(t_env *env, t_exec *exec,
 						t_utils *utils);
 void				ft_add_back_export(t_env *export, char *strs);
-t_env				*ft_export_list(char **strs);
-t_env				*ft_copy_env(t_env *env);
+t_env 				*ft_export_list(char **strs, t_env *export);
 void				ft_copy_env_to_tab(t_env *env, char **strs);
 void				ft_sort_tab(char **strs);
 int					ft_diff_tab(char *strs, char *strs2);
 int					ft_count_line_tab(t_env *env);
-char				**ft_size_up_tab(char **strs, int i, int nb);
-char				**ft_size_up_tab_2(char **strs, int *i);
+char				**ft_size_up_tab(char **strs, int i, int nb, char **export);
+char				**ft_size_up_tab_2(char **strs, int *i, char **export);
 void				ft_size_up_tab_3(int *k, int *i, int *j, char **export);
 char				ft_size_up_tab_4(int *i, int *j, int *k, char **strs);
 int					ft_compare_index(t_env *export, char *str);

@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:41:14 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/16 01:48:13 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/16 18:51:56 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int	main(int argc, char **argv, char **envp)
 	if (envp[0] != NULL)
 	{
 		utils->env = ft_init_fill_env(envp);
-		utils->export = ft_copy_env(utils->env);
+		utils->export = ft_copy_env(utils->env, utils->export);
 	}
 	g_exstat = 0;
 	signal(SIGINT, ft_detect_sig_parent);

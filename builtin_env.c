@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klaurier <klaurier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 15:45:22 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/16 00:28:40 by klaurier         ###   ########.fr       */
+/*   Updated: 2022/11/16 18:49:25 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,13 @@ char	*ft_copy_lex_str(char *str)
 {
 	char	*env_str;
 	int		i;
+	int		j;
 
 	i = 0;
-	env_str = malloc(sizeof(char) * (ft_strlen(str) + 1));
+	j = 0;
+	if (str != NULL)
+		j = ft_strlen(str);
+	env_str = malloc(sizeof(char) * (j + 1));
 	if (env_str == NULL)
 		return (NULL);
 	while (str[i] != '\0')
@@ -38,17 +42,28 @@ char	*ft_copy_lex_str(char *str)
 	return (env_str);
 }
 
+t_env *ft_initalize_env(void)
+{
+	t_env	*curr;
+
+	curr = malloc(sizeof(t_env));
+	if (!curr)
+		return (NULL);
+	curr->next = NULL;
+	curr->str = NULL;
+	return (curr);
+}
+
 void	ft_add_back_str_export_first(t_env *export, char *str)
 {
 	t_env	*new_export;
-	char	*export_str;
-
-	export_str = ft_copy_lex_str(str);
-	new_export = ft_init_env();
+	
+	new_export = ft_initalize_env();
 	while (export->next != NULL)
 		export = export->next;
 	export->next = new_export;
-	new_export->str = export_str;
+	new_export->str = str;
+	new_export->next = NULL;
 }
 
 void	ft_add_back_str(t_env *env, char *str)
