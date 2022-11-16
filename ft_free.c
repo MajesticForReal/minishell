@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 15:31:30 by anrechai          #+#    #+#             */
-/*   Updated: 2022/11/16 00:21:26 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/16 01:49:59 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_free_exec(t_exec *exec)
 		free(exec->str_cmd);
 	if (exec->heredoc != NULL)
 		free(exec->heredoc);
-	if (exec->cmd[0])
+	if (exec->cmd)
 		free(exec->cmd);
 	if (exec->path != NULL && exec->path[0])
 	{

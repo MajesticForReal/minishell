@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:28:36 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/15 21:52:32 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/16 01:55:43 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,13 @@ void	ft_unset_var(t_lex *lex, t_env *env)
 		lex = lex->next;
 	if (lex->next != NULL)
 		lex = lex->next;
+	while (lex != NULL && lex->token != TOK_WORD)
+	{
+		if (lex->next != NULL)
+			lex = lex->next;
+		else
+			break ;
+	}
 	while (env->next != NULL)
 	{
 		if (ft_find_variable_in_env(env->next->str, lex->str) == SUCCESS)
@@ -25,7 +32,10 @@ void	ft_unset_var(t_lex *lex, t_env *env)
 			ft_del_struct(env);
 			return ;
 		}
-		env = env->next;
+		if (env->next != NULL)
+			env = env->next;
+		else
+			break ;
 	}
 	(void)env;
 }
@@ -55,18 +65,20 @@ void	ft_del_struct(t_env *env)
 
 	if (env == NULL)
 		return ;
-	if (env->next->next == NULL)
-	{
-		free(env->next->str);
-		free(env->next);
-		env->next = NULL;
-	}
-	else if (env->next->next != NULL)
+	env_to_del = env;
+	if (env_to_del->next != NULL)
 	{
 		env_to_del = env->next;
 		env->next = env->next->next;
 		free(env_to_del->str);
 		free(env_to_del);
+	}
+	else
+	{
+		env_to_del = env->next;
+		env->next = NULL;
+		free(env->str);
+		free(env);
 	}
 }
 
