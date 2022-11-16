@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:00:55 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/15 21:43:38 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/16 00:49:13 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,21 @@ char				**ft_r_split(char const *s, char c, char **strs);
 char				**ft_split(char const *s, char c);
 
 //buitin
+void				ft_replace_t_export(t_env *export, char *env_str);
+void				ft_replace_t_export_1(t_env *export, char *env_str, int *i);
+void				ft_replace_t_export_2(t_env *export, int *i, int *j,
+						int *trigger);
+void				ft_replace_t_export_3(int *i, int *j);
+char				*ft_copy_lex_str_to_export_1(char *env_str, int *i);
+void				ft_copy_lex_str_to_export_3(int *j, int *i);
+void				ft_copy_lex_str_to_export_2(char *str_w_quotes, int *j,
+						int *i, int *trigger);
+char				*ft_copy_lex_str_to_export(char *env_str);
+void				ft_replace_t_export(t_env *export, char *env_str);
+void				ft_add_back_str_export(t_env *export, char *str);
+void				ft_add_back_str_export_first(t_env *export, char *str);
+char				*ft_copy_lex_str(char *str);
+t_env				*ft_copy_env(t_env *env);
 void				ft_print_list_export(t_env *env, t_exec *exec,
 						t_utils *utils);
 void				ft_print_list_export_no_egal(t_env *env, t_exec *exec,

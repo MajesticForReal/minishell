@@ -6,7 +6,7 @@
 #    By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/27 16:02:00 by y klaurier        #+#    #+#              #
-#    Updated: 2022/11/15 21:34:49 by anrechai         ###   ########.fr        #
+#    Updated: 2022/11/16 00:39:04 by anrechai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,8 @@ SRCS 		=	main.c \
 				builtin_export.c \
 				builtin_export_2.c \
 				builtin_export_3.c \
+				builtin_export_4.c \
+				builtin_export_5.c \
 				builtin_pwd.c \
 				builtin_unset.c \
 				init_env.c \
