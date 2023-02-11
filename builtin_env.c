@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 15:45:22 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/16 19:11:10 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/16 19:27:57 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	ft_add_back_str_export_first(t_env *export, char *str)
 	while (export->next != NULL)
 		export = export->next;
 	export->next = new_export;
-	new_export->str = str;
+	new_export->str = ft_strdup(str);
 	new_export->next = NULL;
 }
 

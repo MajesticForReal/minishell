@@ -6,7 +6,7 @@
 #    By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/27 16:02:00 by y klaurier        #+#    #+#              #
-#    Updated: 2022/11/16 18:30:20 by anrechai         ###   ########.fr        #
+#    Updated: 2022/11/16 19:15:29 by anrechai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,7 +72,7 @@ OBJS		=	${SRCS:.c=.o}
 
 NAME		=	minishell
 
-# FLAG		=	-g3 -Wall -Wextra -Werror
+FLAG		=	-Wall -Wextra -Werror
 
 HEADER		=	minishell.h
 

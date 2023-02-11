@@ -6,7 +6,7 @@
 /*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 20:06:56 by klaurier          #+#    #+#             */
-/*   Updated: 2022/11/16 19:11:30 by anrechai         ###   ########.fr       */
+/*   Updated: 2022/11/16 19:28:24 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_env	*ft_export_list(char **strs, t_env *export)
 	if (export == NULL)
 		return (NULL);
 	export->next = NULL;
-	export->str = strs[0];
+	export->str = ft_strdup(strs[0]);
 	i = 0;
 	while (strs[i] != NULL)
 	{
@@ -46,7 +46,6 @@ t_env	*ft_copy_env(t_env *env, t_env *export)
 	i = ft_count_line_tab(env) + 2;
 	tab_export = NULL;
 	tab_export = ft_size_up_tab(strs, i, nb, tab_export);
-	i = 0;
 	export = ft_export_list(tab_export, export);
 	i = 0;
 	while (tab_export[i])
